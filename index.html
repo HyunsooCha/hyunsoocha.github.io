@@ -56,53 +56,51 @@
               </td>
             </tr>
           </tbody></table>
+
           <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+            <tr onmouseout="pegasus_stop()" onmouseover="pegasus_start()">
+              <td style="padding:20px;width:25%;vertical-align:middle">
+                <div class="one">
+                  <div class="two" id='pegasus_image'>
+                    <img src='images/pegasus.jpeg' style="border-style: none" width="100%"></div>
+                  <img src='images/pegasus.jpeg'  style="border-style: none" width="100%">
+                </div>
+                <script type="text/javascript">
+                  function pegasus_start() {
+                    document.getElementById('pegasus_image').style.opacity = "1";
+                  }
 
-
-
-    <tr onmouseout="pegasus_stop()" onmouseover="pegasus_start()">
-      <td style="padding:20px;max-width:55%;vertical-align:middle">
-        <div class="one">
-          <div class="two" id='pegasus_image'>
-            <img src='images/pegasus.jpeg' width="100%"></div>
-          <img src='images/pegasus.jpeg' width="100%">
-        </div>
-        <script type="text/javascript">
-          function pegasus_start() {
-            document.getElementById('pegasus_image').style.opacity = "1";
-          }
-
-          function pegasus_stop() {
-            document.getElementById('pegasus_image').style.opacity = "0";
-          }
-          pegasus_stop()
-        </script>
-      </td>
-      <td style="padding:20px;max-width:45%;vertical-align:middle">
-        <!-- <a href="https://snuvclab.github.io/pegasus/"> -->
-          <span class="papertitle">PEGASUS: Personalized Generative 3D Avatars with Composable Attributes</span>
-        </a>
-        <br>
-        <strong>Hyunsoo Cha</strong>,
-        <a href="https://bjkim95.github.io/">Byungjun Kim</a>,
-        <a href="https://jhugestar.github.io/">Hanbyul Joo</a>
-        
-            <br>
-            <em>CVPR</em>, 2024
-            <br>
-            <!-- <a href="https://snuvclab.github.io/pegasus/">Project Page</a> -->
-            <!-- / -->
-            <a href="https://www.youtube.com/watch?v=zhO8iUBpnCc">Video</a>
-            /
-            <a href="https://arxiv.org/abs/2402.10636">arXiv</a>
-            /
-            <a href="https://github.com/snuvclab/pegasus/">Code</a>
-            <p></p>
-            <p>
-            We propose a novel generative method for creating personalized 3D avatars using monocular videos. 
-            </p>
-      </td>
-    </tr>
+                  function pegasus_stop() {
+                    document.getElementById('pegasus_image').style.opacity = "0";
+                  }
+                  pegasus_stop()
+                </script>
+              </td>
+              <td style="padding:20px;width:75%;vertical-align:middle">
+                <!-- <a href="https://snuvclab.github.io/pegasus/"> -->
+                  <span class="papertitle">PEGASUS: Personalized Generative 3D Avatars with Composable Attributes</span>
+                </a>
+                <br>
+                <strong>Hyunsoo Cha</strong>,
+                <a href="https://bjkim95.github.io/">Byungjun Kim</a>,
+                <a href="https://jhugestar.github.io/">Hanbyul Joo</a>
+                
+                    <br>
+                    <em>CVPR</em>, 2024
+                    <br>
+                    <!-- <a href="https://snuvclab.github.io/pegasus/">Project Page</a> -->
+                    <!-- / -->
+                    <a href="https://www.youtube.com/watch?v=zhO8iUBpnCc">Video</a>
+                    /
+                    <a href="https://arxiv.org/abs/2402.10636">arXiv</a>
+                    /
+                    <a href="https://github.com/snuvclab/pegasus/">Code</a>
+                    <p></p>
+                    <p>
+                    We propose a novel generative method for creating personalized 3D avatars using monocular videos. 
+                    </p>
+              </td>
+            </tr>
    
           </tbody></table>
           <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
