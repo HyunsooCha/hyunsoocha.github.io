@@ -21,7 +21,7 @@
   project_page: https://hyunsoocha.github.io/pegasus
   github: snuvclab/pegasus
   arxiv: 2402.10636
-  image: pegasus.jpeg
+  image: pegasus.jpeg         # should be 512x512. for professor, 640x320 is okay.
   image_mouseover: pegasus.jpeg
   authors:
     - hyunsoo
