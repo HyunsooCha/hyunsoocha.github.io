@@ -7,6 +7,7 @@
   image: perse_before.jpg
   image_mouseover: perse_after.mp4
   authors:
+    - hyunsoo
     - inhee
     - hanbyul
   # awards:
@@ -21,6 +22,7 @@
   image: pegasus_before.jpg
   image_mouseover: pegasus_after.mp4
   authors:
+    - hyunsoo
     - byungjun
     - hanbyul
   # awards:
