@@ -1,6 +1,6 @@
 - id: perse
   title: "PERSE: Personalized 3D Generative Avatars from A Single Portrait"
-  venue: CVPR, 2024
+  venue: ArXiv, 2024
   description: "A method for building an animatable personalized generative avatar from a reference portrait."
   project_page: https://hyunsoocha.github.io/perse
   arxiv: 

@@ -23,10 +23,10 @@ name: Hyunsoo Cha
 position: PhD Student
 email: 729steven@gmail.com
 description: >-
-  I am Hyunsoo Cha, a PhD student at [Seoul National University](https://en.snu.ac.kr/index.html), advised by Prof. [Hanbyul Joo(https://jhugestar.github.io/)].
+  I am Hyunsoo Cha, a PhD student at [Seoul National University](https://en.snu.ac.kr/index.html), advised by Prof. [Hanbyul Joo](https://jhugestar.github.io/).
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: hyunsuu_cha
+x_username: hyunsuu_cha
 github_username: hyunsoocha
 google_scholar: bbSsAZcAAAAJ
 google_analytics: 
