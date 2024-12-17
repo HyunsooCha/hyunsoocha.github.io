@@ -21,8 +21,8 @@
   project_page: https://hyunsoocha.github.io/pegasus
   github: snuvclab/pegasus
   arxiv: 2402.10636
-  image: pegasus/images/pegasus.jpeg
-  image_mouseover: pegasus/images/pegasus.jpeg
+  image: pegasus.jpeg
+  image_mouseover: pegasus.jpeg
   authors:
     - hyunsoo
     - byungjun
