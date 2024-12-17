@@ -3,7 +3,7 @@
   venue: ArXiv, 2024
   description: "A method for building an animatable personalized generative avatar from a reference portrait."
   project_page: https://hyunsoocha.github.io/perse
-  github: https://github.com/snuvclab/perse
+  github: snuvclab/perse
   arxiv: 
   image: perse_before.jpg
   image_mouseover: perse_after.mp4
@@ -19,7 +19,7 @@
   venue: CVPR, 2024
   description: "A method for constructing a personalized generative 3D face avatar from monocular videos."
   project_page: https://hyunsoocha.github.io/pegasus
-  github: https://github.com/snuvclab/pegasus
+  github: snuvclab/pegasus
   arxiv: 2402.10636
   image: pegasus_before.jpg
   image_mouseover: pegasus_after.mp4
