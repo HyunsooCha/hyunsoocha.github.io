@@ -1,0 +1,27 @@
+- id: perse
+  title: "PERSE: Personalized 3D Generative Avatars from A Single Portrait"
+  venue: CVPR, 2024
+  description: "A method for building an animatable personalized generative avatar from a reference portrait."
+  project_page: https://hyunsoocha.github.io/perse
+  arxiv: 
+  image: perse_before.jpg
+  image_mouseover: perse_after.mp4
+  authors:
+    - inhee
+    - hanbyul
+  # awards:
+  #   - "Oral Presentation"
+
+- id: pegasus
+  title: "PEGASUS: Personalized Generative 3D Avatars with Composable Attributes"
+  venue: CVPR, 2024
+  description: "A method for constructing a personalized generative 3D face avatar from monocular videos."
+  project_page: https://hyunsoocha.github.io/pegasus
+  arxiv: 2402.10636
+  image: pegasus_before.jpg
+  image_mouseover: pegasus_after.mp4
+  authors:
+    - byungjun
+    - hanbyul
+  # awards:
+  #   - "Oral Presentation"
