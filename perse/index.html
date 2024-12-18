@@ -5,7 +5,7 @@
   <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
   <!-- Replace the content tag with appropriate information -->
   <meta name="description" content="DESCRIPTION META TAG">
-  <meta property="og:title" content="PEGASUS: Personalized Generative 3D Avatars with Composable Attributes"/>
+  <meta property="og:title" content="PERSE: Personalized 3D Generative Avatars from A Single Portrait"/>
   <meta property="og:description" content="We present, PEGASUS, a method for constructing personalized generative 3D face avatars from monocular video sources. "/>
   <meta property="og:url" content="https://hyunsoocha.github.io/pegasus/"/>
   <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
@@ -13,7 +13,7 @@
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height" content="630"/>
 
-  <meta name="twitter:title" content="PEGASUS: Personalized Generative 3D Avatars with Composable Attributes">
+  <meta name="twitter:title" content="PERSE: Personalized 3D Generative Avatars from A Single Portrait">
   <meta name="twitter:description" content="We present, PEGASUS, a method for constructing personalized generative 3D face avatars from monocular video sources. ">
   <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
   <meta name="twitter:image" content="static/images/banner_image.jpeg">
@@ -23,7 +23,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-  <title>PEGASUS: Personalized Generative 3D Avatars with Composable Attributes</title>
+  <title>PERSE: Personalized 3D Generative Avatars from A Single Portrait</title>
   <link rel="icon" type="image/x-icon" href="./images/hs_logo.ico">
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
   rel="stylesheet">
@@ -86,49 +86,61 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">PEGASUS: Personalized Generative 3D Avatars with Composable Attributes</h1>
+          <h1 class="title is-1 publication-title">PERSE: Personalized 3D Generative Avatars from A Single Portrait</h1>
             <div class="is-size-5 publication-authors">
               <!-- Paper authors -->
               <span class="author-block">
                 <a href="https://hyunsoocha.github.io/" target="_blank">Hyunsoo Cha</a>,</span>
                 <span class="author-block">
-                  <a href="https://bjkim95.github.io/" target="_blank">Byungjun Kim</a>,</span>
+                  <a href="https://blog.sulwon.com/" target="_blank">Inhee Lee</a>,</span>
                   <span class="author-block">
                     <a href="https://jhugestar.github.io/" target="_blank">Hanbyul Joo</a>
                   </span>
                   </div>
 
                   <div class="is-size-5 publication-authors">
-                    <span class="author-block">Seoul National University<br>CVPR 2024</span>
+                    <span class="author-block">Seoul National University<br> </span>
                   </div>
 
                   <div class="column has-text-centered">
                     <div class="publication-links">
-                         <!-- Arxiv PDF link -->
-                      <span class="link-block">
-                        <a href="https://arxiv.org/pdf/2402.10636.pdf" target="_blank"
-                        class="external-link button is-normal is-rounded is-dark">
-                        <span class="icon">
-                          <i class="fas fa-file-pdf"></i>
-                        </span>
-                        <span>Paper</span>
-                      </a>
-                    </span>
+                <!-- Arxiv PDF link -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/pdf/.pdf" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
 
-              <!-- ArXiv abstract Link -->
-              <span class="link-block">
-                <a href="https://arxiv.org/abs/2402.10636" target="_blank"
-                class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                    <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
-                </a>
-              </span>
+                <!-- ArXiv abstract Link -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+
+
+                <!-- YouTube link -->
+                <span class="link-block">
+                  <a href="https://youtu.be/DjRRte308oc" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                    </span>
+                    <span>Video</span>
+                  </a>
+                </span>
 
                 <!-- Github link -->
                 <span class="link-block">
-                  <a href="https://github.com/snuvclab/pegasus" target="_blank"
+                  <a href="https://github.com/snuvclab/perse" target="_blank"
                   class="external-link button is-normal is-rounded is-dark">
                     <span class="icon">
                       <i class="fab fa-github"></i>
@@ -144,87 +156,59 @@
   </div>
 </section>
 
-
+<!-- source code borrows from CAP4D -->
 <!-- Teaser video-->
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
-      <!-- <video poster="" id="tree" autoplay controls muted loop height="100%">
-        <source src="static/videos/banner_video.mp4"
+<section class="hero is-small"></section>
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <video poster="static/images/teaser.webp" id="video_teaser" autoplay muted playsinline loop style="width: 100%; object-fit: cover;">
+        <source src="static/images/teaser_pp.mp4"
         type="video/mp4">
-      </video> -->
-      <img src="static/images/teaser.jpeg" alt="PEGASUS Teaser Image"/>
-      <h2 class="subtitle has-text-centered">
-        We propose a personalized generative 3D face avatars from monocular video sources.
+      </video>
+      <h2 class="subtitle has-text-centered" style="margin-top: 5px;">
+        TL;DR: Given a reference portrait image input, 
+        PERSE generates an animatable 3D personalized avatar 
+        with disentangled and editable control over various facial attributes.
+      </h2>
+    <!-- <div class="hero-body"> -->
+    </div>
+  </div>
+<!-- </div> -->
+  <!-- </div> -->
+<!-- </section> -->
+<!-- End teaser video -->
+
+<!-- Image carousel -->
+<!-- <section class="hero is-small"> -->
+  <div class="hero-body">
+    <!-- <div class="container is-max-desktop"> </div> style="text-align: center;"> -->
+    <div class="container is-max-desktop">
+      <!-- Your image here -->
+      <!-- <h2 class="title is-3">Method Overview</h2> -->
+      <h2 class="title is-3" style="margin-bottom: -10px;">Overview</h2><br>
+      <video poster="static/images/overview.webp" id="video_overview" autoplay muted playsinline loop style="width: 100%; object-fit: cover;">
+        <!-- Your video here -->
+        <source src="static/images/overview.mp4"
+        type="video/mp4">
+      </video>
+      <h2 class="subtitle is-max-desktop" style="margin-top: 10px;">
+        PERSE consists of two main components: synthetic dataset generation from single portrait image, avatar training. As an application, we show attribute transfer.
       </h2>
     </div>
   </div>
+<!-- </div> -->
 </section>
-<!-- End teaser video -->
 
-<!-- Paper abstract -->
-<section class="section hero is-light">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-            We present, PEGASUS, a method for constructing personalized generative 3D face avatars from monocular video
-            sources. As a compositional generative model, our model
-            enables disentangled controls to selectively alter the facial
-            attributes (e.g., hair or nose) of the target individual, while
-            preserving the identity. We present two key approaches to
-            achieve this goal. First, we present a method to construct
-            a person-specific generative 3D avatar by building a synthetic video collection of the target identity with varying
-            facial attributes, where the videos are synthesized by borrowing parts from diverse individuals from other monocular
-            videos. Through several experiments, we demonstrate the
-            superior performance of our approach by generating unseen
-            attributes with high realism. Subsequently, we introduce a
-            zero-shot approach to achieve the same generative modeling more efficiently by leveraging a previously constructed
-            personalized generative model.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End paper abstract -->
-
-<!-- Youtube video -->
-<section class="hero is-small is-light">
-  <div class="hero-body">
-    <div class="container">
-      <!-- Paper video. -->
-      <h2 class="title is-3">Video Presentation</h2>
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          
-          <div class="publication-video">
-            <!-- Youtube embed code here -->
-            <iframe src="https://www.youtube.com/embed/DjRRte308oc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End youtube video -->
 
 
 <!--BibTex citation -->
   <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
       <h2 class="title">BibTeX</h2>
-      <pre><code>@inproceedings{cha2024pegasus,
-        author = {Cha, Hyunsoo and Kim, Byungjun and Joo, Hanbyul},
-        title = {PEGASUS: Personalized Generative 3D Avatars with Composable Attributes}, 
-        booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
-        year = {2024},}</code></pre>
+      <pre><code>Coming Soon!</code></pre>
     </div>
 </section>
 <!--End BibTex citation -->
-
 
   <footer class="footer">
   <div class="container">
