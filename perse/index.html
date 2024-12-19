@@ -1,525 +1,766 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
-  <!-- Replace the content tag with appropriate information -->
-  <meta name="description" content="DESCRIPTION META TAG">
-  <meta property="og:title" content="PERSE: Personalized 3D Generative Avatars from A Single Portrait"/>
-  <meta property="og:description" content="We present, PEGASUS, a method for constructing personalized generative 3D face avatars from monocular video sources. "/>
-  <meta property="og:url" content="https://hyunsoocha.github.io/pegasus/"/>
-  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
-  <meta property="og:image" content="static/image/banner_image.jpeg" />
-  <meta property="og:image:width" content="1200"/>
-  <meta property="og:image:height" content="630"/>
+  <head>
+    <meta charset="utf-8" />
+    <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+    <!-- Replace the content tag with appropriate information -->
+    <meta name="description" content="DESCRIPTION META TAG" />
+    <meta
+      property="og:title"
+      content="PERSE: Personalized 3D Generative Avatars from A Single Portrait"
+    />
+    <meta
+      property="og:description"
+      content="We present, PEGASUS, a method for constructing personalized generative 3D face avatars from monocular video sources. "
+    />
+    <meta property="og:url" content="https://hyunsoocha.github.io/pegasus/" />
+    <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+    <meta property="og:image" content="static/image/banner_image.jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
-  <meta name="twitter:title" content="PERSE: Personalized 3D Generative Avatars from A Single Portrait">
-  <meta name="twitter:description" content="We present, PEGASUS, a method for constructing personalized generative 3D face avatars from monocular video sources. ">
-  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
-  <meta name="twitter:image" content="static/images/banner_image.jpeg">
-  <meta name="twitter:card" content="summary_large_image">
-  <!-- Keywords for your paper to be indexed by-->
-  <meta name="keywords" content="3D ">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="twitter:title"
+      content="PERSE: Personalized 3D Generative Avatars from A Single Portrait"
+    />
+    <meta
+      name="twitter:description"
+      content="We present, PEGASUS, a method for constructing personalized generative 3D face avatars from monocular video sources. "
+    />
+    <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+    <meta name="twitter:image" content="static/images/banner_image.jpeg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- Keywords for your paper to be indexed by-->
+    <meta name="keywords" content="3D " />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <title>
+      PERSE: Personalized 3D Generative Avatars from A Single Portrait
+    </title>
+    <link rel="icon" type="image/x-icon" href="./images/hs_logo.ico" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+      rel="stylesheet"
+    />
 
-  <title>PERSE: Personalized 3D Generative Avatars from A Single Portrait</title>
-  <link rel="icon" type="image/x-icon" href="./images/hs_logo.ico">
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-  rel="stylesheet">
+    <link rel="stylesheet" href="static/css/bulma.min.css" />
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css" />
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css" />
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css"
+    />
+    <link rel="stylesheet" href="static/css/index.css" />
 
-  <link rel="stylesheet" href="static/css/bulma.min.css">
-  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="static/css/index.css">
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
-  <script defer src="static/js/fontawesome.all.min.js"></script>
-  <script src="static/js/bulma-carousel.min.js"></script>
-  <script src="static/js/bulma-slider.min.js"></script>
-  <script src="static/js/index.js"></script>
-</head>
-<body>
-
-
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-  <div class="navbar-menu">
-    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-      <a class="navbar-item" href="https://hyunsoocha.github.io/">
-      <span class="icon">
-          <i class="fas fa-home"></i>
-      </span>
-      </a>
-
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          More Research
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+    <script defer src="static/js/fontawesome.all.min.js"></script>
+    <script src="static/js/bulma-carousel.min.js"></script>
+    <script src="static/js/bulma-slider.min.js"></script>
+    <script src="static/js/index.js"></script>
+  </head>
+  <body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a
+          role="button"
+          class="navbar-burger"
+          aria-label="menu"
+          aria-expanded="false"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
         </a>
-        <div class="navbar-dropdown">
-          <a class="navbar-item" href="https://hyunsoocha.github.io/pegasus/">
-            PEGASUS
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-start" style="flex-grow: 1; justify-content: center">
+          <a class="navbar-item" href="https://hyunsoocha.github.io/">
+            <span class="icon">
+              <i class="fas fa-home"></i>
+            </span>
           </a>
-          <a class="navbar-item" href="https://hyunsoocha.github.io/perse">
-            PERSE
-          </a>
-        </div>
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link"> More Research </a>
+            <div class="navbar-dropdown">
+              <a
+                class="navbar-item"
+                href="https://hyunsoocha.github.io/pegasus/"
+              >
+                PEGASUS
+              </a>
+              <a class="navbar-item" href="https://hyunsoocha.github.io/perse">
+                PERSE
+              </a>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
 
-  </div>
-</nav>
+      <!-- </div> -->
+    </nav>
 
-<section class="hero">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">PERSE: Personalized 3D Generative Avatars from A Single Portrait</h1>
-            <div class="is-size-5 publication-authors">
-              <!-- Paper authors -->
-              <span class="author-block">
-                <a href="https://hyunsoocha.github.io/" target="_blank">Hyunsoo Cha</a>,</span>
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 class="title is-1 publication-title">
+                PERSE: Personalized 3D Generative Avatars from A Single Portrait
+              </h1>
+              <div class="is-size-5 publication-authors">
+                <!-- Paper authors -->
                 <span class="author-block">
-                  <a href="https://blog.sulwon.com/" target="_blank">Inhee Lee</a>,</span>
-                  <span class="author-block">
-                    <a href="https://jhugestar.github.io/" target="_blank">Hanbyul Joo</a>
-                  </span>
-                  </div>
+                  <a href="https://hyunsoocha.github.io/" target="_blank"
+                    >Hyunsoo Cha</a
+                  >,</span
+                >
+                <span class="author-block">
+                  <a href="https://blog.sulwon.com/" target="_blank"
+                    >Inhee Lee</a
+                  >,</span
+                >
+                <span class="author-block">
+                  <a href="https://jhugestar.github.io/" target="_blank"
+                    >Hanbyul Joo</a
+                  >
+                </span>
+              </div>
 
-                  <div class="is-size-5 publication-authors">
-                    <span class="author-block">Seoul National University<br> </span>
-                  </div>
+              <div class="is-size-5 publication-authors">
+                <span class="author-block"
+                  >Seoul National University<br />
+                </span>
+              </div>
 
-                  <div class="column has-text-centered">
-                    <div class="publication-links">
-                <!-- Arxiv PDF link -->
-                <span class="link-block">
-                  <a href="https://arxiv.org/pdf/.pdf" target="_blank"
-                    class="external-link button is-normal is-rounded is-dark">
+              <div class="column has-text-centered">
+                <div class="publication-links">
+                  <!-- Arxiv PDF link -->
+                  <span class="link-block">
+                    <a
+                      href="https://arxiv.org/pdf/.pdf"
+                      target="_blank"
+                      class="external-link button is-normal is-rounded is-dark"
+                    >
                       <span class="icon">
                         <i class="fas fa-file-pdf"></i>
                       </span>
-                    <span>Paper</span>
-                  </a>
-                </span>
+                      <span>Paper</span>
+                    </a>
+                  </span>
 
-                <!-- ArXiv abstract Link -->
-                <span class="link-block">
-                  <a href="https://arxiv.org/abs/" target="_blank"
-                  class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                      <i class="ai ai-arxiv"></i>
-                    </span>
-                    <span>arXiv</span>
-                  </a>
-                </span>
+                  <!-- ArXiv abstract Link -->
+                  <span class="link-block">
+                    <a
+                      href="https://arxiv.org/abs/"
+                      target="_blank"
+                      class="external-link button is-normal is-rounded is-dark"
+                    >
+                      <span class="icon">
+                        <i class="ai ai-arxiv"></i>
+                      </span>
+                      <span>arXiv</span>
+                    </a>
+                  </span>
 
+                  <!-- YouTube link -->
+                  <span class="link-block">
+                    <a
+                      href="https://youtu.be/DjRRte308oc"
+                      target="_blank"
+                      class="external-link button is-normal is-rounded is-dark"
+                    >
+                      <span class="icon">
+                        <i class="fab fa-youtube"></i>
+                      </span>
+                      <span>Video</span>
+                    </a>
+                  </span>
 
-                <!-- YouTube link -->
-                <span class="link-block">
-                  <a href="https://youtu.be/DjRRte308oc" target="_blank"
-                  class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                      <i class="fab fa-youtube"></i>
-                    </span>
-                    <span>Video</span>
-                  </a>
-                </span>
-
-                <!-- Github link -->
-                <span class="link-block">
-                  <a href="https://github.com/snuvclab/perse" target="_blank"
-                  class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                      <i class="fab fa-github"></i>
-                    </span>
-                    <span>Code</span>
-                  </a>
-                </span>
+                  <!-- Github link -->
+                  <span class="link-block">
+                    <a
+                      href="https://github.com/snuvclab/perse"
+                      target="_blank"
+                      class="external-link button is-normal is-rounded is-dark"
+                    >
+                      <span class="icon">
+                        <i class="fab fa-github"></i>
+                      </span>
+                      <span>Code</span>
+                    </a>
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- source code borrows from CAP4D -->
-<!-- Teaser video-->
-<section class="hero is-small"></section>
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <video poster="static/images/teaser.webp" id="video_teaser" autoplay muted playsinline loop style="width: 100%; object-fit: cover;">
-        <source src="static/images/teaser_pp.mp4"
-        type="video/mp4">
-      </video>
-      <h2 class="subtitle has-text-centered" style="margin-top: 5px;">
-        TL;DR: Given a reference portrait image input, 
-        PERSE generates an animatable 3D personalized avatar 
-        with disentangled and editable control over various facial attributes.
-      </h2>
-    <!-- <div class="hero-body"> -->
-    </div>
-  </div>
-<!-- </div> -->
-  <!-- </div> -->
-<!-- </section> -->
-<!-- End teaser video -->
-
-<!-- Image carousel -->
-<!-- <section class="hero is-small"> -->
-  <div class="hero-body">
-    <!-- <div class="container is-max-desktop"> </div> style="text-align: center;"> -->
-    <div class="container is-max-desktop">
-      <!-- Your image here -->
-      <!-- <h2 class="title is-3">Method Overview</h2> -->
-      <h2 class="title is-3" style="margin-bottom: -10px;">Overview</h2><br>
-      <video poster="static/images/overview.webp" id="video_overview" autoplay muted playsinline loop style="width: 100%; object-fit: cover;">
-        <!-- Your video here -->
-        <source src="static/images/overview.mp4"
-        type="video/mp4">
-      </video>
-      <h2 class="subtitle is-max-desktop" style="margin-top: 10px;">
-        <b>PERSE</b> consists of two main components and an application.<br>
-        First, we generates a 2D monocular synthetic dataset from a single image using our video diffusion model named as <b>portrait-CHAMP</b>. 
-        The synthetic dataset maintains the same identity as the input image 
-        but is edited with different attributes, forming a 2D monocular video with the same head pose and facial expression. <br>
-        Next, we train 3DGS avatar using the 2D synthetic dataset. 
-        The 3DGS avatar is an avatar model conditioned on a latent space, allowing disentangled control over attributes. <br>
-        Finally, PERSE avatar model enables attribute transfer from in-the-wild 2D images, 
-        making interpolation possible between the pretrained latent space and the in-the-wild attributes.
-      </h2>
-    </div>
-  </div>
-<!-- </div> -->
-</section>
-
-
-<!-- Video carousel -->
-<section class="hero is-small is-light">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3">Results</h2>
-
-      <h2 class="title is-4">Unseen Pose Rendering</h2>
-      <h2 class="subtitle is-max-desktop" style="margin-top: 20px;">
-        CAP4D generates realistic avatars from single reference images. The model can leverage additional available 
-        reference images and recover details and geometry that are not visible in the first view. This results in an 
-        overall improved reconstruction of the reference identity. We provide a side-by-side comparison with single image, few images
-        and many images below. The differences are subtle, however, notice freckles and birthmarks appearing with more reference 
-        images. 
-      </h2>
-
-      <div class="carousel-container" style="width: 75%; margin: 0 auto; text-align: center;">
-        <div id="results-carousel" class="carousel results-carousel">
-          
-
-          <div class="item item-video3">
-            <!-- <h2 class="title is-4" style="text-align: center;">Few images to avatar</h2> -->
-            <div class="container" style="text-align: center;">
-              <img src="comparisons/multiview/m01_ref.webp" alt="method figure" width="100%"/>
-              <h2 class="subtitle has-text-centered is-max-desktop" style="display: flex; justify-content: space-between; margin-top: 5px;">
-                <span style="flex: 1; text-align: center;">single reference <br>image</span>
-                <span style="flex: 1; text-align: center;">4 reference <br> images</span>
-                <span style="flex: 1; text-align: center;">64 reference <br> images</span>
-              </h2>
-              <hr style="border: none; height: 5px; background: transparent;">
-            </div>
-            <video poster="comparisons/multiview/m01_gen_processed_poster.webp" data-src="comparisons/multiview/m01_gen_processed.mp4" id="video28" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
-              <!-- Your video file here -->
-              <source 
-              type="video/mp4">
-            </video>
-            <h2 class="subtitle has-text-centered is-max-desktop"  style="margin-top: 5px;">
-              images generated with MMDM
-            </h2>
-            <hr style="border: none; height: 5px; background: transparent;">
-            <video poster="comparisons/multiview/m01_render_processed_poster.webp" data-src="comparisons/multiview/m01_render_processed.mp4" id="video29" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
-              <!-- Your video file here -->
-              <source 
-              type="video/mp4">
-            </video>
-            <h2 class="subtitle has-text-centered is-max-desktop"  style="margin-top: 5px;">
-              CAP4D avatar
-            </h2>
-          </div>
-
-
-
-          <div class="item item-video3">
-            <!-- <h2 class="title is-4" style="text-align: center;">Few images to avatar</h2> -->
-            <div class="container" style="text-align: center;">
-              <img src="comparisons/multiview/w01_ref.webp" alt="method figure" width="100%"/>
-              <h2 class="subtitle has-text-centered is-max-desktop" style="display: flex; justify-content: space-between; margin-top: 5px;">
-                <span style="flex: 1; text-align: center;">single reference <br>image</span>
-                <span style="flex: 1; text-align: center;">4 reference <br> images</span>
-                <span style="flex: 1; text-align: center;">64 reference <br> images</span>
-              </h2>
-              <hr style="border: none; height: 5px; background: transparent;">
-            </div>
-            <video poster="comparisons/multiview/w01_gen_processed_poster.webp" data-src="comparisons/multiview/w01_gen_processed.mp4" id="video30" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
-              <!-- Your video file here -->
-              <source 
-              type="video/mp4">
-            </video>
-            <h2 class="subtitle has-text-centered is-max-desktop"  style="margin-top: 5px;">
-              images generated with MMDM
-            </h2>
-            <hr style="border: none; height: 5px; background: transparent;">
-            <video poster="comparisons/multiview/w01_render_processed_poster.webp" data-src="comparisons/multiview/w01_render_processed.mp4" id="video31" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
-              <!-- Your video file here -->
-              <source 
-              type="video/mp4">
-            </video>
-            <h2 class="subtitle has-text-centered is-max-desktop"  style="margin-top: 5px;">
-              CAP4D avatar
-            </h2>
-          </div>
-
-
-
+    <!-- source code borrows from CAP4D -->
+    <!-- Teaser video-->
+    <section class="hero is-small">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <video
+            poster="static/images/teaser.webp"
+            id="video_teaser"
+            autoplay
+            muted
+            playsinline
+            loop
+            style="width: 100%; object-fit: cover"
+          >
+            <source src="static/images/teaser_pp.mp4" type="video/mp4" />
+          </video>
+          <h2 class="subtitle has-text-centered" style="margin-top: 5px">
+            TL;DR: Given a reference portrait image input, PERSE generates an
+            animatable 3D personalized avatar with disentangled and editable
+            control over various facial attributes.
+          </h2>
+          <!-- <div class="hero-body"> -->
         </div>
-        <!-- <h2 class="subtitle has-text-centered is-max-desktop">
+      </div>
+      <!-- </div> -->
+      <!-- </div> -->
+      <!-- </section> -->
+      <!-- End teaser video -->
+
+      <!-- Image carousel -->
+      <!-- <section class="hero is-small"> -->
+      <div class="hero-body">
+        <!-- <div class="container is-max-desktop"> </div> style="text-align: center;"> -->
+        <div class="container is-max-desktop">
+          <!-- Your image here -->
+          <!-- <h2 class="title is-3">Method Overview</h2> -->
+          <h2 class="title is-3" style="margin-bottom: -10px">Overview</h2>
+          <br />
+          <video
+            poster="static/images/overview.webp"
+            id="video_overview"
+            autoplay
+            muted
+            playsinline
+            loop
+            style="width: 100%; object-fit: cover"
+          >
+            <!-- Your video here -->
+            <source src="static/images/overview.mp4" type="video/mp4" />
+          </video>
+          <h2 class="subtitle is-max-desktop" style="margin-top: 10px">
+            <b>PERSE</b> consists of two main components and an application.<br />
+            First, we generates a 2D monocular synthetic dataset from a single
+            image using our video diffusion model named as
+            <b>portrait-CHAMP</b>. The synthetic dataset maintains the same
+            identity as the input image but is edited with different attributes,
+            forming a 2D monocular video with the same head pose and facial
+            expression. <br />
+            Next, we train 3DGS avatar using the 2D synthetic dataset. The 3DGS
+            avatar is an avatar model conditioned on a latent space, allowing
+            disentangled control over attributes. <br />
+            Finally, PERSE avatar model enables attribute transfer from
+            in-the-wild 2D images, making interpolation possible between the
+            pretrained latent space and the in-the-wild attributes.
+          </h2>
+        </div>
+      </div>
+      <!-- </div> -->
+    </section>
+
+    <!-- Video carousel -->
+    <section class="hero is-small is-light">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <h2 class="title is-3">Results</h2>
+
+          <h2 class="title is-4">Unseen Pose Rendering</h2>
+          <h2 class="subtitle is-max-desktop" style="margin-top: 20px">
+            We show rendering results of PERSE avatar model in unseen pose
+            rendering.
+          </h2>
+
+          <div
+            class="carousel-container"
+            style="width: 100%; margin: 0 auto; text-align: center"
+          >
+            <div id="results-carousel" class="carousel results-carousel">
+              <div class="item item-video3">
+                <div class="container" style="text-align: center">
+                  <img
+                    src="comparisons/multiview/m01_ref.webp"
+                    alt="method figure"
+                    width="100%"
+                  />
+                  <h2
+                    class="subtitle has-text-centered is-max-desktop"
+                    style="
+                      display: flex;
+                      justify-content: space-between;
+                      margin-top: 5px;
+                    "
+                  >
+                    <span style="flex: 1; text-align: center"
+                      >single reference <br />image</span
+                    >
+                    <span style="flex: 1; text-align: center"
+                      >4 reference <br />
+                      images</span
+                    >
+                    <span style="flex: 1; text-align: center"
+                      >64 reference <br />
+                      images</span
+                    >
+                  </h2>
+                  <hr
+                    style="border: none; height: 5px; background: transparent"
+                  />
+                </div>
+                <video
+                  poster="comparisons/multiview/m01_gen_processed_poster.webp"
+                  data-src="comparisons/multiview/m01_gen_processed.mp4"
+                  id="video28"
+                  autoplay
+                  muted
+                  playsinline
+                  loop
+                  width="100%"
+                  data-disable-autoplay="true"
+                >
+                  <!-- Your video file here -->
+                  <source type="video/mp4" />
+                </video>
+                <h2
+                  class="subtitle has-text-centered is-max-desktop"
+                  style="margin-top: 5px"
+                >
+                  images generated with MMDM
+                </h2>
+                <hr
+                  style="border: none; height: 5px; background: transparent"
+                />
+                <video
+                  poster="comparisons/multiview/m01_render_processed_poster.webp"
+                  data-src="comparisons/multiview/m01_render_processed.mp4"
+                  id="video29"
+                  autoplay
+                  muted
+                  playsinline
+                  loop
+                  width="100%"
+                  data-disable-autoplay="true"
+                >
+                  <!-- Your video file here -->
+                  <source type="video/mp4" />
+                </video>
+                <h2
+                  class="subtitle has-text-centered is-max-desktop"
+                  style="margin-top: 5px"
+                >
+                  CAP4D avatar
+                </h2>
+              </div>
+
+              <div class="item item-video3">
+                <!-- <h2 class="title is-4" style="text-align: center;">Few images to avatar</h2> -->
+                <div class="container" style="text-align: center">
+                  <img
+                    src="comparisons/multiview/w01_ref.webp"
+                    alt="method figure"
+                    width="100%"
+                  />
+                  <h2
+                    class="subtitle has-text-centered is-max-desktop"
+                    style="
+                      display: flex;
+                      justify-content: space-between;
+                      margin-top: 5px;
+                    "
+                  >
+                    <span style="flex: 1; text-align: center"
+                      >single reference <br />image</span
+                    >
+                    <span style="flex: 1; text-align: center"
+                      >4 reference <br />
+                      images</span
+                    >
+                    <span style="flex: 1; text-align: center"
+                      >64 reference <br />
+                      images</span
+                    >
+                  </h2>
+                  <hr
+                    style="border: none; height: 5px; background: transparent"
+                  />
+                </div>
+                <video
+                  poster="comparisons/multiview/w01_gen_processed_poster.webp"
+                  data-src="comparisons/multiview/w01_gen_processed.mp4"
+                  id="video30"
+                  autoplay
+                  muted
+                  playsinline
+                  loop
+                  width="100%"
+                  data-disable-autoplay="true"
+                >
+                  <!-- Your video file here -->
+                  <source type="video/mp4" />
+                </video>
+                <h2
+                  class="subtitle has-text-centered is-max-desktop"
+                  style="margin-top: 5px"
+                >
+                  images generated with MMDM
+                </h2>
+                <hr
+                  style="border: none; height: 5px; background: transparent"
+                />
+                <video
+                  poster="comparisons/multiview/w01_render_processed_poster.webp"
+                  data-src="comparisons/multiview/w01_render_processed.mp4"
+                  id="video31"
+                  autoplay
+                  muted
+                  playsinline
+                  loop
+                  width="100%"
+                  data-disable-autoplay="true"
+                >
+                  <!-- Your video file here -->
+                  <source type="video/mp4" />
+                </video>
+                <h2
+                  class="subtitle has-text-centered is-max-desktop"
+                  style="margin-top: 5px"
+                >
+                  CAP4D avatar
+                </h2>
+              </div>
+            </div>
+            <!-- <h2 class="subtitle has-text-centered is-max-desktop">
           Click on the arrows on the side to toggle between appearance changes.
         </h2> -->
+          </div>
+
+          <h2 class="title is-4">Interpolation Between Two Latent Codes</h2>
+
+          <h2 class="subtitle is-max-desktop" style="margin-top: 20px">
+            We show that PERSE avatar model's interpolated latent codes generate
+            realistic, high-quality avatars with smoothly interpolated
+            attributes.
+          </h2>
+          <!-- </br> -->
+
+          <!-- <div class="carousel-container" style="width: 120%; margin: 0 auto; text-align: center;"> -->
+          <div class="container">
+            <div id="results-carousel" class="carousel results-carousel">
+              <!-- Interpolating. -->
+              <!-- beard -->
+              <div class="item">
+                <h3 class="title is-5" style="text-align: center">Beard</h3>
+                <div class="container" style="text-align: center">
+                  <div class="columns is-vcentered interpolation-panel">
+                    <div class="column is-3 has-text-centered">
+                      <img
+                        src="./static/interpolation/beard/0043-51186.jpg"
+                        class="interpolation-image"
+                        alt="Interpolate start reference image."
+                      />
+                      <h2
+                        class="subtitle has-text-centered is-max-desktop"
+                        style="margin-top: 5px"
+                      >
+                        Beard A <br />
+                      </h2>
+                    </div>
+                    <div class="column interpolation-video-column">
+                      <div id="beard-image-wrapper">Loading...</div>
+                      <input
+                        class="slider is-fullwidth is-large is-info"
+                        id="beard-slider"
+                        step="1"
+                        min="0"
+                        max="100"
+                        value="0"
+                        type="range"
+                      />
+                    </div>
+                    <div class="column is-3 has-text-centered">
+                      <img
+                        src="./static/interpolation/beard/0052-51189.jpg"
+                        class="interpolation-image"
+                        alt="Interpolation end reference image."
+                      />
+                      <h2
+                        class="subtitle has-text-centered is-max-desktop"
+                        style="margin-top: 5px"
+                      >
+                        Beard B <br />
+                      </h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- hair -->
+              <div class="item">
+                <h3 class="title is-5" style="text-align: center">Hair</h3>
+                <div class="container" style="text-align: center">
+                  <div class="columns is-vcentered interpolation-panel">
+                    <div class="column is-3 has-text-centered">
+                      <img
+                        src="./static/interpolation/hair/0491-51342.jpg"
+                        class="interpolation-image"
+                        alt="Interpolate start reference image."
+                      />
+                      <h2
+                        class="subtitle has-text-centered is-max-desktop"
+                        style="margin-top: 5px"
+                      >
+                        Hair A <br />
+                      </h2>
+                    </div>
+                    <div class="column interpolation-video-column">
+                      <div id="hair-image-wrapper">Loading...</div>
+                      <input
+                        class="slider is-fullwidth is-large is-info"
+                        id="hair-slider"
+                        step="1"
+                        min="0"
+                        max="100"
+                        value="0"
+                        type="range"
+                      />
+                    </div>
+                    <div class="column is-3 has-text-centered">
+                      <img
+                        src="./static/interpolation/hair/0551-51345.jpg"
+                        class="interpolation-image"
+                        alt="Interpolation end reference image."
+                      />
+                      <h2
+                        class="subtitle has-text-centered is-max-desktop"
+                        style="margin-top: 5px"
+                      >
+                        Hair B <br />
+                      </h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- hat -->
+              <div class="item">
+                <h3 class="title is-5" style="text-align: center">Hat</h3>
+                <div class="container" style="text-align: center">
+                  <div class="columns is-vcentered interpolation-panel">
+                    <div class="column is-3 has-text-centered">
+                      <img
+                        src="./static/interpolation/hat/2733-51203.jpg"
+                        class="interpolation-image"
+                        alt="Interpolate start reference image."
+                      />
+                      <h2
+                        class="subtitle has-text-centered is-max-desktop"
+                        style="margin-top: 5px"
+                      >
+                        Hat A <br />
+                      </h2>
+                    </div>
+                    <div class="column interpolation-video-column">
+                      <div id="hat-image-wrapper">Loading...</div>
+                      <input
+                        class="slider is-fullwidth is-large is-info"
+                        id="hat-slider"
+                        step="1"
+                        min="0"
+                        max="100"
+                        value="0"
+                        type="range"
+                      />
+                    </div>
+                    <div class="column is-3 has-text-centered">
+                      <img
+                        src="./static/interpolation/hat/2696-51206.jpg"
+                        class="interpolation-image"
+                        alt="Interpolation end reference image."
+                      />
+                      <h2
+                        class="subtitle has-text-centered is-max-desktop"
+                        style="margin-top: 5px"
+                      >
+                        Hat B <br />
+                      </h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- eyebrows -->
+              <div class="item">
+                <h3 class="title is-5" style="text-align: center">Eyebrows</h3>
+                <div class="container" style="text-align: center">
+                  <div class="columns is-vcentered interpolation-panel">
+                    <div class="column is-3 has-text-centered">
+                      <img
+                        src="./static/interpolation/eyebrows/0271_eyebrows_medium-thick_flat_dark_brown_tapered_girl-56481.jpg"
+                        class="interpolation-image"
+                        alt="Interpolate start reference image."
+                      />
+                      <h2
+                        class="subtitle has-text-centered is-max-desktop"
+                        style="margin-top: 5px"
+                      >
+                        Eyebrows A <br />
+                      </h2>
+                    </div>
+                    <div class="column interpolation-video-column">
+                      <div id="eyebrows-image-wrapper">Loading...</div>
+                      <input
+                        class="slider is-fullwidth is-large is-info"
+                        id="eyebrows-slider"
+                        step="1"
+                        min="0"
+                        max="100"
+                        value="0"
+                        type="range"
+                      />
+                    </div>
+                    <div class="column is-3 has-text-centered">
+                      <img
+                        src="./static/interpolation/eyebrows/0274_eyebrows_thick_angled_brown_average_length_girl-56484.jpg"
+                        class="interpolation-image"
+                        alt="Interpolation end reference image."
+                      />
+                      <h2
+                        class="subtitle has-text-centered is-max-desktop"
+                        style="margin-top: 5px"
+                      >
+                        Eyebrows B <br />
+                      </h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- mouth -->
+              <div class="item">
+                <h3 class="title is-5" style="text-align: center">Mouth</h3>
+                <div class="container" style="text-align: center">
+                  <div class="columns is-vcentered interpolation-panel">
+                    <div class="column is-3 has-text-centered">
+                      <img
+                        src="./static/interpolation/mouth/2902_mouth_large_thin_lips_red_lips_a_crooked_smile_girl-56491.jpg"
+                        class="interpolation-image"
+                        alt="Interpolate start reference image."
+                      />
+                      <h2
+                        class="subtitle has-text-centered is-max-desktop"
+                        style="margin-top: 5px"
+                      >
+                        Mouth A <br />
+                      </h2>
+                    </div>
+                    <div class="column interpolation-video-column">
+                      <div id="mouth-image-wrapper">Loading...</div>
+                      <input
+                        class="slider is-fullwidth is-large is-info"
+                        id="mouth-slider"
+                        step="1"
+                        min="0"
+                        max="100"
+                        value="0"
+                        type="range"
+                      />
+                    </div>
+                    <div class="column is-3 has-text-centered">
+                      <img
+                        src="./static/interpolation/mouth/2904_mouth_wide_full_lips_dark_lips_a_closed_smile_girl-56494.jpg"
+                        class="interpolation-image"
+                        alt="Interpolation end reference image."
+                      />
+                      <h2
+                        class="subtitle has-text-centered is-max-desktop"
+                        style="margin-top: 5px"
+                      >
+                        Mouth B <br />
+                      </h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h2 class="title is-4">
+            Facial Attribute Transfer From In-The-Wild Image
+          </h2>
+
+          <h2 class="subtitle is-max-desktop" style="margin-top: 20px">
+            We present the results of transferring facial attributes from
+            in-the-wild images. As shown here, the transferred attributes are
+            well rigged to the avatar and are capable of rendering novel poses.
+          </h2>
+        </div>
       </div>
 
-      <h2 class="title is-4">Interpolation Between Two Latent Codes</h2>
+      <!-- </div> -->
+      <!-- </div> -->
+    </section>
 
-      <h2 class="subtitle is-max-desktop" style="margin-top: 20px;">
-        We show that PERSE avatar model's interpolated latent codes generate realistic, high-quality avatars with smoothly interpolated attributes.
-      </h2>
-      </br>
+    <!--BibTex citation -->
+    <section class="section" id="BibTeX">
+      <div class="container is-max-desktop content">
+        <h2 class="title">BibTeX</h2>
+        <pre><code>Coming Soon!</code></pre>
+      </div>
+    </section>
+    <!--End BibTex citation -->
 
-      <!-- <div class="carousel-container" style="width: 120%; margin: 0 auto; text-align: center;"> -->
+    <footer class="footer">
       <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-
-      <!-- Interpolating. -->  
-      <!-- beard -->
-      <div class="item">
-        <h3 class="title is-5" style="text-align: center;">Beard</h3>
-        <div class="container" style="text-align: center;">
-          <div class="columns is-vcentered interpolation-panel">
-            <div class="column is-3 has-text-centered">
-              <img src="./static/interpolation/beard/0043-51186.jpg"
-                class="interpolation-image"
-                alt="Interpolate start reference image."/>
-              <h2 class="subtitle has-text-centered is-max-desktop" style="margin-top: 5px;">
-                Beard A <br>
-              </h2>
-            </div>
-            <div class="column interpolation-video-column">
-              <div id="beard-image-wrapper">
-                Loading...
-              </div>
-              <input class="slider is-fullwidth is-large is-info"
-                id="beard-slider"
-                step="1" min="0" max="100" value="0" type="range">
-            </div>
-            <div class="column is-3 has-text-centered">
-              <img src="./static/interpolation/beard/0052-51189.jpg"
-                class="interpolation-image"
-                alt="Interpolation end reference image."/>
-              <h2 class="subtitle has-text-centered is-max-desktop" style="margin-top: 5px;">
-                Beard B <br>
-              </h2>
+        <div class="columns is-centered">
+          <div class="column is-8">
+            <div class="content">
+              <p>
+                This page was built using the
+                <a
+                  href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                  target="_blank"
+                  >Academic Project Page Template</a
+                >
+                which was adopted from the <a
+                  href="https://nerfies.github.io"
+                  target="_blank"
+                  >Nerfies</a
+                > project page. Also, this page is inspired by and borrows
+                content the
+                <a href="https://felixtaubner.github.io/cap4d/" target="_blank"
+                  >CAP4D</a
+                >
+                project page. Thank you for sharing source codes. <br />
+                This website is licensed under a
+                <a
+                  rel="license"
+                  href="http://creativecommons.org/licenses/by-sa/4.0/"
+                  target="_blank"
+                  >Creative Commons Attribution-ShareAlike 4.0 International
+                  License</a
+                >.
+              </p>
             </div>
           </div>
         </div>
       </div>
-      
-      <!-- hair -->
-      <div class="item">
-        <h3 class="title is-5" style="text-align: center;">Hair</h3>
-        <div class="container" style="text-align: center;">
-          <div class="columns is-vcentered interpolation-panel">
-            <div class="column is-3 has-text-centered">
-              <img src="./static/interpolation/hair/0491-51342.jpg"
-                class="interpolation-image"
-                alt="Interpolate start reference image."/>
-              <h2 class="subtitle has-text-centered is-max-desktop" style="margin-top: 5px;">
-                Hair A <br>
-              </h2>
-            </div>
-            <div class="column interpolation-video-column">
-              <div id="hair-image-wrapper">
-                Loading...
-              </div>
-              <input class="slider is-fullwidth is-large is-info"
-                id="hair-slider"
-                step="1" min="0" max="100" value="0" type="range">
-            </div>
-            <div class="column is-3 has-text-centered">
-              <img src="./static/interpolation/hair/0551-51345.jpg"
-                class="interpolation-image"
-                alt="Interpolation end reference image."/>
-              <h2 class="subtitle has-text-centered is-max-desktop" style="margin-top: 5px;">
-                Hair B <br>
-              </h2>
-            </div>
-          </div>
-        </div>
-      </div>
+      <!-- </div> -->
+    </footer>
+    <!-- Statcounter tracking code -->
 
-      <!-- hat -->
-      <div class="item">
-        <h3 class="title is-5" style="text-align: center;">Hat</h3>
-        <div class="container" style="text-align: center;">
-          <div class="columns is-vcentered interpolation-panel">
-            <div class="column is-3 has-text-centered">
-              <img src="./static/interpolation/hat/2733-51203.jpg"
-                class="interpolation-image"
-                alt="Interpolate start reference image."/>
-              <h2 class="subtitle has-text-centered is-max-desktop" style="margin-top: 5px;">
-                Hat A <br>
-              </h2>
-            </div>
-            <div class="column interpolation-video-column">
-              <div id="hat-image-wrapper">
-                Loading...
-              </div>
-              <input class="slider is-fullwidth is-large is-info"
-                id="hat-slider"
-                step="1" min="0" max="100" value="0" type="range">
-            </div>
-            <div class="column is-3 has-text-centered">
-              <img src="./static/interpolation/hat/2696-51206.jpg"
-                class="interpolation-image"
-                alt="Interpolation end reference image."/>
-              <h2 class="subtitle has-text-centered is-max-desktop" style="margin-top: 5px;">
-                Hat B <br>
-              </h2>
-            </div>
-          </div>
-        </div>
-      </div>
-
-        
-      <!-- eyebrows -->
-      <div class="item">
-        <h3 class="title is-5" style="text-align: center;">Eyebrows</h3>
-        <div class="container" style="text-align: center;">
-          <div class="columns is-vcentered interpolation-panel">
-            <div class="column is-3 has-text-centered">
-              <img src="./static/interpolation/eyebrows/0271_eyebrows_medium-thick_flat_dark_brown_tapered_girl-56481.jpg"
-                class="interpolation-image"
-                alt="Interpolate start reference image."/>
-              <h2 class="subtitle has-text-centered is-max-desktop" style="margin-top: 5px;">
-                Eyebrows A <br>
-              </h2>
-            </div>
-            <div class="column interpolation-video-column">
-              <div id="eyebrows-image-wrapper">
-                Loading...
-              </div>
-              <input class="slider is-fullwidth is-large is-info"
-                id="eyebrows-slider"
-                step="1" min="0" max="100" value="0" type="range">
-            </div>
-            <div class="column is-3 has-text-centered">
-              <img src="./static/interpolation/eyebrows/0274_eyebrows_thick_angled_brown_average_length_girl-56484.jpg"
-                class="interpolation-image"
-                alt="Interpolation end reference image."/>
-              <h2 class="subtitle has-text-centered is-max-desktop" style="margin-top: 5px;">
-                Eyebrows B <br>
-              </h2>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- mouth -->
-      <div class="item">
-        <h3 class="title is-5" style="text-align: center;">Mouth</h3>
-        <div class="container" style="text-align: center;">
-          <div class="columns is-vcentered interpolation-panel">
-            <div class="column is-3 has-text-centered">
-              <img src="./static/interpolation/mouth/2902_mouth_large_thin_lips_red_lips_a_crooked_smile_girl-56491.jpg"
-                class="interpolation-image"
-                alt="Interpolate start reference image."/>
-              <h2 class="subtitle has-text-centered is-max-desktop" style="margin-top: 5px;">
-                Mouth A <br>
-              </h2>
-            </div>
-            <div class="column interpolation-video-column">
-              <div id="mouth-image-wrapper">
-                Loading...
-              </div>
-              <input class="slider is-fullwidth is-large is-info"
-                id="mouth-slider"
-                step="1" min="0" max="100" value="0" type="range">
-            </div>
-            <div class="column is-3 has-text-centered">
-              <img src="./static/interpolation/mouth/2904_mouth_wide_full_lips_dark_lips_a_closed_smile_girl-56494.jpg"
-                class="interpolation-image"
-                alt="Interpolation end reference image."/>
-              <h2 class="subtitle has-text-centered is-max-desktop" style="margin-top: 5px;">
-                Mouth B <br>
-              </h2>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      </div>
-    </div>
-        <!--/ Interpolating. -->
-    </div>
-  </div>
-</section>
-
-
-
-<!--BibTex citation -->
-  <section class="section" id="BibTeX">
-    <div class="container is-max-desktop content">
-      <h2 class="title">BibTeX</h2>
-      <pre><code>Coming Soon!</code></pre>
-    </div>
-</section>
-<!--End BibTex citation -->
-
-  <footer class="footer">
-  <div class="container">
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
-
-          <p>
-            This page was built using 
-            the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
-            Also, this page is inspired by and borrows content
-            the <a href="https://felixtaubner.github.io/cap4d/" target="_blank">CAP4D</a> project page.
-            Thank you for sharing source codes.
-            <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<!-- Statcounter tracking code -->
-  
-<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+    <!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
 
     <!-- End of Statcounter Code -->
-
   </body>
-  </html>
+</html>
