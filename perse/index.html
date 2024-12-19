@@ -271,181 +271,102 @@
     </section>
 
     <!-- Video carousel -->
-    <section class="hero is-small is-light">
+    <section class="hero is-small">
+      <!-- <section class="hero is-small is-light"> -->
       <div class="hero-body">
         <div class="container is-max-desktop">
           <h2 class="title is-3">Results</h2>
 
-          <h2 class="title is-4">Unseen Pose Rendering</h2>
+          <h2 class="title is-4" style="margin-top: 20px">Synthetic Dataset</h2>
+
+          <video
+            poster="static/images/synthetic_dataset.webp"
+            id="video_synthetic_dataset"
+            autoplay
+            muted
+            playsinline
+            loop
+            style="width: 100%; object-fit: cover"
+          >
+            <!-- Your video here -->
+            <source
+              src="static/images/synthetic_dataset.mp4"
+              type="video/mp4"
+            />
+          </video>
+
+          <h2 class="subtitle is-max-desktop" style="margin-top: 20px">
+            We generate synthetic dataset consisting of almost a thousand
+            attribute-edited videos using our methods for attribute-edited
+            portrait image generation and animated portrait video generation by
+            portrait-CHAMP
+          </h2>
+
+          <h2 class="title is-4" style="margin-top: 40px">Unseen Pose Rendering</h2>
           <h2 class="subtitle is-max-desktop" style="margin-top: 20px">
             We show rendering results of PERSE avatar model in unseen pose
             rendering.
           </h2>
-
-          <div
-            class="carousel-container"
-            style="width: 100%; margin: 0 auto; text-align: center"
-          >
-            <div id="results-carousel" class="carousel results-carousel">
-              <div class="item item-video3">
-                <div class="container" style="text-align: center">
-                  <img
-                    src="comparisons/multiview/m01_ref.webp"
-                    alt="method figure"
-                    width="100%"
-                  />
-                  <h2
-                    class="subtitle has-text-centered is-max-desktop"
-                    style="
-                      display: flex;
-                      justify-content: space-between;
-                      margin-top: 5px;
-                    "
-                  >
-                    <span style="flex: 1; text-align: center"
-                      >single reference <br />image</span
-                    >
-                    <span style="flex: 1; text-align: center"
-                      >4 reference <br />
-                      images</span
-                    >
-                    <span style="flex: 1; text-align: center"
-                      >64 reference <br />
-                      images</span
-                    >
-                  </h2>
-                  <hr
-                    style="border: none; height: 5px; background: transparent"
-                  />
-                </div>
-                <video
-                  poster="comparisons/multiview/m01_gen_processed_poster.webp"
-                  data-src="comparisons/multiview/m01_gen_processed.mp4"
-                  id="video28"
-                  autoplay
-                  muted
-                  playsinline
-                  loop
-                  width="100%"
-                  data-disable-autoplay="true"
-                >
-                  <!-- Your video file here -->
-                  <source type="video/mp4" />
-                </video>
-                <h2
-                  class="subtitle has-text-centered is-max-desktop"
-                  style="margin-top: 5px"
-                >
-                  images generated with MMDM
-                </h2>
-                <hr
-                  style="border: none; height: 5px; background: transparent"
+          <div id="results-carousel" class="carousel results-carousel">
+            <div class="item item-video3">
+              <video
+                poster="static/images/result_unseen1.webp"
+                id="video_unseen1"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/result_unseen1.mp4"
+                  type="video/mp4"
                 />
-                <video
-                  poster="comparisons/multiview/m01_render_processed_poster.webp"
-                  data-src="comparisons/multiview/m01_render_processed.mp4"
-                  id="video29"
-                  autoplay
-                  muted
-                  playsinline
-                  loop
-                  width="100%"
-                  data-disable-autoplay="true"
-                >
-                  <!-- Your video file here -->
-                  <source type="video/mp4" />
-                </video>
-                <h2
-                  class="subtitle has-text-centered is-max-desktop"
-                  style="margin-top: 5px"
-                >
-                  CAP4D avatar
-                </h2>
-              </div>
-
-              <div class="item item-video3">
-                <!-- <h2 class="title is-4" style="text-align: center;">Few images to avatar</h2> -->
-                <div class="container" style="text-align: center">
-                  <img
-                    src="comparisons/multiview/w01_ref.webp"
-                    alt="method figure"
-                    width="100%"
-                  />
-                  <h2
-                    class="subtitle has-text-centered is-max-desktop"
-                    style="
-                      display: flex;
-                      justify-content: space-between;
-                      margin-top: 5px;
-                    "
-                  >
-                    <span style="flex: 1; text-align: center"
-                      >single reference <br />image</span
-                    >
-                    <span style="flex: 1; text-align: center"
-                      >4 reference <br />
-                      images</span
-                    >
-                    <span style="flex: 1; text-align: center"
-                      >64 reference <br />
-                      images</span
-                    >
-                  </h2>
-                  <hr
-                    style="border: none; height: 5px; background: transparent"
-                  />
-                </div>
-                <video
-                  poster="comparisons/multiview/w01_gen_processed_poster.webp"
-                  data-src="comparisons/multiview/w01_gen_processed.mp4"
-                  id="video30"
-                  autoplay
-                  muted
-                  playsinline
-                  loop
-                  width="100%"
-                  data-disable-autoplay="true"
-                >
-                  <!-- Your video file here -->
-                  <source type="video/mp4" />
-                </video>
-                <h2
-                  class="subtitle has-text-centered is-max-desktop"
-                  style="margin-top: 5px"
-                >
-                  images generated with MMDM
-                </h2>
-                <hr
-                  style="border: none; height: 5px; background: transparent"
-                />
-                <video
-                  poster="comparisons/multiview/w01_render_processed_poster.webp"
-                  data-src="comparisons/multiview/w01_render_processed.mp4"
-                  id="video31"
-                  autoplay
-                  muted
-                  playsinline
-                  loop
-                  width="100%"
-                  data-disable-autoplay="true"
-                >
-                  <!-- Your video file here -->
-                  <source type="video/mp4" />
-                </video>
-                <h2
-                  class="subtitle has-text-centered is-max-desktop"
-                  style="margin-top: 5px"
-                >
-                  CAP4D avatar
-                </h2>
-              </div>
+              </video>
             </div>
-            <!-- <h2 class="subtitle has-text-centered is-max-desktop">
-          Click on the arrows on the side to toggle between appearance changes.
-        </h2> -->
+            <div class="item item-video3">
+              <video
+                poster="static/images/result_unseen2.webp"
+                id="video_unseen2"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/result_unseen2.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video
+                poster="static/images/result_unseen3.webp"
+                id="video_unseen3"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/result_unseen3.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
           </div>
 
-          <h2 class="title is-4">Interpolation Between Two Latent Codes</h2>
+          <h2 class="title is-4" style="margin-top: 40px">
+            Interpolation Between Two Latent Codes
+          </h2>
 
           <h2 class="subtitle is-max-desktop" style="margin-top: 20px">
             We show that PERSE avatar model's interpolated latent codes generate
@@ -695,7 +616,7 @@
             </div>
           </div>
 
-          <h2 class="title is-4">
+          <h2 class="title is-4" style="margin-top: 40px">
             Facial Attribute Transfer From In-The-Wild Image
           </h2>
 
@@ -704,6 +625,77 @@
             in-the-wild images. As shown here, the transferred attributes are
             well rigged to the avatar and are capable of rendering novel poses.
           </h2>
+
+          <h3 class="title is-5" style="margin-top: 40px">
+            Transferred Rendering in Unseen Pose
+          </h3>
+
+          <video
+            poster="static/images/transfer_unseen.webp"
+            id="video_transfer_unseeen"
+            autoplay
+            muted
+            playsinline
+            loop
+            style="width: 100%; object-fit: cover"
+          >
+            <!-- Your video here -->
+            <source src="static/images/transfer_unseen.mp4" type="video/mp4" />
+          </video>
+
+          <h2 class="subtitle is-max-desktop" style="margin-top: 20px">
+            We present the results of transferring facial attributes from in-the-wild images.
+          </h2>
+
+          <h3 class="title is-5" style="margin-top: 40px">
+            Interpolation Between Pretrained Latent Code and Novel Latent Code
+          </h3>
+
+          <div class="columns is-vcentered interpolation-panel">
+            <div class="column is-3 has-text-centered">
+              <img
+                src="./static/images/interpolation/transfer1/0004_hair_bangs_black_youngman_hyunsoo_img_6948-51686.jpg"
+                class="interpolation-image"
+                alt="Interpolate start reference image."
+              />
+              <h2
+                class="subtitle has-text-centered is-max-desktop"
+                style="margin-top: 5px"
+              >
+                In-The-Wild Image <br />
+              </h2>
+            </div>
+            <div class="column interpolation-video-column">
+              <div id="transfer-image-wrapper">Loading...</div>
+              <input
+                class="slider is-fullwidth is-large is-info"
+                id="transfer-slider"
+                step="1"
+                min="0"
+                max="100"
+                value="0"
+                type="range"
+              />
+            </div>
+            <div class="column is-3 has-text-centered">
+              <img
+                src="./static/images/interpolation/transfer1/0897_0001-56188.jpg"
+                class="interpolation-image"
+                alt="Interpolation end reference image."
+              />
+              <h2
+                class="subtitle has-text-centered is-max-desktop"
+                style="margin-top: 5px"
+              >
+                Latent Space Sample Image <br />
+              </h2>
+            </div>
+          </div>
+
+          <h2 class="subtitle is-max-desktop" style="margin-top: 10px">
+            We demonstrate that interpolation between the transferred attribute also produces natural, high-quality avatars.
+          </h2>
+
         </div>
       </div>
 

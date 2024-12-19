@@ -1,7 +1,14 @@
 window.HELP_IMPROVE_VIDEOJS = false;
 
-// var INTERP_BASE = "./static/interpolation/stacked";
-var NUM_INTERP_FRAMES = 20;
+// SHOULD CHECK KEYS FOR NUM_INTERP_FRAMES, INTERP_BASES, interp_images
+var NUM_INTERP_FRAMES = {
+  beard: 20,
+  hair: 20,
+  hat: 20,
+  eyebrows: 20,
+  mouth: 20,
+  transfer: 30,
+};
 
 var INTERP_BASES = {
   beard: "./static/images/interpolation/beard/stacked",
@@ -9,7 +16,7 @@ var INTERP_BASES = {
   hat: "./static/images/interpolation/hat/stacked",
   eyebrows: "./static/images/interpolation/eyebrows/stacked",
   mouth: "./static/images/interpolation/mouth/stacked",
-  transfer_1: "./static/images/interpolation/transfer_1/stacked",
+  transfer: "./static/images/interpolation/transfer1/stacked",
 };
 
 var interp_images = {
@@ -18,11 +25,12 @@ var interp_images = {
   hat: [],
   eyebrows: [],
   mouth: [],
+  transfer: [],
 };
 
 // 이미지 프리로드 함수
 function preloadInterpolationImages(attribute) {
-  for (var i = 0; i < NUM_INTERP_FRAMES; i++) {
+  for (var i = 0; i < NUM_INTERP_FRAMES[attribute]; i++) {
     var path =
       INTERP_BASES[attribute] + "/" + String(i).padStart(4, "0") + ".jpg";
     interp_images[attribute][i] = new Image();
@@ -83,7 +91,7 @@ $(document).ready(function () {
     $("#" + attribute + "-slider").on("input", function (event) {
       setInterpolationImage(attribute, this.value);
     });
-    $("#" + attribute + "-slider").prop("max", NUM_INTERP_FRAMES - 1);
+    $("#" + attribute + "-slider").prop("max", NUM_INTERP_FRAMES[attribute] - 1);
   });
 
   // preloadInterpolationImages();
