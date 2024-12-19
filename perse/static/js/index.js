@@ -5,8 +5,8 @@ var NUM_INTERP_FRAMES = {
   beard: 20,
   hair: 20,
   hat: 20,
-  eyebrows: 20,
-  mouth: 20,
+  eyebrows: 40,
+  mouth: 40,
   transfer: 30,
 };
 
