@@ -303,10 +303,7 @@
           </h2>
 
           <h2 class="title is-4" style="margin-top: 40px">Unseen Pose Rendering</h2>
-          <h2 class="subtitle is-max-desktop" style="margin-top: 20px">
-            We show rendering results of PERSE avatar model in unseen pose
-            rendering.
-          </h2>
+          
           <div id="results-carousel" class="carousel results-carousel">
             <div class="item item-video3">
               <video
@@ -364,16 +361,14 @@
             </div>
           </div>
 
+          <h2 class="subtitle is-max-desktop" style="margin-top: 20px">
+            We show rendering results of PERSE avatar model in unseen pose
+            rendering.
+          </h2>
+
           <h2 class="title is-4" style="margin-top: 40px">
             Interpolation Between Two Latent Codes
           </h2>
-
-          <h2 class="subtitle is-max-desktop" style="margin-top: 20px">
-            We show that PERSE avatar model's interpolated latent codes generate
-            realistic, high-quality avatars with smoothly interpolated
-            attributes.
-          </h2>
-          <!-- </br> -->
 
           <!-- <div class="carousel-container" style="width: 120%; margin: 0 auto; text-align: center;"> -->
           <div class="container">
@@ -615,6 +610,25 @@
               </div>
             </div>
           </div>
+
+          <video
+            poster="static/images/interpolation_rendering.webp"
+            id="video_interpolation_rendering"
+            autoplay
+            muted
+            playsinline
+            loop
+            style="width: 100%; object-fit: cover"
+          >
+            <!-- Your video here -->
+            <source src="static/images/interpolation_rendering.mp4" type="video/mp4" />
+          </video>
+
+          <h2 class="subtitle is-max-desktop" style="margin-top: 20px">
+            We show that PERSE avatar model's interpolated latent codes generate
+            realistic, high-quality avatars with smoothly interpolated
+            attributes.
+          </h2>
 
           <h2 class="title is-4" style="margin-top: 40px">
             Facial Attribute Transfer from In-The-Wild Image
