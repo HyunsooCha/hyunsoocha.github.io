@@ -76,12 +76,39 @@ $(document).ready(function () {
     slidesToShow: 1,
     loop: true,
     infinite: true,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 10000,
   };
 
   // Initialize all div with carousel class
   var carousels = bulmaCarousel.attach(".carousel", options);
+
+  // Prevent dragging the background (except for arrows and sliders)
+  $(".carousel").on("mousedown", function (event) {
+    if (
+      !$(event.target).closest(".carousel-navigation").length && // 화살표 버튼
+      !$(event.target).closest("input.slider").length // 슬라이더
+    ) {
+      event.preventDefault(); // 기본 드래그 방지
+    }
+  });
+
+  // Prevent sliding while dragging the slider
+  let isDraggingSlider = false;
+
+  $("input.slider").on("mousedown", function () {
+    isDraggingSlider = true; // 슬라이더 드래그 시작
+  });
+
+  $(document).on("mouseup", function () {
+    isDraggingSlider = false; // 슬라이더 드래그 종료
+  });
+
+  $(".carousel").on("mousemove", function (event) {
+    if (isDraggingSlider) {
+      event.stopPropagation(); // 슬라이더 드래그 중에는 슬라이드 이벤트 차단
+    }
+  });
 
   // 속성별 이미지 프리로드
   Object.keys(INTERP_BASES).forEach(function (attribute) {
