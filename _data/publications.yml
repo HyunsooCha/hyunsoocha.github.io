@@ -1,18 +1,18 @@
-# - id: perse
-#   title: "PERSE: Personalized 3D Generative Avatars from A Single Portrait"
-#   venue: ArXiv, 2024
-#   description: "A method for building an animatable personalized generative avatar from a reference portrait."
-#   project_page: https://hyunsoocha.github.io/perse
-#   github: snuvclab/perse
-#   arxiv: 
-#   image: perse_before.jpg
-#   image_mouseover: perse_after.mp4
-#   authors:
-#     - hyunsoo
-#     - inhee
-#     - hanbyul
-#   # awards:
-#   #   - "Oral Presentation"
+- id: perse
+  title: "PERSE: Personalized 3D Generative Avatars from A Single Portrait"
+  venue: ArXiv, 2024
+  description: "A method for building an animatable personalized generative avatar from a reference portrait."
+  project_page: https://hyunsoocha.github.io/perse
+  github: snuvclab/perse
+  arxiv: 2412.21206
+  image: perse_before.jpg
+  image_mouseover: perse_after.mp4
+  authors:
+    - hyunsoo
+    - inhee
+    - hanbyul
+  # awards:
+  #   - "Oral Presentation"
 
 - id: pegasus
   title: "PEGASUS: Personalized Generative 3D Avatars with Composable Attributes"
