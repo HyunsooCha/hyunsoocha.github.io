@@ -1,3 +1,17 @@
+- id: durian
+  title: "Durian: Dual Reference-guided Portrait Animation with Attribute Transfer"
+  venue: ArXiv, 2025
+  description: "The first method for generating portrait animation videos with facial attribute transfer from a given reference image to a target portrait in a zero-shot manner."
+  project_page: https://hyunsoocha.github.io/durian
+  github: snuvclab/durian
+  arxiv: 2509.04434
+  image: durian.jpeg
+  image_mouseover: durian.m4v
+  authors:
+    - hyunsoo
+    - byungjun
+    - hanbyul
+
 - id: perse
   title: "PERSE: Personalized 3D Generative Avatars from A Single Portrait"
   venue: CVPR, 2025
@@ -6,7 +20,7 @@
   github: snuvclab/perse
   arxiv: 2412.21206
   image: perse.webp
-  image_mouseover: perse.mp4
+  image_mouseover: perse.mp4      # 1060x700
   authors:
     - hyunsoo
     - inhee
