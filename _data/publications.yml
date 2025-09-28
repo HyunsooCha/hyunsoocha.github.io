@@ -1,7 +1,7 @@
 - id: durian
-  title: "Durian: Dual Reference-guided Portrait Animation with Attribute Transfer"
+  title: "Durian: Dual Reference Image-Guided Portrait Animation with Attribute Transfer"
   venue: ArXiv, 2025
-  description: "The first method for generating portrait animation videos with facial attribute transfer from a given reference image to a target portrait in a zero-shot manner."
+  description: "Given a portrait and one or more reference images specifying target attributes, Durian generates a portrait animation with attribute transfer in a single-stage pipeline."
   project_page: https://hyunsoocha.github.io/durian
   github: snuvclab/durian
   arxiv: 2509.04434
