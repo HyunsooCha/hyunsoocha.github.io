@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+    <!-- Replace the content tag with appropriate information -->
+    <meta name="description" content="DESCRIPTION META TAG" />
+    <meta
+      property="og:title"
+      content="Vanast: Virtual Try-On with Human Image Animation via Synthetic Triplet Supervision"
+    />
+    <meta
+      property="og:description"
+      content="Given a human image and one or more garment images, our method generates virtual try-on with human image animation conditioned on a pose video while preserving identity."
+    />
+    <meta property="og:url" content="https://hyunsoocha.github.io/vanast/" />
+    <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+    <meta property="og:image" content="static/image/banner_image.jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta
+      name="twitter:title"
+      content="Vanast: Virtual Try-On with Human Image Animation via Synthetic Triplet Supervision"
+    />
+    <meta
+      name="twitter:description"
+      content="Given a human image and one or more garment images, our method generates virtual try-on with human image animation conditioned on a pose video while preserving identity."
+    />
+    <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+    <meta name="twitter:image" content="static/images/banner_image.jpeg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <!-- Keywords for your paper to be indexed by-->
+    <meta name="keywords" content="3D " />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>
+      Vanast: Virtual Try-On with Human Image Animation via Synthetic Triplet Supervision
+    </title>
+    <link rel="icon" type="image/x-icon" href="./images/hs_logo.ico" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="static/css/bulma.min.css" />
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css" />
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css" />
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css"
+    />
+    <link rel="stylesheet" href="static/css/index.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+    <script defer src="static/js/fontawesome.all.min.js"></script>
+    <script src="static/js/bulma-carousel.min.js"></script>
+    <script src="static/js/bulma-slider.min.js"></script>
+    <script src="static/js/index.js"></script>
+  </head>
+  <body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a
+          role="button"
+          class="navbar-burger"
+          aria-label="menu"
+          aria-expanded="false"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-start" style="flex-grow: 1; justify-content: center">
+          <a class="navbar-item" href="https://hyunsoocha.github.io/">
+            <span class="icon">
+              <i class="fas fa-home"></i>
+            </span>
+          </a>
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link"> More Research </a>
+            <div class="navbar-dropdown">
+              <a class="navbar-item" href="https://hyunsoocha.github.io/vanast">
+                Vanast
+              </a>
+              <a class="navbar-item" href="https://hyunsoocha.github.io/durian">
+                Durian
+              </a>
+              <a class="navbar-item" href="https://hyunsoocha.github.io/perse">
+                PERSE
+              </a>
+              <a
+                class="navbar-item"
+                href="https://hyunsoocha.github.io/pegasus/"
+              >
+                PEGASUS
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- </div> -->
+    </nav>
+
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 class="title is-1 publication-title">
+                Vanast: Virtual Try-On with Human Image Animation via Synthetic Triplet Supervision
+              </h1>
+              <div class="is-size-5 publication-authors">
+                <!-- Paper authors -->
+                <span class="author-block">
+                  <a href="https://hyunsoocha.github.io/" target="_blank"
+                    >Hyunsoo Cha</a
+                  >,</span
+                >
+                <span class="author-block">
+                  <a href="https://wonjungwoo.github.io/" target="_blank"
+                    >Wonjung Woo</a
+                  >,</span
+                >
+                <span class="author-block">
+                  <a href="https://bjkim95.github.io/" target="_blank"
+                    >Byungjun Kim</a
+                  >,</span
+                >
+                <span class="author-block">
+                  <a href="https://jhugestar.github.io/" target="_blank"
+                    >Hanbyul Joo</a
+                  >
+                </span>
+              </div>
+
+              <div class="is-size-5 publication-authors">
+                <span class="author-block"
+                  >Seoul National University<br>ArXiv 2025<br />
+                </span>
+              </div>
+
+              <div class="column has-text-centered">
+                <div class="publication-links">
+                  <!-- Arxiv PDF link -->
+                  <span class="link-block">
+                    <a
+                      href="https://arxiv.org/pdf/2509.04434.pdf"
+                      target="_blank"
+                      class="external-link button is-normal is-rounded is-dark"
+                    >
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Paper</span>
+                    </a>
+                  </span>
+
+                  <!-- ArXiv abstract Link -->
+                  <span class="link-block">
+                    <a
+                      href="https://arxiv.org/abs/2509.04434"
+                      target="_blank"
+                      class="external-link button is-normal is-rounded is-dark"
+                    >
+                      <span class="icon">
+                        <i class="ai ai-arxiv"></i>
+                      </span>
+                      <span>arXiv</span>
+                    </a>
+                  </span>
+
+                  <!-- YouTube link -->
+                  <!-- <span class="link-block">
+                    <a
+                      href="https://youtu.be/zX881Zx03o4"
+                      target="_blank"
+                      class="external-link button is-normal is-rounded is-dark"
+                    >
+                      <span class="icon">
+                        <i class="fab fa-youtube"></i>
+                      </span>
+                      <span>Video</span>
+                    </a>
+                  </span> -->
+
+                  <!-- GitHub link -->
+                  <span class="link-block">
+                    <a
+                      href="https://github.com/snuvclab/vanast"
+                      target="_blank"
+                      class="external-link button is-normal is-rounded is-dark"
+                    >
+                      <span class="icon">
+                        <i class="fab fa-github"></i>
+                      </span>
+                      <span>Code</span>
+                    </a>
+                  </span>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- source code borrows from CAP4D -->
+    <!-- Teaser video-->
+    <section class="hero is-small">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <video
+            poster="static/images/teaser/teaser.001.jpeg"
+            id="video_teaser"
+            autoplay
+            muted
+            playsinline
+            loop
+            style="width: 100%; object-fit: cover"
+          >
+            <source src="static/images/teaser/teaser.m4v" type="video/mp4" />
+          </video>
+          <h2 class="subtitle has-text-centered" style="margin-top: 5px">
+            TL;DR: Given a human image and one or more garment images, 
+            our method generates virtual try-on with human image animation
+            conditioned on a pose video while preserving identity.
+          </h2>
+          <!-- <div class="hero-body"> -->
+        </div>
+      </div>
+      </div>
+
+      <!-- </div> -->
+    </section>
+
+    <!-- Video carousel -->
+    <section class="hero is-small">
+      <!-- <section class="hero is-small is-light"> -->
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <h2 class="title is-3">Results</h2>
+          <h2 class="subtitle is-max-desktop" style="margin-top: 20px">
+            Note that all result videos are complete zero-shot inference results that are not included in the training set, without any additional training/optimization. <br>
+            We present results of transferring attributes to the portrait while simultaneously animating it according to the facial keypoint video.
+          </h2>
+          
+          <h2 class="title is-4" style="margin-top: 40px">
+            Hair Transfer
+          </h2>
+
+          <div id="results-carousel" class="carousel results-carousel">
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_hair_transfer1/results_hair_transfer1.001.jpeg"
+                id="hair_transfer1"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_hair_transfer1/results_hair_transfer1.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_hair_transfer2/results_hair_transfer2.001.jpeg"
+                id="hair_transfer2"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_hair_transfer2/results_hair_transfer2.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_hair_transfer3/results_hair_transfer3.001.jpeg"
+                id="hair_transfer3"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_hair_transfer3/results_hair_transfer3.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_hair_transfer4/results_hair_transfer4.001.jpeg"
+                id="hair_transfer4"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_hair_transfer4/results_hair_transfer4.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_hair_transfer5/results_hair_transfer5.001.jpeg"
+                id="hair_transfer5"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_hair_transfer5/results_hair_transfer5.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+          </div>
+          
+
+          <h2 class="title is-4" style="margin-top: 40px">
+            Hat Transfer
+          </h2>
+
+          <div id="results-carousel" class="carousel results-carousel">
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_hat_transfer1/results_hat_transfer1.001.jpeg"
+                id="hat_transfer1"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_hat_transfer1/results_hat_transfer1.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_hat_transfer2/results_hat_transfer2.001.jpeg"
+                id="hat_transfer2"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_hat_transfer2/results_hat_transfer2.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_hat_transfer3/results_hat_transfer3.001.jpeg"
+                id="hat_transfer3"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_hat_transfer3/results_hat_transfer3.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_hat_transfer4/results_hat_transfer4.001.jpeg"
+                id="hat_transfer4"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_hat_transfer4/results_hat_transfer4.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_hat_transfer5/results_hat_transfer5.001.jpeg"
+                id="hat_transfer5"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_hat_transfer5/results_hat_transfer5.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+          </div>
+
+
+          <h2 class="title is-4" style="margin-top: 40px">
+            Beard Transfer
+          </h2>
+
+          <div id="results-carousel" class="carousel results-carousel">
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_beard_transfer1/results_beard_transfer1.001.jpeg"
+                id="beard_transfer1"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_beard_transfer1/results_beard_transfer1.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_beard_transfer2/results_beard_transfer2.001.jpeg"
+                id="beard_transfer2"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_beard_transfer2/results_beard_transfer2.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_beard_transfer3/results_beard_transfer3.001.jpeg"
+                id="beard_transfer3"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_beard_transfer3/results_beard_transfer3.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_beard_transfer4/results_beard_transfer4.001.jpeg"
+                id="beard_transfer4"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_beard_transfer4/results_beard_transfer4.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_beard_transfer5/results_beard_transfer5.001.jpeg"
+                id="beard_transfer5"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_beard_transfer5/results_beard_transfer5.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+          </div>
+
+
+          <h2 class="title is-4" style="margin-top: 40px">
+            Eyeglasses Transfer
+          </h2>
+
+          <div id="results-carousel" class="carousel results-carousel">
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_eyeglasses_transfer1/results_eyeglasses_transfer1.001.jpeg"
+                id="eyeglasses_transfer1"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_eyeglasses_transfer1/results_eyeglasses_transfer1.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_eyeglasses_transfer2/results_eyeglasses_transfer2.001.jpeg"
+                id="eyeglasses_transfer2"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_eyeglasses_transfer2/results_eyeglasses_transfer2.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_eyeglasses_transfer3/results_eyeglasses_transfer3.001.jpeg"
+                id="eyeglasses_transfer3"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_eyeglasses_transfer3/results_eyeglasses_transfer3.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_eyeglasses_transfer4/results_eyeglasses_transfer4.001.jpeg"
+                id="eyeglasses_transfer4"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_eyeglasses_transfer4/results_eyeglasses_transfer4.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_eyeglasses_transfer5/results_eyeglasses_transfer5.001.jpeg"
+                id="eyeglasses_transfer5"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_eyeglasses_transfer5/results_eyeglasses_transfer5.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+          </div>
+
+
+          <h2 class="title is-3">Applications</h2>
+          <h2 class="subtitle is-max-desktop" style="margin-top: 20px">
+            All result videos are complete zero-shot inferences, not included in the training set and without any additional training/optimization, 
+            showing the transfer of multiple attributes simultaneously to the portrait or interpolation between attributes.
+          </h2>
+          <h2 class="title is-4" style="margin-top: 40px">
+            Multi Attribute Transfer
+          </h2>
+
+          <div id="results-carousel" class="carousel results-carousel">
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_multi_attribute_transfer1/results_multi_attribute_transfer1.001.jpeg"
+                id="multi_attribute_transfer1"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_multi_attribute_transfer1/results_multi_attribute_transfer1.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_multi_attribute_transfer2/results_multi_attribute_transfer2.001.jpeg"
+                id="multi_attribute_transfer2"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_multi_attribute_transfer2/results_multi_attribute_transfer2.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_multi_attribute_transfer3/results_multi_attribute_transfer3.001.jpeg"
+                id="multi_attribute_transfer3"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_multi_attribute_transfer3/results_multi_attribute_transfer3.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_multi_attribute_transfer4/results_multi_attribute_transfer4.001.jpeg"
+                id="multi_attribute_transfer4"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_multi_attribute_transfer4/results_multi_attribute_transfer4.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_multi_attribute_transfer5/results_multi_attribute_transfer5.001.jpeg"
+                id="multi_attribute_transfer5"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_multi_attribute_transfer5/results_multi_attribute_transfer5.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_multi_attribute_transfer6/results_multi_attribute_transfer6.001.jpeg"
+                id="multi_attribute_transfer6"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_multi_attribute_transfer6/results_multi_attribute_transfer6.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_multi_attribute_transfer7/results_multi_attribute_transfer7.001.jpeg"
+                id="multi_attribute_transfer7"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_multi_attribute_transfer7/results_multi_attribute_transfer7.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+          </div>
+
+
+          <h2 class="title is-4" style="margin-top: 40px">
+            Attribute Interpolation
+          </h2>
+
+          <div id="results-carousel" class="carousel results-carousel">
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_attribute_interpolation1/results_attribute_interpolation1.001.jpeg"
+                id="attribute_interpolation"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_attribute_interpolation1/results_attribute_interpolation1.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_attribute_interpolation2/results_attribute_interpolation2.001.jpeg"
+                id="attribute_interpolation"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_attribute_interpolation2/results_attribute_interpolation2.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video
+                poster="static/images/results_attribute_interpolation3/results_attribute_interpolation3.001.jpeg"
+                id="attribute_interpolation"
+                autoplay
+                muted
+                playsinline
+                loop
+                width="100%"
+                data-disable-autoplay="true"
+              >
+                <!-- Your video file here -->
+                <source
+                  src="static/images/results_attribute_interpolation3/results_attribute_interpolation3.mp4"
+                  type="video/mp4"
+                />
+              </video>
+            </div>
+
+
+        </div>
+      </div>
+
+      <!-- </div> -->
+      <!-- </div> -->
+    </section>
+
+    <!--BibTex citation -->
+    <section class="section" id="BibTeX">
+      <div class="container is-max-desktop content">
+        <h2 class="title">BibTeX</h2>
+        <pre><code>
+@article{cha2025durian,
+  title={Durian: Dual Reference Image-Guided Portrait Animation with Attribute Transfer},
+  author={Cha, Hyunsoo and Kim, Byungjun and Joo, Hanbyul},
+  journal={arXiv preprint arXiv:2509.04434},
+  year={2025}
+}
+        </code></pre>
+      </div>
+    </section>
+    <!--End BibTex citation -->
+
+    <footer class="footer">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-8">
+            <div class="content">
+              <p>
+                This page was built using the
+                <a
+                  href="https://github.com/eliahuhorwitz/Academic-project-page-template"
+                  target="_blank"
+                  >Academic Project Page Template</a
+                >
+                which was adopted from the <a
+                  href="https://nerfies.github.io"
+                  target="_blank"
+                  >Nerfies</a
+                > project page. The reference images used for visualization are
+                exclusively sourced from
+                <a
+                  href="https://www.freepik.com/search?ai=excluded&format=search&last_filter=page&last_value=2&page=2&query=Portrait&selection=1&log-in=google#uuid=df2e55dc-679a-4208-8844-3dbc4f3dfb4e"
+                  target="_blank"
+                  >FreePik</a
+                >
+                under a free license. <br />
+                This website is licensed under a
+                <a
+                  rel="license"
+                  href="http://creativecommons.org/licenses/by-sa/4.0/"
+                  target="_blank"
+                  >Creative Commons Attribution-ShareAlike 4.0 International
+                  License</a
+                >.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- </div> -->
+    </footer>
+    <!-- Statcounter tracking code -->
+
+    <!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+  </body>
+</html>
