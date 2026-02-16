@@ -23,7 +23,7 @@ name: Hyunsoo Cha
 position: PhD Student
 email: 729steven@gmail.com
 description: >-
-  I am Hyunsoo Cha, a PhD student at [Seoul National University](https://en.snu.ac.kr/index.html), advised by Prof. [Hanbyul Joo](https://jhugestar.github.io/).
+  I am Hyunsoo Cha, a PhD student at [Seoul National University](https://en.snu.ac.kr/index.html), advised by Prof. [Hanbyul Joo](https://jhugestar.github.io/). My research goal is to develop generative models that can understand and represent people in virtual worlds.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 x_username: hyunssu_cha
