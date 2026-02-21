@@ -1,7 +1,7 @@
 - id: vanast
   title: "Vanast: Virtual Try-On with Human Image Animation via Synthetic Triplet Supervision"
   venue: CVPR, 2026
-  description: "Given a human image and one or more garment images, our method generates virtual try-on with human image animation conditioned on a pose video while preserving identity."
+  description: "Given a human image and one or more garment images, our method generates virtual try-on with human image animation conditioned on a pose video while preserving identity.\\Project Page, Code, and PDF will be released soon."
   # project_page: https://hyunsoocha.github.io/vanast
   # github: snuvclab/vanast
   # arxiv: 2509.04434
