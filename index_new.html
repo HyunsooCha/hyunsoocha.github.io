@@ -311,6 +311,7 @@ layout: null
       border-radius: 16px;
       margin-bottom: 1.5rem;
       transition: all 0.3s ease;
+      align-items: stretch;
     }
 
     .pub-card:hover {
@@ -324,7 +325,7 @@ layout: null
       border-radius: 10px;
       overflow: hidden;
       background: var(--brown-100);
-      aspect-ratio: 16 / 9;
+      min-height: 0;
     }
 
     .pub-image img {
@@ -527,6 +528,7 @@ layout: null
 
       .pub-image {
         aspect-ratio: 16/9;
+        min-height: auto;
       }
 
       .nav-links {
