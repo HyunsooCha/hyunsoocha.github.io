@@ -1,911 +1,788 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
-    <!-- Replace the content tag with appropriate information -->
-    <meta name="description" content="DESCRIPTION META TAG" />
-    <meta
-      property="og:title"
-      content="Durian: Dual Reference Image-Guided Portrait Animation with Attribute Transfer"
-    />
-    <meta
-      property="og:description"
-      content="Given a portrait image and single or multiple reference images specifying target attributes, Durian generates a portrait animation with facial attribute transfer conditioned on a keypoint sequence."
-    />
+    <meta name="description" content="Durian: Dual Reference Image-Guided Portrait Animation with Attribute Transfer" />
+    <meta property="og:title" content="Durian: Dual Reference Image-Guided Portrait Animation with Attribute Transfer" />
+    <meta property="og:description" content="Given a portrait image and single or multiple reference images specifying target attributes, Durian generates a portrait animation with facial attribute transfer conditioned on a keypoint sequence." />
     <meta property="og:url" content="https://hyunsoocha.github.io/durian/" />
-    <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
     <meta property="og:image" content="static/image/banner_image.jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-
-    <meta
-      name="twitter:title"
-      content="Durian: Dual Reference Image-Guided Portrait Animation with Attribute Transfer"
-    />
-    <meta
-      name="twitter:description"
-      content="Given a portrait image and single or multiple reference images specifying target attributes, Durian generates a portrait animation with facial attribute transfer conditioned on a keypoint sequence."
-    />
-    <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+    <meta name="twitter:title" content="Durian: Dual Reference Image-Guided Portrait Animation with Attribute Transfer" />
+    <meta name="twitter:description" content="Given a portrait image and single or multiple reference images specifying target attributes, Durian generates a portrait animation with facial attribute transfer conditioned on a keypoint sequence." />
     <meta name="twitter:image" content="static/images/banner_image.jpeg" />
     <meta name="twitter:card" content="summary_large_image" />
-    <!-- Keywords for your paper to be indexed by-->
-    <meta name="keywords" content="3D " />
+    <meta name="keywords" content="portrait animation, attribute transfer, facial animation, ICLR 2026" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <title>
-      Durian: Dual Reference Image-Guided Portrait Animation with Attribute Transfer
-    </title>
+    <title>Durian: Dual Reference Image-Guided Portrait Animation with Attribute Transfer</title>
     <link rel="icon" type="image/x-icon" href="./images/hs_logo.ico" />
-    <link
-      href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-      rel="stylesheet"
-    />
-
-    <link rel="stylesheet" href="static/css/bulma.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" />
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css" />
     <link rel="stylesheet" href="static/css/bulma-carousel.min.css" />
     <link rel="stylesheet" href="static/css/bulma-slider.min.css" />
-    <link rel="stylesheet" href="static/css/fontawesome.all.min.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css"
-    />
-    <link rel="stylesheet" href="static/css/index.css" />
 
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      :root {
+        --white: #ffffff;
+        --cream: #fdfaf6;
+        --cream-dark: #f8f3ec;
+        --sand: #f0e8dc;
+        --orange: #e8621a;
+        --orange-light: #f07830;
+        --orange-pale: #fdf0e6;
+        --orange-border: rgba(232, 98, 26, 0.15);
+        --orange-border-hover: rgba(232, 98, 26, 0.3);
+        --text-dark: #1a1a1a;
+        --text-body: #3d3530;
+        --text-secondary: #7a6e63;
+        --text-muted: #b0a49a;
+        --border: #e8dfd5;
+        --border-light: #f0e8dc;
+        --radius: 4px;
+      }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--cream);
+        color: var(--text-body);
+        line-height: 1.7;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ===== Layout ===== */
+      .page-content { position: relative; }
+
+      .container {
+        max-width: 1060px;
+        margin: 0 auto;
+        padding: 0 32px;
+      }
+
+      .container-wide {
+        max-width: 1060px;
+        margin: 0 auto;
+        padding: 0 32px;
+      }
+
+      /* ===== Navbar ===== */
+      .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 0;
+        background: var(--cream);
+        border-bottom: 1px solid var(--border);
+        transition: all 0.3s ease;
+      }
+
+      .nav-inner {
+        max-width: 1060px;
+        margin: 0 auto;
+        padding: 0 32px;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .nav-home {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 16px;
+        transition: color 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .nav-home:hover { color: var(--orange); }
+
+      .nav-links {
+        display: flex;
+        gap: 0;
+        list-style: none;
+      }
+      .nav-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 15px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        padding: 18px 20px;
+        transition: all 0.3s;
+        border-bottom: 2px solid transparent;
+      }
+      .nav-links a:hover {
+        color: var(--text-dark);
+      }
+      .nav-links a.active {
+        color: var(--orange);
+        border-bottom-color: var(--orange);
+      }
+
+      /* ===== Hero ===== */
+      .hero-section {
+        padding: 140px 0 50px;
+        text-align: center;
+      }
+
+      .venue-badge {
+        display: inline-block;
+        padding: 5px 24px;
+        border: 1px solid var(--orange);
+        color: var(--orange);
+        font-family: 'Inter', sans-serif;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        margin-bottom: 36px;
+        animation: fadeInUp 0.6s ease;
+      }
+
+      .hero-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(2.2rem, 5vw, 3.4rem);
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+        color: var(--text-dark);
+        margin-bottom: 36px;
+        animation: fadeInUp 0.6s ease 0.1s both;
+      }
+
+      .hero-title em {
+        font-style: italic;
+        color: var(--orange);
+      }
+
+      .authors {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px 28px;
+        margin-bottom: 8px;
+        animation: fadeInUp 0.6s ease 0.2s both;
+      }
+      .authors a {
+        color: var(--text-body);
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 400;
+        transition: color 0.3s;
+        letter-spacing: 0.2px;
+      }
+      .authors a:hover {
+        color: var(--orange);
+      }
+
+      .affiliation {
+        color: var(--text-secondary);
+        font-size: 14px;
+        margin-bottom: 40px;
+        animation: fadeInUp 0.6s ease 0.25s both;
+        letter-spacing: 0.3px;
+      }
+
+      /* ===== Buttons ===== */
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 20px;
+        animation: fadeInUp 0.6s ease 0.3s both;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 26px;
+        font-family: 'Inter', sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: none;
+      }
+
+      .btn-primary {
+        background: var(--orange);
+        color: var(--white);
+      }
+      .btn-primary:hover {
+        background: var(--orange-light);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 16px rgba(232, 98, 26, 0.2);
+      }
+
+      .btn-outline {
+        background: transparent;
+        color: var(--text-body);
+        border: 1px solid var(--border);
+      }
+      .btn-outline:hover {
+        border-color: var(--orange);
+        color: var(--orange);
+        transform: translateY(-1px);
+      }
+
+      .btn i { font-size: 14px; }
+
+      /* ===== Thin Rule ===== */
+      .thin-rule {
+        width: 40px;
+        height: 1px;
+        background: var(--orange);
+        margin: 0 auto 40px;
+      }
+
+      /* ===== Teaser ===== */
+      .teaser-section {
+        padding: 10px 0 30px;
+      }
+
+      .teaser-video-wrapper {
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background: var(--white);
+      }
+
+      .teaser-video-wrapper video {
+        display: block;
+        width: 100%;
+      }
+
+      .teaser-caption {
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 14.5px;
+        line-height: 1.8;
+        padding: 28px 20px 0;
+        max-width: 720px;
+        margin: 0 auto;
+      }
+
+      .teaser-caption strong {
+        color: var(--orange);
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-size: 11px;
+      }
+
+      /* ===== Section ===== */
+      .section {
+        padding: 60px 0;
+      }
+
+      .section-ornament {
+        text-align: center;
+        margin-bottom: 12px;
+        color: var(--orange);
+        font-size: 14px;
+        letter-spacing: 6px;
+      }
+
+      .section-label {
+        display: block;
+        text-align: center;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--orange);
+        margin-bottom: 10px;
+      }
+
+      .section-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(1.6rem, 3vw, 2.4rem);
+        font-weight: 700;
+        text-align: center;
+        color: var(--text-dark);
+        margin-bottom: 12px;
+      }
+
+      .section-desc {
+        color: var(--text-secondary);
+        font-size: 14px;
+        max-width: 640px;
+        margin: 0 auto 48px;
+        line-height: 1.8;
+        text-align: center;
+      }
+
+      .subsection-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 16px;
+        margin-top: 48px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--border);
+        letter-spacing: 0.3px;
+      }
+
+      /* ===== Carousel ===== */
+      .results-carousel {
+        overflow: hidden;
+      }
+
+      .results-carousel .item {
+        margin: 5px;
+        overflow: hidden;
+        padding: 8px;
+        font-size: 0;
+      }
+
+      .results-carousel video {
+        margin: 0;
+        border: 1px solid var(--border);
+        transition: border-color 0.3s;
+      }
+
+      .results-carousel video:hover {
+        border-color: var(--orange-border-hover);
+      }
+
+      .slider-pagination .slider-page {
+        background: var(--orange) !important;
+      }
+
+      /* ===== BibTeX ===== */
+      .bibtex-section {
+        padding: 60px 0 40px;
+      }
+
+      .bibtex-card {
+        background: var(--white);
+        border: 1px solid var(--border);
+        padding: 28px 32px;
+      }
+
+      .bibtex-card pre {
+        margin: 0;
+        padding: 0;
+        background: none;
+        border: none;
+      }
+
+      .bibtex-card code {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12.5px;
+        color: var(--text-secondary);
+        line-height: 1.7;
+      }
+
+      /* ===== Footer ===== */
+      .site-footer {
+        padding: 40px 0;
+        border-top: 1px solid var(--border);
+        margin-top: 40px;
+      }
+
+      .site-footer p {
+        color: var(--text-muted);
+        font-size: 12px;
+        text-align: center;
+        line-height: 1.9;
+        letter-spacing: 0.2px;
+      }
+
+      .site-footer a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      .site-footer a:hover {
+        color: var(--orange);
+      }
+
+      /* ===== Divider ===== */
+      .divider {
+        width: 1px;
+        height: 48px;
+        background: var(--border);
+        margin: 56px auto 0;
+      }
+
+      /* ===== Animations ===== */
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(16px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .fade-in {
+        opacity: 0;
+        transform: translateY(16px);
+        transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ===== Responsive ===== */
+      @media (max-width: 768px) {
+        .hero-section { padding: 110px 0 30px; }
+        .nav-links { display: none; }
+        .actions { gap: 8px; }
+        .btn { padding: 8px 18px; font-size: 12px; }
+        .section { padding: 40px 0; }
+        .container, .container-wide { padding: 0 20px; }
+      }
+
+      /* ===== Scrollbar ===== */
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: var(--cream); }
+      ::-webkit-scrollbar-thumb { background: var(--sand); border-radius: 3px; }
+      ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+    </style>
+  </head>
+
+  <body>
+    <div class="page-content">
+      <!-- Navigation -->
+      <nav class="nav">
+        <div class="nav-inner">
+          <a href="https://hyunsoocha.github.io/" class="nav-home">
+            <i class="fas fa-home"></i>
+          </a>
+          <ul class="nav-links">
+            <li><a href="https://hyunsoocha.github.io/vanast">Vanast</a></li>
+            <li><a href="https://hyunsoocha.github.io/durian" class="active">Durian</a></li>
+            <li><a href="https://hyunsoocha.github.io/perse">PERSE</a></li>
+            <li><a href="https://hyunsoocha.github.io/pegasus/">PEGASUS</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- Hero -->
+      <section class="hero-section">
+        <div class="container">
+          <div class="venue-badge">ICLR 2026</div>
+          <h1 class="hero-title">
+            <em>Durian</em><br>
+            Dual Reference Image-Guided Portrait<br>Animation with Attribute Transfer
+          </h1>
+
+          <div class="authors">
+            <a href="https://hyunsoocha.github.io/" target="_blank">Hyunsoo Cha</a>
+            <a href="https://bjkim95.github.io/" target="_blank">Byungjun Kim</a>
+            <a href="https://jhugestar.github.io/" target="_blank">Hanbyul Joo</a>
+          </div>
+
+          <p class="affiliation">Seoul National University</p>
+
+          <div class="actions">
+            <a href="https://arxiv.org/pdf/2509.04434.pdf" target="_blank" class="btn btn-primary">
+              <i class="fas fa-file-pdf"></i> Paper
+            </a>
+            <a href="https://arxiv.org/abs/2509.04434" target="_blank" class="btn btn-outline">
+              <i class="ai ai-arxiv"></i> arXiv
+            </a>
+            <a href="https://openreview.net/forum?id=tz5GRv9Vzu" target="_blank" class="btn btn-outline">
+              <i class="fas fa-book-open"></i> OpenReview
+            </a>
+            <a href="https://github.com/snuvclab/durian" target="_blank" class="btn btn-outline">
+              <i class="fab fa-github"></i> Code (Coming Soon)
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Teaser -->
+      <section class="teaser-section">
+        <div class="container">
+          <div class="teaser-video-wrapper fade-in">
+            <video
+              poster="static/images/teaser/teaser.001.jpeg"
+              id="video_teaser"
+              autoplay muted playsinline loop
+              style="width: 100%; display: block;"
+            >
+              <source src="static/images/teaser/teaser.m4v" type="video/mp4" />
+            </video>
+          </div>
+          <p class="teaser-caption fade-in">
+            <strong>TL;DR</strong> &mdash; Given a portrait image and single or multiple reference images
+            specifying target attributes (e.g., hairstyle, eyeglasses),
+            Durian generates a portrait animation with facial attribute transfer
+            conditioned on a keypoint sequence.
+          </p>
+        </div>
+      </section>
+
+      <!-- Results -->
+      <section class="section">
+        <div class="container-wide">
+          <div class="fade-in">
+            <div class="section-ornament">&#9670;</div>
+            <div class="section-label">Demonstrations</div>
+            <h2 class="section-title">Results</h2>
+            <div class="thin-rule"></div>
+            <p class="section-desc">
+              All result videos are complete zero-shot inference results not included in the training set, without any additional training or optimization.
+              We present results of transferring attributes to the portrait while simultaneously animating it.
+            </p>
+          </div>
+
+          <!-- Hair Transfer -->
+          <h3 class="subsection-title fade-in">Hair Transfer</h3>
+          <div id="results-carousel" class="carousel results-carousel fade-in">
+            <div class="item item-video3">
+              <video poster="static/images/results_hair_transfer1/results_hair_transfer1.001.jpeg" id="hair_transfer1" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_hair_transfer1/results_hair_transfer1.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="static/images/results_hair_transfer2/results_hair_transfer2.001.jpeg" id="hair_transfer2" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_hair_transfer2/results_hair_transfer2.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="static/images/results_hair_transfer3/results_hair_transfer3.001.jpeg" id="hair_transfer3" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_hair_transfer3/results_hair_transfer3.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="static/images/results_hair_transfer4/results_hair_transfer4.001.jpeg" id="hair_transfer4" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_hair_transfer4/results_hair_transfer4.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="static/images/results_hair_transfer5/results_hair_transfer5.001.jpeg" id="hair_transfer5" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_hair_transfer5/results_hair_transfer5.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </div>
+
+          <!-- Hat Transfer -->
+          <h3 class="subsection-title fade-in">Hat Transfer</h3>
+          <div id="results-carousel" class="carousel results-carousel fade-in">
+            <div class="item item-video3">
+              <video poster="static/images/results_hat_transfer1/results_hat_transfer1.001.jpeg" id="hat_transfer1" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_hat_transfer1/results_hat_transfer1.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="static/images/results_hat_transfer2/results_hat_transfer2.001.jpeg" id="hat_transfer2" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_hat_transfer2/results_hat_transfer2.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="static/images/results_hat_transfer3/results_hat_transfer3.001.jpeg" id="hat_transfer3" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_hat_transfer3/results_hat_transfer3.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="static/images/results_hat_transfer4/results_hat_transfer4.001.jpeg" id="hat_transfer4" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_hat_transfer4/results_hat_transfer4.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="static/images/results_hat_transfer5/results_hat_transfer5.001.jpeg" id="hat_transfer5" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_hat_transfer5/results_hat_transfer5.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </div>
+
+          <!-- Beard Transfer -->
+          <h3 class="subsection-title fade-in">Beard Transfer</h3>
+          <div id="results-carousel" class="carousel results-carousel fade-in">
+            <div class="item item-video3">
+              <video poster="static/images/results_beard_transfer1/results_beard_transfer1.001.jpeg" id="beard_transfer1" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_beard_transfer1/results_beard_transfer1.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="static/images/results_beard_transfer2/results_beard_transfer2.001.jpeg" id="beard_transfer2" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_beard_transfer2/results_beard_transfer2.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="static/images/results_beard_transfer3/results_beard_transfer3.001.jpeg" id="beard_transfer3" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_beard_transfer3/results_beard_transfer3.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="static/images/results_beard_transfer4/results_beard_transfer4.001.jpeg" id="beard_transfer4" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_beard_transfer4/results_beard_transfer4.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="static/images/results_beard_transfer5/results_beard_transfer5.001.jpeg" id="beard_transfer5" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_beard_transfer5/results_beard_transfer5.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </div>
+
+          <!-- Eyeglasses Transfer -->
+          <h3 class="subsection-title fade-in">Eyeglasses Transfer</h3>
+          <div id="results-carousel" class="carousel results-carousel fade-in">
+            <div class="item item-video3">
+              <video poster="static/images/results_eyeglasses_transfer1/results_eyeglasses_transfer1.001.jpeg" id="eyeglasses_transfer1" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_eyeglasses_transfer1/results_eyeglasses_transfer1.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="static/images/results_eyeglasses_transfer2/results_eyeglasses_transfer2.001.jpeg" id="eyeglasses_transfer2" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_eyeglasses_transfer2/results_eyeglasses_transfer2.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="static/images/results_eyeglasses_transfer3/results_eyeglasses_transfer3.001.jpeg" id="eyeglasses_transfer3" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_eyeglasses_transfer3/results_eyeglasses_transfer3.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="static/images/results_eyeglasses_transfer4/results_eyeglasses_transfer4.001.jpeg" id="eyeglasses_transfer4" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_eyeglasses_transfer4/results_eyeglasses_transfer4.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="static/images/results_eyeglasses_transfer5/results_eyeglasses_transfer5.001.jpeg" id="eyeglasses_transfer5" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_eyeglasses_transfer5/results_eyeglasses_transfer5.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <!-- Applications -->
+          <div class="fade-in" style="margin-top: 56px;">
+            <div class="section-ornament">&#9670;</div>
+            <div class="section-label">Extended Capabilities</div>
+            <h2 class="section-title">Applications</h2>
+            <div class="thin-rule"></div>
+            <p class="section-desc">
+              All result videos are complete zero-shot inferences, showing the transfer of multiple attributes simultaneously to the portrait or interpolation between attributes.
+            </p>
+          </div>
+
+          <!-- Multi Attribute Transfer -->
+          <h3 class="subsection-title fade-in">Multi Attribute Transfer</h3>
+          <div id="results-carousel" class="carousel results-carousel fade-in">
+            <div class="item item-video3">
+              <video poster="static/images/results_multi_attribute_transfer1/results_multi_attribute_transfer1.001.jpeg" id="multi_attribute_transfer1" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_multi_attribute_transfer1/results_multi_attribute_transfer1.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="static/images/results_multi_attribute_transfer2/results_multi_attribute_transfer2.001.jpeg" id="multi_attribute_transfer2" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_multi_attribute_transfer2/results_multi_attribute_transfer2.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="static/images/results_multi_attribute_transfer3/results_multi_attribute_transfer3.001.jpeg" id="multi_attribute_transfer3" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_multi_attribute_transfer3/results_multi_attribute_transfer3.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="static/images/results_multi_attribute_transfer4/results_multi_attribute_transfer4.001.jpeg" id="multi_attribute_transfer4" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_multi_attribute_transfer4/results_multi_attribute_transfer4.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="static/images/results_multi_attribute_transfer5/results_multi_attribute_transfer5.001.jpeg" id="multi_attribute_transfer5" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_multi_attribute_transfer5/results_multi_attribute_transfer5.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="static/images/results_multi_attribute_transfer6/results_multi_attribute_transfer6.001.jpeg" id="multi_attribute_transfer6" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_multi_attribute_transfer6/results_multi_attribute_transfer6.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="static/images/results_multi_attribute_transfer7/results_multi_attribute_transfer7.001.jpeg" id="multi_attribute_transfer7" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_multi_attribute_transfer7/results_multi_attribute_transfer7.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </div>
+
+          <!-- Attribute Interpolation -->
+          <h3 class="subsection-title fade-in">Attribute Interpolation</h3>
+          <div id="results-carousel" class="carousel results-carousel fade-in">
+            <div class="item item-video3">
+              <video poster="static/images/results_attribute_interpolation1/results_attribute_interpolation1.001.jpeg" id="attribute_interpolation1" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_attribute_interpolation1/results_attribute_interpolation1.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="static/images/results_attribute_interpolation2/results_attribute_interpolation2.001.jpeg" id="attribute_interpolation2" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_attribute_interpolation2/results_attribute_interpolation2.mp4" type="video/mp4" />
+              </video>
+            </div>
+            <div class="item item-video3">
+              <video poster="static/images/results_attribute_interpolation3/results_attribute_interpolation3.001.jpeg" id="attribute_interpolation3" autoplay muted playsinline loop width="100%" data-disable-autoplay="true">
+                <source src="static/images/results_attribute_interpolation3/results_attribute_interpolation3.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BibTeX -->
+      <section class="bibtex-section" id="BibTeX">
+        <div class="container">
+          <div class="section-label">Citation</div>
+          <h2 class="section-title" style="margin-bottom: 24px;">BibTeX</h2>
+          <div class="bibtex-card">
+            <pre><code>@inproceedings{cha2026durian,
+  author={Cha, Hyunsoo and Kim, Byungjun and Joo, Hanbyul},
+  booktitle={International Conference on Learning Representations},
+  title={Durian: Dual Reference Image-Guided Portrait Animation with Attribute Transfer},
+  year={2026}
+}</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="site-footer">
+        <div class="container">
+          <p>
+            Built using the
+            <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>,
+            adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            Reference images sourced from
+            <a href="https://www.freepik.com/search?ai=excluded&format=search&last_filter=page&last_value=2&page=2&query=Portrait&selection=1" target="_blank">FreePik</a>
+            under a free license.
+            <br>
+            Licensed under <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>.
+          </p>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
     <script defer src="static/js/fontawesome.all.min.js"></script>
     <script src="static/js/bulma-carousel.min.js"></script>
     <script src="static/js/bulma-slider.min.js"></script>
     <script src="static/js/index.js"></script>
-  </head>
-  <body>
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <a
-          role="button"
-          class="navbar-burger"
-          aria-label="menu"
-          aria-expanded="false"
-        >
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
-      </div>
-      <div class="navbar-menu">
-        <div class="navbar-start" style="flex-grow: 1; justify-content: center">
-          <a class="navbar-item" href="https://hyunsoocha.github.io/">
-            <span class="icon">
-              <i class="fas fa-home"></i>
-            </span>
-          </a>
+    <script>
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-          <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link"> More Research </a>
-            <div class="navbar-dropdown">
-              <a class="navbar-item" href="https://hyunsoocha.github.io/vanast">
-                Vanast
-              </a>
-              <a class="navbar-item" href="https://hyunsoocha.github.io/durian">
-                Durian
-              </a>
-              <a class="navbar-item" href="https://hyunsoocha.github.io/perse">
-                PERSE
-              </a>
-              <a
-                class="navbar-item"
-                href="https://hyunsoocha.github.io/pegasus/"
-              >
-                PEGASUS
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- </div> -->
-    </nav>
-
-    <section class="hero">
-      <div class="hero-body">
-        <div class="container is-max-desktop">
-          <div class="columns is-centered">
-            <div class="column has-text-centered">
-              <h1 class="title is-1 publication-title">
-                Durian: Dual Reference Image-Guided Portrait Animation with Attribute Transfer
-              </h1>
-              <div class="is-size-5 publication-authors">
-                <!-- Paper authors -->
-                <span class="author-block">
-                  <a href="https://hyunsoocha.github.io/" target="_blank"
-                    >Hyunsoo Cha</a
-                  >,</span
-                >
-                <span class="author-block">
-                  <a href="https://bjkim95.github.io/" target="_blank"
-                    >Byungjun Kim</a
-                  >,</span
-                >
-                <span class="author-block">
-                  <a href="https://jhugestar.github.io/" target="_blank"
-                    >Hanbyul Joo</a
-                  >
-                </span>
-              </div>
-
-              <div class="is-size-5 publication-authors">
-                <span class="author-block"
-                  >Seoul National University<br>ICLR 2026<br />
-                </span>
-              </div>
-
-              <div class="column has-text-centered">
-                <div class="publication-links">
-                  <!-- Arxiv PDF link -->
-                  <span class="link-block">
-                    <a
-                      href="https://arxiv.org/pdf/2509.04434.pdf"
-                      target="_blank"
-                      class="external-link button is-normal is-rounded is-dark"
-                    >
-                      <span class="icon">
-                        <i class="fas fa-file-pdf"></i>
-                      </span>
-                      <span>Paper</span>
-                    </a>
-                  </span>
-
-                  <!-- ArXiv abstract Link -->
-                  <span class="link-block">
-                    <a
-                      href="https://arxiv.org/abs/2509.04434"
-                      target="_blank"
-                      class="external-link button is-normal is-rounded is-dark"
-                    >
-                      <span class="icon">
-                        <i class="ai ai-arxiv"></i>
-                      </span>
-                      <span>arXiv</span>
-                    </a>
-                  </span>
-
-                  <!-- YouTube link -->
-                  <!-- <span class="link-block">
-                    <a
-                      href="https://youtu.be/zX881Zx03o4"
-                      target="_blank"
-                      class="external-link button is-normal is-rounded is-dark"
-                    >
-                      <span class="icon">
-                        <i class="fab fa-youtube"></i>
-                      </span>
-                      <span>Video</span>
-                    </a>
-                  </span> -->
-
-                  <!-- GitHub link -->
-                  <span class="link-block">
-                    <a
-                      href="https://github.com/snuvclab/durian"
-                      target="_blank"
-                      class="external-link button is-normal is-rounded is-dark"
-                    >
-                      <span class="icon">
-                        <i class="fab fa-github"></i>
-                      </span>
-                      <span>Code (Coming Soon)</span>
-                    </a>
-                  </span>
-
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- source code borrows from CAP4D -->
-    <!-- Teaser video-->
-    <section class="hero is-small">
-      <div class="hero-body">
-        <div class="container is-max-desktop">
-          <video
-            poster="static/images/teaser/teaser.001.jpeg"
-            id="video_teaser"
-            autoplay
-            muted
-            playsinline
-            loop
-            style="width: 100%; object-fit: cover"
-          >
-            <source src="static/images/teaser/teaser.m4v" type="video/mp4" />
-          </video>
-          <h2 class="subtitle has-text-centered" style="margin-top: 5px">
-            TL;DR: Given a portrait image and single or multiple reference images 
-            specifying target attributes (e.g., hairstyle, eyeglasses), 
-            Durian generates a portrait animation with facial attribute transfer 
-            conditioned on a keypoint sequence.
-          </h2>
-          <!-- <div class="hero-body"> -->
-        </div>
-      </div>
-      </div>
-
-      <!-- </div> -->
-    </section>
-
-    <!-- Video carousel -->
-    <section class="hero is-small">
-      <!-- <section class="hero is-small is-light"> -->
-      <div class="hero-body">
-        <div class="container is-max-desktop">
-          <h2 class="title is-3">Results</h2>
-          <h2 class="subtitle is-max-desktop" style="margin-top: 20px">
-            Note that all result videos are complete zero-shot inference results that are not included in the training set, without any additional training/optimization. <br>
-            We present results of transferring attributes to the portrait while simultaneously animating it according to the facial keypoint video.
-          </h2>
-          
-          <h2 class="title is-4" style="margin-top: 40px">
-            Hair Transfer
-          </h2>
-
-          <div id="results-carousel" class="carousel results-carousel">
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_hair_transfer1/results_hair_transfer1.001.jpeg"
-                id="hair_transfer1"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_hair_transfer1/results_hair_transfer1.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_hair_transfer2/results_hair_transfer2.001.jpeg"
-                id="hair_transfer2"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_hair_transfer2/results_hair_transfer2.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_hair_transfer3/results_hair_transfer3.001.jpeg"
-                id="hair_transfer3"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_hair_transfer3/results_hair_transfer3.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_hair_transfer4/results_hair_transfer4.001.jpeg"
-                id="hair_transfer4"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_hair_transfer4/results_hair_transfer4.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_hair_transfer5/results_hair_transfer5.001.jpeg"
-                id="hair_transfer5"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_hair_transfer5/results_hair_transfer5.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-          </div>
-          
-
-          <h2 class="title is-4" style="margin-top: 40px">
-            Hat Transfer
-          </h2>
-
-          <div id="results-carousel" class="carousel results-carousel">
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_hat_transfer1/results_hat_transfer1.001.jpeg"
-                id="hat_transfer1"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_hat_transfer1/results_hat_transfer1.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_hat_transfer2/results_hat_transfer2.001.jpeg"
-                id="hat_transfer2"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_hat_transfer2/results_hat_transfer2.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_hat_transfer3/results_hat_transfer3.001.jpeg"
-                id="hat_transfer3"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_hat_transfer3/results_hat_transfer3.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_hat_transfer4/results_hat_transfer4.001.jpeg"
-                id="hat_transfer4"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_hat_transfer4/results_hat_transfer4.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_hat_transfer5/results_hat_transfer5.001.jpeg"
-                id="hat_transfer5"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_hat_transfer5/results_hat_transfer5.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-          </div>
-
-
-          <h2 class="title is-4" style="margin-top: 40px">
-            Beard Transfer
-          </h2>
-
-          <div id="results-carousel" class="carousel results-carousel">
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_beard_transfer1/results_beard_transfer1.001.jpeg"
-                id="beard_transfer1"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_beard_transfer1/results_beard_transfer1.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_beard_transfer2/results_beard_transfer2.001.jpeg"
-                id="beard_transfer2"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_beard_transfer2/results_beard_transfer2.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_beard_transfer3/results_beard_transfer3.001.jpeg"
-                id="beard_transfer3"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_beard_transfer3/results_beard_transfer3.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_beard_transfer4/results_beard_transfer4.001.jpeg"
-                id="beard_transfer4"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_beard_transfer4/results_beard_transfer4.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_beard_transfer5/results_beard_transfer5.001.jpeg"
-                id="beard_transfer5"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_beard_transfer5/results_beard_transfer5.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-          </div>
-
-
-          <h2 class="title is-4" style="margin-top: 40px">
-            Eyeglasses Transfer
-          </h2>
-
-          <div id="results-carousel" class="carousel results-carousel">
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_eyeglasses_transfer1/results_eyeglasses_transfer1.001.jpeg"
-                id="eyeglasses_transfer1"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_eyeglasses_transfer1/results_eyeglasses_transfer1.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_eyeglasses_transfer2/results_eyeglasses_transfer2.001.jpeg"
-                id="eyeglasses_transfer2"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_eyeglasses_transfer2/results_eyeglasses_transfer2.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_eyeglasses_transfer3/results_eyeglasses_transfer3.001.jpeg"
-                id="eyeglasses_transfer3"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_eyeglasses_transfer3/results_eyeglasses_transfer3.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_eyeglasses_transfer4/results_eyeglasses_transfer4.001.jpeg"
-                id="eyeglasses_transfer4"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_eyeglasses_transfer4/results_eyeglasses_transfer4.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_eyeglasses_transfer5/results_eyeglasses_transfer5.001.jpeg"
-                id="eyeglasses_transfer5"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_eyeglasses_transfer5/results_eyeglasses_transfer5.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-          </div>
-
-
-          <h2 class="title is-3">Applications</h2>
-          <h2 class="subtitle is-max-desktop" style="margin-top: 20px">
-            All result videos are complete zero-shot inferences, not included in the training set and without any additional training/optimization, 
-            showing the transfer of multiple attributes simultaneously to the portrait or interpolation between attributes.
-          </h2>
-          <h2 class="title is-4" style="margin-top: 40px">
-            Multi Attribute Transfer
-          </h2>
-
-          <div id="results-carousel" class="carousel results-carousel">
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_multi_attribute_transfer1/results_multi_attribute_transfer1.001.jpeg"
-                id="multi_attribute_transfer1"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_multi_attribute_transfer1/results_multi_attribute_transfer1.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_multi_attribute_transfer2/results_multi_attribute_transfer2.001.jpeg"
-                id="multi_attribute_transfer2"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_multi_attribute_transfer2/results_multi_attribute_transfer2.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_multi_attribute_transfer3/results_multi_attribute_transfer3.001.jpeg"
-                id="multi_attribute_transfer3"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_multi_attribute_transfer3/results_multi_attribute_transfer3.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_multi_attribute_transfer4/results_multi_attribute_transfer4.001.jpeg"
-                id="multi_attribute_transfer4"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_multi_attribute_transfer4/results_multi_attribute_transfer4.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_multi_attribute_transfer5/results_multi_attribute_transfer5.001.jpeg"
-                id="multi_attribute_transfer5"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_multi_attribute_transfer5/results_multi_attribute_transfer5.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_multi_attribute_transfer6/results_multi_attribute_transfer6.001.jpeg"
-                id="multi_attribute_transfer6"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_multi_attribute_transfer6/results_multi_attribute_transfer6.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_multi_attribute_transfer7/results_multi_attribute_transfer7.001.jpeg"
-                id="multi_attribute_transfer7"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_multi_attribute_transfer7/results_multi_attribute_transfer7.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-          </div>
-
-
-          <h2 class="title is-4" style="margin-top: 40px">
-            Attribute Interpolation
-          </h2>
-
-          <div id="results-carousel" class="carousel results-carousel">
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_attribute_interpolation1/results_attribute_interpolation1.001.jpeg"
-                id="attribute_interpolation"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_attribute_interpolation1/results_attribute_interpolation1.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_attribute_interpolation2/results_attribute_interpolation2.001.jpeg"
-                id="attribute_interpolation"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_attribute_interpolation2/results_attribute_interpolation2.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-            <div class="item item-video3">
-              <video
-                poster="static/images/results_attribute_interpolation3/results_attribute_interpolation3.001.jpeg"
-                id="attribute_interpolation"
-                autoplay
-                muted
-                playsinline
-                loop
-                width="100%"
-                data-disable-autoplay="true"
-              >
-                <!-- Your video file here -->
-                <source
-                  src="static/images/results_attribute_interpolation3/results_attribute_interpolation3.mp4"
-                  type="video/mp4"
-                />
-              </video>
-            </div>
-
-
-        </div>
-      </div>
-
-      <!-- </div> -->
-      <!-- </div> -->
-    </section>
-
-    <!--BibTex citation -->
-    <section class="section" id="BibTeX">
-      <div class="container is-max-desktop content">
-        <h2 class="title">BibTeX</h2>
-        <pre><code>
-@article{cha2025durian,
-  title={Durian: Dual Reference Image-Guided Portrait Animation with Attribute Transfer},
-  author={Cha, Hyunsoo and Kim, Byungjun and Joo, Hanbyul},
-  journal={arXiv preprint arXiv:2509.04434},
-  year={2025}
-}
-        </code></pre>
-      </div>
-    </section>
-    <!--End BibTex citation -->
-
-    <footer class="footer">
-      <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-8">
-            <div class="content">
-              <p>
-                This page was built using the
-                <a
-                  href="https://github.com/eliahuhorwitz/Academic-project-page-template"
-                  target="_blank"
-                  >Academic Project Page Template</a
-                >
-                which was adopted from the <a
-                  href="https://nerfies.github.io"
-                  target="_blank"
-                  >Nerfies</a
-                > project page. The reference images used for visualization are
-                exclusively sourced from
-                <a
-                  href="https://www.freepik.com/search?ai=excluded&format=search&last_filter=page&last_value=2&page=2&query=Portrait&selection=1&log-in=google#uuid=df2e55dc-679a-4208-8844-3dbc4f3dfb4e"
-                  target="_blank"
-                  >FreePik</a
-                >
-                under a free license. <br />
-                This website is licensed under a
-                <a
-                  rel="license"
-                  href="http://creativecommons.org/licenses/by-sa/4.0/"
-                  target="_blank"
-                  >Creative Commons Attribution-ShareAlike 4.0 International
-                  License</a
-                >.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- </div> -->
-    </footer>
-    <!-- Statcounter tracking code -->
-
-    <!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
-
-    <!-- End of Statcounter Code -->
+      document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
   </body>
 </html>
