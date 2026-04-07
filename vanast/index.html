@@ -205,16 +205,32 @@
       }
 
       .hero-title {
-        font-size: clamp(2rem, 5vw, 3.2rem);
-        font-weight: 800;
         line-height: 1.2;
         letter-spacing: -0.02em;
         margin-bottom: 28px;
+        animation: fadeInUp 0.6s ease 0.1s both;
+      }
+
+      .hero-title-name {
+        display: block;
+        font-size: clamp(3rem, 8vw, 5rem);
+        font-weight: 900;
+        letter-spacing: -0.03em;
+        background: linear-gradient(135deg, #8b6f47 0%, #a0724a 40%, #c4943a 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 12px;
+      }
+
+      .hero-title-sub {
+        display: block;
+        font-size: clamp(1.6rem, 4vw, 2.6rem);
+        font-weight: 600;
         background: linear-gradient(135deg, #2c2418 0%, #6b4f2e 50%, #8b6f47 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        animation: fadeInUp 0.6s ease 0.1s both;
       }
 
       .authors {
@@ -548,7 +564,8 @@
         <div class="container">
           <div class="venue-badge">CVPR 2026</div>
           <h1 class="hero-title">
-            Vanast: Virtual Try-On with Human Image Animation<br>via Synthetic Triplet Supervision
+            <span class="hero-title-name">Vanast</span><br>
+            <span class="hero-title-sub">Virtual Try-On with Human Image Animation<br>via Synthetic Triplet Supervision</span>
           </h1>
 
           <div class="authors">
