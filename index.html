@@ -643,15 +643,13 @@ layout: null
       </div>
       <ul class="news-list" id="news-list">
         {% for news in site.data.news %}
-        <li class="fade-in{% if forloop.index > 5 %} news-hidden{% endif %}">
+        <li class="fade-in">
           <span class="news-date">{{ news.date }}</span>
           <span>{{ news.description | markdownify | remove: '<p>' | remove: '</p>' }}</span>
         </li>
         {% endfor %}
       </ul>
-      {% if site.data.news.size > 5 %}
-      <button class="news-toggle" id="news-toggle" onclick="toggleNews()">Show more</button>
-      {% endif %}
+      <button class="news-toggle" id="news-toggle" style="display:none;" onclick="toggleNews()">Show more</button>
     </div>
   </section>
 
@@ -747,12 +745,23 @@ layout: null
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-    // News toggle
+    // News: show only first 5
+    (function() {
+      const items = document.querySelectorAll('#news-list li');
+      const btn = document.getElementById('news-toggle');
+      if (items.length > 5) {
+        for (let i = 5; i < items.length; i++) {
+          items[i].classList.add('news-hidden');
+        }
+        btn.style.display = 'inline-block';
+      }
+    })();
+
     function toggleNews() {
-      const hidden = document.querySelectorAll('.news-hidden');
+      const items = document.querySelectorAll('#news-list li.news-hidden');
       const btn = document.getElementById('news-toggle');
       const isExpanded = btn.textContent === 'Show less';
-      hidden.forEach(el => {
+      items.forEach(el => {
         el.style.display = isExpanded ? 'none' : 'flex';
         if (!isExpanded) el.classList.add('visible');
       });
