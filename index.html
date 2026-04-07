@@ -719,6 +719,21 @@ layout: null
     }, { threshold: 0.1 });
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Video hover play
+    document.querySelectorAll('.pub-image').forEach(container => {
+      const video = container.querySelector('video');
+      if (!video) return;
+      container.addEventListener('mouseenter', () => {
+        video.style.display = 'block';
+        video.currentTime = 0;
+        video.play();
+      });
+      container.addEventListener('mouseleave', () => {
+        video.style.display = 'none';
+        video.pause();
+      });
+    });
   </script>
 </body>
 </html>
