@@ -300,10 +300,6 @@ layout: null
       text-decoration: underline;
     }
 
-    .news-hidden {
-      display: none;
-    }
-
     .news-toggle {
       display: inline-block;
       margin-top: 0.8rem;
@@ -370,11 +366,13 @@ layout: null
       width: 100%;
       height: 100%;
       object-fit: contain;
-      display: none;
+      opacity: 0;
+      z-index: 2;
+      transition: opacity 0.3s ease;
     }
 
     .pub-image:hover video {
-      display: block;
+      opacity: 1;
     }
 
     .pub-content {
@@ -666,7 +664,7 @@ layout: null
       <div class="pub-card fade-in">
         <div class="pub-image">
           {% if publication.image_mouseover contains "mp4" %}
-          <video autoplay preload playsinline loop muted>
+          <video preload="auto" playsinline loop muted>
             <source src="./images/{{ publication.image_mouseover }}" type="video/mp4">
           </video>
           {% endif %}
@@ -751,20 +749,20 @@ layout: null
       const btn = document.getElementById('news-toggle');
       if (items.length > 5) {
         for (let i = 5; i < items.length; i++) {
-          items[i].classList.add('news-hidden');
+          items[i].style.display = 'none';
         }
         btn.style.display = 'inline-block';
       }
     })();
 
     function toggleNews() {
-      const items = document.querySelectorAll('#news-list li.news-hidden');
+      const items = document.querySelectorAll('#news-list li');
       const btn = document.getElementById('news-toggle');
       const isExpanded = btn.textContent === 'Show less';
-      items.forEach(el => {
-        el.style.display = isExpanded ? 'none' : 'flex';
-        if (!isExpanded) el.classList.add('visible');
-      });
+      for (let i = 5; i < items.length; i++) {
+        items[i].style.display = isExpanded ? 'none' : 'flex';
+        if (!isExpanded) items[i].classList.add('visible');
+      }
       btn.textContent = isExpanded ? 'Show more' : 'Show less';
     }
 
@@ -773,12 +771,10 @@ layout: null
       const video = container.querySelector('video');
       if (!video) return;
       container.addEventListener('mouseenter', () => {
-        video.style.display = 'block';
         video.currentTime = 0;
         video.play();
       });
       container.addEventListener('mouseleave', () => {
-        video.style.display = 'none';
         video.pause();
       });
     });
