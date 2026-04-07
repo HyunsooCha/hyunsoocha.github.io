@@ -832,6 +832,16 @@
       }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
       document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+      // Mobile: tap poster to play video, keep looping
+      if ('ontouchstart' in window) {
+        document.querySelectorAll('video[data-disable-autoplay="true"]').forEach(function(video) {
+          video.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            video.play();
+          }, { once: true });
+        });
+      }
     </script>
   </body>
 </html>
