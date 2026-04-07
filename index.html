@@ -300,6 +300,30 @@ layout: null
       text-decoration: underline;
     }
 
+    .news-hidden {
+      display: none;
+    }
+
+    .news-toggle {
+      display: inline-block;
+      margin-top: 0.8rem;
+      padding: 0.4rem 1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--accent);
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .news-toggle:hover {
+      background: var(--brown-100);
+      border-color: var(--brown-300);
+    }
+
     /* Publication Card */
     .pub-card {
       display: grid;
@@ -617,14 +641,17 @@ layout: null
       <div class="section-header">
         <h2>News</h2>
       </div>
-      <ul class="news-list">
+      <ul class="news-list" id="news-list">
         {% for news in site.data.news %}
-        <li class="fade-in">
+        <li class="fade-in{% if forloop.index > 5 %} news-hidden{% endif %}">
           <span class="news-date">{{ news.date }}</span>
           <span>{{ news.description | markdownify | remove: '<p>' | remove: '</p>' }}</span>
         </li>
         {% endfor %}
       </ul>
+      {% if site.data.news.size > 5 %}
+      <button class="news-toggle" id="news-toggle" onclick="toggleNews()">Show more</button>
+      {% endif %}
     </div>
   </section>
 
@@ -719,6 +746,18 @@ layout: null
     }, { threshold: 0.1 });
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // News toggle
+    function toggleNews() {
+      const hidden = document.querySelectorAll('.news-hidden');
+      const btn = document.getElementById('news-toggle');
+      const isExpanded = btn.textContent === 'Show less';
+      hidden.forEach(el => {
+        el.style.display = isExpanded ? 'none' : 'flex';
+        if (!isExpanded) el.classList.add('visible');
+      });
+      btn.textContent = isExpanded ? 'Show more' : 'Show less';
+    }
 
     // Video hover play
     document.querySelectorAll('.pub-image').forEach(container => {
