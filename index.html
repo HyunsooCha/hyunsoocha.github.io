@@ -355,7 +355,7 @@ layout: null
       transition: transform 0.4s ease;
     }
 
-    .pub-card:hover .pub-image img {
+    .pub-card:hover .pub-image--no-video img {
       transform: scale(1.05);
     }
 
@@ -662,7 +662,7 @@ layout: null
 
       {% for publication in site.data.publications %}
       <div class="pub-card fade-in">
-        <div class="pub-image">
+        <div class="pub-image {% unless publication.image_mouseover contains "mp4" %}pub-image--no-video{% endunless %}">
           {% if publication.image_mouseover contains "mp4" %}
           <video preload="auto" playsinline loop muted>
             <source src="./images/{{ publication.image_mouseover }}" type="video/mp4">
