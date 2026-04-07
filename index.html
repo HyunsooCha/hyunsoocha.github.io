@@ -6,175 +6,683 @@ layout: null
 
 <head>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-
   <meta content="width=device-width, initial-scale=1" name="viewport">
   <title>{{ site.name }}</title>
   <link rel="shortcut icon" href="images/hs_logo.ico" type="image/x-icon">
-  <!-- Global site tag (gtag.js) - Google Analytics -->
+
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
-
     gtag('config', '{{ site.google_analytics }}');
   </script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@700&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
   <link href="{{ '/css/fontawesome.all.min.css' | relative_url }}" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" rel="stylesheet">
-  <link href="{{ '/css/bulma.min.css' | relative_url }}" rel="stylesheet">
-  <link href="{{ '/css/index.css' | relative_url }}" rel="stylesheet">
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script defer src="{{ '/js/fontawesome.all.min.js' | relative_url }}"></script>
-  <script src="{{ '/js/index.js' | relative_url }}"></script>
+
+  <style>
+    :root {
+      --brown-50: #fdf8f1;
+      --brown-100: #f5ebe0;
+      --brown-200: #e6d5c3;
+      --brown-300: #d4b896;
+      --brown-400: #c49a6c;
+      --brown-500: #a67c52;
+      --brown-600: #8b6340;
+      --brown-700: #6f4e32;
+      --brown-800: #5a3e28;
+      --brown-900: #3d2b1a;
+      --brown-950: #2a1c10;
+
+      --text-primary: #2a1c10;
+      --text-secondary: #6f4e32;
+      --text-muted: #8b7355;
+      --bg-primary: #fdf8f1;
+      --bg-card: #ffffff;
+      --bg-tag: #f5ebe0;
+      --accent: #a67c52;
+      --accent-hover: #8b6340;
+      --border: #e6d5c3;
+      --shadow: rgba(90, 62, 40, 0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(253, 248, 241, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s ease;
+    }
+
+    nav.scrolled {
+      box-shadow: 0 2px 20px var(--shadow);
+    }
+
+    .nav-inner {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 0.8rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-name {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+      letter-spacing: 0.01em;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    /* Container */
+    .container {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding-top: 7rem;
+      padding-bottom: 4rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .portrait-wrapper {
+      position: relative;
+    }
+
+    .portrait-wrapper img {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--brown-200);
+      box-shadow: 0 8px 30px var(--shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .portrait-wrapper img:hover {
+      transform: scale(1.03);
+      box-shadow: 0 12px 40px rgba(90, 62, 40, 0.15);
+    }
+
+    .hero-info h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.3rem;
+      line-height: 1.2;
+    }
+
+    .hero-info .position {
+      font-size: 1.15rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .hero-info .bio {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-info .bio a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .hero-info .bio a:hover {
+      border-bottom-color: var(--accent);
+    }
+
+    /* Social Links */
+    .social-links {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.5rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .social-link:hover {
+      background: var(--brown-100);
+      border-color: var(--brown-300);
+      color: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+
+    .social-link i {
+      font-size: 1rem;
+    }
+
+    /* Section */
+    .section {
+      padding: 3rem 0;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .section-header::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, var(--border), transparent);
+    }
+
+    /* Divider */
+    .divider {
+      border: none;
+      height: 1px;
+      background: var(--border);
+      margin: 0;
+    }
+
+    /* News Section */
+    .news-list {
+      list-style: none;
+    }
+
+    .news-list li {
+      padding: 0.6rem 0;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      display: flex;
+      gap: 1rem;
+      align-items: baseline;
+    }
+
+    .news-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      min-width: 80px;
+    }
+
+    .news-list li a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .news-list li a:hover {
+      text-decoration: underline;
+    }
+
+    /* Publication Card */
+    .pub-card {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 1.8rem;
+      padding: 1.8rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+      align-items: stretch;
+    }
+
+    .pub-card:hover {
+      box-shadow: 0 8px 30px var(--shadow);
+      transform: translateY(-2px);
+      border-color: var(--brown-300);
+    }
+
+    .pub-image {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--brown-100);
+      min-height: 0;
+    }
+
+    .pub-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .pub-card:hover .pub-image img {
+      transform: scale(1.05);
+    }
+
+    .pub-image video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .pub-image:hover video {
+      display: block;
+    }
+
+    .pub-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .pub-venue {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--accent);
+      background: var(--bg-tag);
+      padding: 0.25rem 0.7rem;
+      border-radius: 100px;
+      margin-bottom: 0.7rem;
+      width: fit-content;
+      letter-spacing: 0.03em;
+    }
+
+    .pub-venue .award {
+      color: #c0392b;
+      font-weight: 500;
+      margin-left: 0.5em;
+    }
+
+    .pub-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+
+    .pub-title a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .pub-title a:hover {
+      color: var(--accent);
+    }
+
+    .pub-authors {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      line-height: 1.6;
+    }
+
+    .pub-authors .me {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .pub-authors a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    .pub-authors a:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    .pub-desc {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .pub-links {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .pub-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background: var(--bg-tag);
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .pub-link:hover {
+      background: var(--brown-200);
+      color: var(--accent-hover);
+    }
+
+    .pub-link i {
+      font-size: 0.85rem;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 3rem;
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .footer-icons {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-icons a {
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      transition: color 0.2s;
+    }
+
+    .footer-icons a:hover {
+      color: var(--accent);
+    }
+
+    .footer-text {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .footer-text a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 2rem;
+      }
+
+      .portrait-wrapper {
+        display: flex;
+        justify-content: center;
+      }
+
+      .portrait-wrapper img {
+        width: 180px;
+        height: 180px;
+      }
+
+      .hero-info h1 {
+        font-size: 2rem;
+      }
+
+      .social-links {
+        justify-content: center;
+      }
+
+      .pub-card {
+        grid-template-columns: 1fr;
+        padding: 1.2rem;
+      }
+
+      .pub-image {
+        aspect-ratio: 16/9;
+        min-height: auto;
+      }
+
+      .nav-links {
+        gap: 1rem;
+      }
+
+      .container {
+        padding: 0 1.2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-links {
+        display: none;
+      }
+    }
+
+    /* Animate on scroll */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 
 <body>
 
+  <!-- Navigation -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-name">{{ site.name }}</a>
+      <ul class="nav-links">
+        <li><a href="#news">News</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="cv/Hyunsoo_Cha_s_Resume__CV_.pdf" target="_blank">CV</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
   <section class="hero">
-    <div class="hero-body container is-max-desktop">
-      <div class="columns is-vcentered">
-
-        <div class="column is-4">
-          <div class="portrait">
-            <img src="{{ '/images/portrait_2022.jpg' | relative_url }}" />
-          </div>
+    <div class="container">
+      <div class="hero-grid">
+        <div class="portrait-wrapper">
+          <img src="{{ '/images/portrait_2022.jpg' | relative_url }}" alt="{{ site.name }}" />
         </div>
-
-        <div class="column">
-          <h1 class="title">
-            <b>{{ site.name }}</b>
-          </h1>
-          <div class="content has-text-justified">
-            {{ site.description | markdownify }}
-            <div class="buttons">
-              <!-- <a class="external-link button is-light" href="cv.html">
-                <span class="icon"><i class="fas fa-file"></i></span>
-                <span>CV</span>
-              </a> -->
-              <a class="external-link button is-light" href="cv/Hyunsoo_Cha_s_Resume__CV_.pdf" target="_blank">
-                <span class="icon"><i class="fas fa-file"></i></span>
-                <span>CV</span>
-              </a>
-              
-              <a class="external-link button is-light"
-                href="https://scholar.google.com/citations?user={{ site.google_scholar }}">
-                <span class="icon"><i class="ai ai-google-scholar"></i></span>
-                <span>Scholar</span>
-              </a>
-
-              <a class="external-link button is-light" href="https://github.com/{{ site.github_username }}">
-                <span class="icon"><i class="fab fa-github"></i></span>
-                <span>GitHub</span>
-              </a>
-
-              <a class="external-link button is-light" href="https://x.com/{{ site.x_username }}">
-                <span class="icon"><i class="fab fa-twitter"></i></span>
-                <span>X(Twitter)</span>
-              </a>
-
-              <a class="external-link button is-light" href="https://linkedin.com/in/{{ site.linkedin_username }}">
-                <span class="icon"><i class="fab fa-linkedin"></i></span>
-                <span>LinkedIn</span>
-              </a>
-            </div>
-
+        <div class="hero-info">
+          <h1>{{ site.name }}</h1>
+          <div class="position">{{ site.position }} @ Seoul National University</div>
+          <div class="bio">
+            {{ site.description | markdownify | remove: '<p>' | remove: '</p>' }}
+          </div>
+          <div class="social-links">
+            <a class="social-link" href="cv/Hyunsoo_Cha_s_Resume__CV_.pdf" target="_blank">
+              <i class="fas fa-file"></i> CV
+            </a>
+            <a class="social-link" href="https://scholar.google.com/citations?user={{ site.google_scholar }}">
+              <i class="ai ai-google-scholar"></i> Scholar
+            </a>
+            <a class="social-link" href="https://github.com/{{ site.github_username }}">
+              <i class="fab fa-github"></i> GitHub
+            </a>
+            <a class="social-link" href="https://x.com/{{ site.x_username }}">
+              <i class="fab fa-twitter"></i> X
+            </a>
+            <a class="social-link" href="https://linkedin.com/in/{{ site.linkedin_username }}">
+              <i class="fab fa-linkedin"></i> LinkedIn
+            </a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- News. -->
-  <div class="hr">
+  <div class="container"><hr class="divider"></div>
+
+  <!-- News -->
+  <section class="section" id="news">
     <div class="container">
-      <hr>
+      <div class="section-header">
+        <h2>News</h2>
+      </div>
+      <ul class="news-list">
+        {% for news in site.data.news %}
+        <li class="fade-in">
+          <span class="news-date">{{ news.date }}</span>
+          <span>{{ news.description | markdownify | remove: '<p>' | remove: '</p>' }}</span>
+        </li>
+        {% endfor %}
+      </ul>
     </div>
-  </div>
+  </section>
 
-  <section class="section">
-    <div class="container is-max-desktop">
+  <div class="container"><hr class="divider"></div>
 
-      <!--<h2 class="title is-3">News</h2>
-      <div class="content">
-        <ul>
-          {% for news in site.data.news %}
-          <li>
-            <b>{{ news.date }}</b>: {{ news.description | markdownify | remove: '<p>' | remove: '</p>' }}
-          </li>
-          {% endfor %}
-        </ul>
-      </div>-->
-
-      <h2 class="title is-3">Publications</h2>
+  <!-- Publications -->
+  <section class="section" id="publications">
+    <div class="container">
+      <div class="section-header">
+        <h2>Publications</h2>
+      </div>
 
       {% for publication in site.data.publications %}
-      <div class="publication-block columns">
-
-        <div class="column is-3">
-          <div class="publication-image {% if publication.image_mouseover %}publication-mousecell{% endif %}">
-            {% if publication.image_mouseover contains "mp4" %}
-            <video autoplay preload playsinline class="" height="100%" loop muted width="100%">
-              <source src="./images/{{ publication.image_mouseover }}" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-            {% endif %}
-            <img alt="{{ publication.title }}" src="./images/{{ publication.image }}" />
-          </div>
+      <div class="pub-card fade-in">
+        <div class="pub-image">
+          {% if publication.image_mouseover contains "mp4" %}
+          <video autoplay preload playsinline loop muted>
+            <source src="./images/{{ publication.image_mouseover }}" type="video/mp4">
+          </video>
+          {% endif %}
+          <img alt="{{ publication.title }}" src="./images/{{ publication.image }}" />
         </div>
-
-        <div class="column">
-          <div class="content">
-            <h3 class="publication-title"><a href="{{ publication.project_page }}">{{ publication.title }}</a></h3>
-            <div class="publication-authors">
-              {% for author_id in publication.authors %}
+        <div class="pub-content">
+          <span class="pub-venue">
+            {{ publication.venue }}
+            {% for award in publication.awards %}
+              <span class="award">{{ award }}</span>
+            {% endfor %}
+          </span>
+          <h3 class="pub-title">
+            <a href="{{ publication.project_page }}">{{ publication.title }}</a>
+          </h3>
+          <div class="pub-authors">
+            {% for author_id in publication.authors %}
               {% assign author = site.data.authors[author_id] %}
-              <span class="author-block {% if author.is_me %}author-me{% endif %}">
-                {% if author.is_me %}
-                {{ author.first_name }} {{author.middle_name}} {{ author.last_name }}{% if forloop.last == false %},{%
-                endif %}
-                {% else %}
-                <a href="{{ author.website }}">{{ author.first_name }} {{ author.middle_name }} {{ author.last_name
-                  }}</a>{% if forloop.last == false %},{% endif %}
-                {% endif %}
-              </span>
-              {% endfor %}
-            </div>
-            <div class="publication-venue">
-              <span>{{ publication.venue }}</span>
-              {% for award in publication.awards %}
-                <span class="publication-venue-emph">{{ award }}<span>
-              {% endfor %}
-            </div>
-            <p class="publication-description">{{ publication.description }}</p>
-            <!-- Publication Links. -->
-            <div class="publication-links buttons field has-addons">
-              <a class="external-link button is-small is-ghost" href="{{ publication.project_page }}">
-                <span class="icon"><i class="fas fa-globe-asia"></i></span>
-                <span>Project Page</span>
-              </a>
-              <a class="external-link button is-small is-ghost" href="https://arxiv.org/pdf/{{ publication.arxiv }}.pdf">
-                <span class="icon"><i class="fas fa-file-pdf"></i></span>
-                <span>PDF</span>
-              </a>
-              <a class="external-link button is-small is-ghost" href="https://arxiv.org/abs/{{ publication.arxiv }}">
-                <span class="icon"><i class="ai ai-arxiv"></i></span>
-                <span>arXiv</span>
-              </a>
-              {% if publication.github %}
-              <a class="external-link button is-small is-ghost" href="https://github.com/{{ publication.github }}">
-                <span class="icon"><i class="fa fab fa-github"></i></span>
-                <span>Code</span>
-              </a>
+              {% if author.is_me %}
+                <span class="me">{{ author.first_name }} {{ author.middle_name }} {{ author.last_name }}</span>{% if forloop.last == false %}, {% endif %}
+              {% else %}
+                <a href="{{ author.website }}">{{ author.first_name }} {{ author.middle_name }} {{ author.last_name }}</a>{% if forloop.last == false %}, {% endif %}
               {% endif %}
-            </div>
-            <!--/ Publication Links. -->
+            {% endfor %}
+          </div>
+          <p class="pub-desc">{{ publication.description }}</p>
+          <div class="pub-links">
+            <a class="pub-link" href="{{ publication.project_page }}">
+              <i class="fas fa-globe-asia"></i> Project
+            </a>
+            <a class="pub-link" href="https://arxiv.org/pdf/{{ publication.arxiv }}.pdf">
+              <i class="fas fa-file-pdf"></i> PDF
+            </a>
+            <a class="pub-link" href="https://arxiv.org/abs/{{ publication.arxiv }}">
+              <i class="ai ai-arxiv"></i> arXiv
+            </a>
+            {% if publication.github %}
+            <a class="pub-link" href="https://github.com/{{ publication.github }}">
+              <i class="fab fa-github"></i> Code
+            </a>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -182,29 +690,35 @@ layout: null
     </div>
   </section>
 
-  <footer class="footer">
+  <!-- Footer -->
+  <footer>
     <div class="container">
-      <div class="content footer-links has-text-centered">
-        <a href="mailto:{{ site.email }}">
-          <i class="fas fa-envelope"></i>
-        </a>
-        <a class="external-link" href="https://github.com/{{ site.github_username }}">
-          <i class="fab fa-github"></i>
-        </a>
-        <a class="external-link" href="https://scholar.google.com/citations?user={{ site.google_scholar }}">
-          <i class="ai ai-google-scholar"></i>
-        </a>
+      <div class="footer-icons">
+        <a href="mailto:{{ site.email }}"><i class="fas fa-envelope"></i></a>
+        <a href="https://github.com/{{ site.github_username }}"><i class="fab fa-github"></i></a>
+        <a href="https://scholar.google.com/citations?user={{ site.google_scholar }}"><i class="ai ai-google-scholar"></i></a>
       </div>
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-8">
-          <div class="content">
-            <p>
-              Borrowed and modified from <a href="https://github.com/keunhong/keunhong.github.io">this template</a>.
-            </p>
-          </div>
-        </div>
-      </div>
+      <p class="footer-text">&copy; {{ 'now' | date: '%Y' }} {{ site.name }}</p>
     </div>
   </footer>
+
+  <script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 10);
+    });
+
+    // Fade-in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
