@@ -562,6 +562,25 @@ layout: null
       overflow: hidden;
     }
 
+    .pub-tags {
+      display: flex;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.6rem;
+    }
+
+    .pub-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--accent);
+      background: transparent;
+      border: 1px solid var(--brown-200);
+      padding: 0.15rem 0.55rem;
+      border-radius: 100px;
+      letter-spacing: 0.02em;
+    }
+
     .pub-links {
       display: flex;
       gap: 0.5rem;
@@ -730,9 +749,22 @@ layout: null
 
       <div class="sidebar-section-title">Research Interests</div>
       <div class="interest-tags">
-        <span class="interest-tag">Generative Models</span>
-        <span class="interest-tag">Interactive Avatars</span>
-        <span class="interest-tag">Appearance Editing</span>
+        {% assign all_tags = "" %}
+        {% for pub in site.data.publications %}
+          {% for tag in pub.tags %}
+            {% unless all_tags contains tag %}
+              {% if all_tags == "" %}
+                {% assign all_tags = tag %}
+              {% else %}
+                {% assign all_tags = all_tags | append: "|" | append: tag %}
+              {% endif %}
+            {% endunless %}
+          {% endfor %}
+        {% endfor %}
+        {% assign tag_list = all_tags | split: "|" | sort %}
+        {% for tag in tag_list %}
+          <span class="interest-tag">{{ tag }}</span>
+        {% endfor %}
       </div>
     </aside>
 
@@ -810,6 +842,14 @@ layout: null
               {% endfor %}
             </div>
             <p class="pub-desc">{{ publication.description }}</p>
+            {% if publication.tags %}
+            {% assign sorted_tags = publication.tags | sort %}
+            <div class="pub-tags">
+              {% for tag in sorted_tags %}
+                <span class="pub-tag">{{ tag }}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
             <div class="pub-links">
               <a class="pub-link" href="{{ publication.project_page }}">
                 <i class="fas fa-globe-asia"></i> Project

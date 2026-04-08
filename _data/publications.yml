@@ -13,6 +13,11 @@
     - wonjung
     - byungjun
     - hanbyul
+  tags:
+    - Generative Models
+    - Appearance Editing
+    - Virtual Try-On
+    - Animation
 
 - id: durian
   title: "Durian: Dual Reference Image-Guided Portrait Animation with Attribute Transfer"
@@ -28,6 +33,12 @@
     - hyunsoo
     - byungjun
     - hanbyul
+  tags:
+    - Generative Models
+    - Appearance Editing
+    - Animation
+    - Appearance Editing
+    - Virtual Try-On
 
 - id: perse
   title: "PERSE: Personalized 3D Generative Avatars from A Single Portrait"
@@ -43,6 +54,11 @@
     - hyunsoo
     - inhee
     - hanbyul
+  tags:
+    - Generative Models
+    - 3D Avatar
+    - Appearance Editing
+    - Virtual Try-On
 
 - id: pegasus
   title: "PEGASUS: Personalized Generative 3D Avatars with Composable Attributes"
@@ -57,3 +73,6 @@
     - hyunsoo
     - byungjun
     - hanbyul
+  tags:
+    - 3D Avatar
+    - Appearance Editing
