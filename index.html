@@ -456,6 +456,17 @@ layout: null
       border-left-color: var(--accent-hover);
     }
 
+    @keyframes pub-flash {
+      0%   { box-shadow: 0 0 0 0 rgba(166, 124, 82, 0); }
+      15%  { box-shadow: 0 0 0 4px rgba(166, 124, 82, 0.35); }
+      40%  { box-shadow: 0 0 20px 4px rgba(166, 124, 82, 0.15); }
+      100% { box-shadow: 0 0 0 0 rgba(166, 124, 82, 0); }
+    }
+
+    .pub-card--flash {
+      animation: pub-flash 1.2s ease-out;
+    }
+
     .pub-image {
       position: relative;
       border-radius: 0;
@@ -946,15 +957,18 @@ layout: null
       btn.textContent = isExpanded ? 'Show more' : 'Show less';
     }
 
-    // Interest tag click → scroll to first matching publication
+    // Interest tag click → scroll to random matching publication
     document.querySelectorAll('.interest-tag[data-tag]').forEach(tag => {
       tag.addEventListener('click', () => {
         const target = tag.getAttribute('data-tag');
-        const match = document.querySelector('.pub-card[data-tags*="' + target + '"]');
-        if (match) {
+        const matches = Array.from(document.querySelectorAll('.pub-card[data-tags*="' + target + '"]'));
+        if (matches.length > 0) {
+          const match = matches[Math.floor(Math.random() * matches.length)];
           match.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          match.style.boxShadow = '0 0 0 2px var(--accent)';
-          setTimeout(() => { match.style.boxShadow = ''; }, 1500);
+          match.classList.add('pub-card--flash');
+          match.addEventListener('animationend', () => {
+            match.classList.remove('pub-card--flash');
+          }, { once: true });
         }
       });
     });
