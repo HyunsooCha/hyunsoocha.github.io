@@ -163,7 +163,7 @@ layout: null
 
     .profile-name {
       font-family: 'Playfair Display', serif;
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: 700;
       color: var(--text-primary);
       margin-bottom: 0.25rem;
@@ -441,7 +441,7 @@ layout: null
 
     .pub-card.highlight {
       border-left: 3px solid var(--accent);
-      background: linear-gradient(135deg, #fffaf4 0%, var(--bg-card) 100%);
+      background: linear-gradient(to right, #fffaf4 0%, #fffaf4 280px, var(--bg-card) 320px);
     }
 
     .pub-card.highlight:hover {
@@ -706,11 +706,11 @@ layout: null
       <h1 class="profile-name">{{ site.name }}</h1>
       <div class="profile-role">{{ site.position }}</div>
       <div class="profile-org">Seoul National University</div>
-      <a class="profile-email" href="mailto:{{ site.email }}">
-        <i class="fas fa-envelope"></i> {{ site.email }}
-      </a>
 
       <div class="social-icons">
+        <a class="social-icon" href="mailto:{{ site.email }}" title="Email">
+          <i class="fas fa-envelope"></i>
+        </a>
         <a class="social-icon" href="cv/Hyunsoo_Cha_s_Resume__CV_.pdf" target="_blank" title="CV">
           <i class="fas fa-file"></i>
         </a>
