@@ -958,19 +958,26 @@ layout: null
       btn.textContent = isExpanded ? 'Show more' : 'Show less';
     }
 
-    // Interest tag click → scroll to random matching publication
+    // Interest tag click → scroll through matching publications sequentially
+    const tagClickState = {};
     document.querySelectorAll('.interest-tag[data-tag]').forEach(tag => {
       tag.addEventListener('click', () => {
         const target = tag.getAttribute('data-tag');
         const matches = Array.from(document.querySelectorAll('.pub-card[data-tags*="' + target + '"]'));
-        if (matches.length > 0) {
-          const match = matches[Math.floor(Math.random() * matches.length)];
-          match.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          match.classList.add('pub-card--flash');
-          match.addEventListener('animationend', () => {
-            match.classList.remove('pub-card--flash');
-          }, { once: true });
-        }
+        if (matches.length === 0) return;
+
+        if (!(target in tagClickState)) tagClickState[target] = 0;
+        const idx = tagClickState[target] % matches.length;
+        tagClickState[target] = idx + 1;
+
+        const match = matches[idx];
+        match.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        match.classList.remove('pub-card--flash');
+        void match.offsetWidth;
+        match.classList.add('pub-card--flash');
+        match.addEventListener('animationend', () => {
+          match.classList.remove('pub-card--flash');
+        }, { once: true });
       });
     });
 
