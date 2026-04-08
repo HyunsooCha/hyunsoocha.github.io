@@ -1,5 +1,12 @@
 - title: Research Scientist Intern (Upcoming)
   organization: NVIDIA
   location: Santa Clara, CA, USA
-  period: Jun 2026 - 
+  period: Jun 2026 -
   logo: nvidia-logo-vert.png
+
+- title: Intern
+  organization: Samsung Electronics, DRAM Solution Team
+  location: Hwaseong, Korea
+  period: Sep 2021 - Dec 2021
+  logo: samsung-logo.png
+  description: Developed and validated BIOS modules for Intel Xeon server CPUs

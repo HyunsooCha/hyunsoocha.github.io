@@ -360,6 +360,13 @@ layout: null
       font-weight: 500;
     }
 
+    .exp-desc {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+      line-height: 1.5;
+    }
+
     .exp-period {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.78rem;
@@ -763,7 +770,7 @@ layout: null
         {% endfor %}
         {% assign tag_list = all_tags | split: "|" | sort %}
         {% for tag in tag_list %}
-          <span class="interest-tag">{{ tag }}</span>
+          <span class="interest-tag" data-tag="{{ tag }}" style="cursor:pointer;">{{ tag }}</span>
         {% endfor %}
       </div>
     </aside>
@@ -804,6 +811,9 @@ layout: null
             <div class="exp-title">{{ exp.title }}</div>
             <div class="exp-org">{{ exp.organization }}</div>
             <div class="exp-period">{{ exp.location }} &middot; {{ exp.period }}</div>
+            {% if exp.description %}
+            <div class="exp-desc">{{ exp.description }}</div>
+            {% endif %}
           </div>
         </div>
         {% endfor %}
@@ -814,7 +824,7 @@ layout: null
         <div class="section-header"><h2>Publications</h2></div>
 
         {% for publication in site.data.publications %}
-        <div class="pub-card fade-in{% if publication.highlight %} highlight{% endif %}">
+        <div class="pub-card fade-in{% if publication.highlight %} highlight{% endif %}" data-tags="{{ publication.tags | join: '|' }}">
           <div class="pub-image {% unless publication.image_mouseover contains "mp4" %}pub-image--no-video{% endunless %}">
             {% if publication.image_mouseover contains "mp4" %}
             <video preload="auto" playsinline loop muted>
@@ -935,6 +945,19 @@ layout: null
       }
       btn.textContent = isExpanded ? 'Show more' : 'Show less';
     }
+
+    // Interest tag click → scroll to first matching publication
+    document.querySelectorAll('.interest-tag[data-tag]').forEach(tag => {
+      tag.addEventListener('click', () => {
+        const target = tag.getAttribute('data-tag');
+        const match = document.querySelector('.pub-card[data-tags*="' + target + '"]');
+        if (match) {
+          match.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          match.style.boxShadow = '0 0 0 2px var(--accent)';
+          setTimeout(() => { match.style.boxShadow = ''; }, 1500);
+        }
+      });
+    });
 
     // Video hover play
     document.querySelectorAll('.pub-image').forEach(container => {
