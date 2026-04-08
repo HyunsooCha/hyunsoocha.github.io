@@ -27,6 +27,7 @@ layout: null
   <!-- Icons -->
   <link href="{{ '/css/fontawesome.all.min.css' | relative_url }}" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" rel="stylesheet">
+
   <script defer src="{{ '/js/fontawesome.all.min.js' | relative_url }}"></script>
 
   <style>
@@ -73,7 +74,7 @@ layout: null
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ── Navigation ── */
+    /* Navigation */
     nav {
       position: fixed;
       top: 0;
@@ -91,7 +92,7 @@ layout: null
     }
 
     .nav-inner {
-      max-width: 1200px;
+      max-width: 1080px;
       margin: 0 auto;
       padding: 0.8rem 2rem;
       display: flex;
@@ -122,170 +123,134 @@ layout: null
       letter-spacing: 0.01em;
     }
 
-    .nav-links a:hover,
-    .nav-links a.active {
+    .nav-links a:hover {
       color: var(--accent);
     }
 
-    /* ── Page Layout ── */
-    .page-container {
-      max-width: 1200px;
+    /* Container */
+    .container {
+      max-width: 1080px;
       margin: 0 auto;
-      padding: 5.5rem 2rem 2rem;
+      padding: 0 2rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding-top: 7rem;
+      padding-bottom: 4rem;
+    }
+
+    .hero-grid {
       display: grid;
-      grid-template-columns: 300px 1fr;
-      gap: 3.5rem;
-      align-items: start;
+      grid-template-columns: 220px 1fr;
+      gap: 3rem;
+      align-items: center;
     }
 
-    /* ── Left Sidebar (sticky) ── */
-    .profile {
-      position: sticky;
-      top: 5rem;
-      padding: 2rem 0;
+    .portrait-wrapper {
+      position: relative;
     }
 
-    .profile-photo {
+    .portrait-wrapper img {
       width: 220px;
       height: 220px;
       border-radius: 50%;
       object-fit: cover;
       border: 4px solid var(--brown-200);
       box-shadow: 0 8px 30px var(--shadow);
-      margin-bottom: 1.5rem;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .profile-photo:hover {
+    .portrait-wrapper img:hover {
       transform: scale(1.03);
       box-shadow: 0 12px 40px rgba(90, 62, 40, 0.15);
     }
 
-    .profile-name {
+    .hero-info h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 2rem;
+      font-size: 2.8rem;
       font-weight: 700;
       color: var(--text-primary);
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.3rem;
       line-height: 1.2;
     }
 
-    .profile-role {
-      font-size: 1rem;
+    .hero-info .position {
+      font-size: 1.15rem;
       color: var(--accent);
       font-weight: 500;
-      margin-bottom: 0.15rem;
+      margin-bottom: 1rem;
     }
 
-    .profile-org {
-      font-size: 0.92rem;
-      color: var(--text-muted);
-      margin-bottom: 1.2rem;
-    }
-
-    .profile-email {
-      font-size: 0.88rem;
+    .hero-info .bio {
+      font-size: 1rem;
       color: var(--text-secondary);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      margin-bottom: 1.2rem;
-      transition: color 0.2s;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
     }
 
-    .profile-email:hover {
+    .hero-info .bio a {
       color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
     }
 
-    /* Social icons row */
-    .social-icons {
+    .hero-info .bio a:hover {
+      border-bottom-color: var(--accent);
+    }
+
+    /* Social Links */
+    .social-links {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.6rem;
       flex-wrap: wrap;
-      margin-bottom: 1.8rem;
     }
 
-    .social-icon {
+    .social-link {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
+      gap: 0.45rem;
+      padding: 0.5rem 1rem;
       background: var(--bg-card);
       border: 1px solid var(--border);
+      border-radius: 100px;
       color: var(--text-secondary);
-      font-size: 1.05rem;
       text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
       transition: all 0.2s ease;
     }
 
-    .social-icon:hover {
+    .social-link:hover {
       background: var(--brown-100);
       border-color: var(--brown-300);
       color: var(--accent-hover);
-      transform: translateY(-2px);
+      transform: translateY(-1px);
       box-shadow: 0 4px 12px var(--shadow);
     }
 
-    /* Research Interests */
-    .sidebar-section-title {
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--text-muted);
-      margin-bottom: 0.7rem;
+    .social-link i {
+      font-size: 1rem;
     }
 
-    .interest-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
-
-    .interest-tag {
-      display: inline-block;
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--text-secondary);
-      background: var(--bg-tag);
-      border: 1px solid var(--border);
-      padding: 0.3rem 0.75rem;
-      border-radius: 100px;
-      transition: all 0.2s ease;
-    }
-
-    .interest-tag:hover {
-      background: var(--brown-200);
-      border-color: var(--brown-300);
-      color: var(--accent-hover);
-    }
-
-    /* ── Right Content ── */
-    .content {
-      padding: 2rem 0 4rem;
-      min-width: 0;
-    }
-
+    /* Section */
     .section {
-      margin-bottom: 3rem;
+      padding: 3rem 0;
     }
 
     .section-header {
       display: flex;
       align-items: center;
       gap: 1rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
     }
 
     .section-header h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.6rem;
+      font-size: 1.8rem;
       font-weight: 700;
       color: var(--text-primary);
-      white-space: nowrap;
     }
 
     .section-header::after {
@@ -295,79 +260,15 @@ layout: null
       background: linear-gradient(to right, var(--border), transparent);
     }
 
-    /* About */
-    .about-text {
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-      line-height: 1.85;
+    /* Divider */
+    .divider {
+      border: none;
+      height: 1px;
+      background: var(--border);
+      margin: 0;
     }
 
-    .about-text a {
-      color: var(--accent);
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.2s;
-    }
-
-    .about-text a:hover {
-      border-bottom-color: var(--accent);
-    }
-
-    /* Experience */
-    .exp-card {
-      display: flex;
-      gap: 1.2rem;
-      padding: 1.2rem 1.4rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      margin-bottom: 1rem;
-      align-items: center;
-      transition: all 0.3s ease;
-    }
-
-    .exp-card:hover {
-      box-shadow: 0 6px 24px var(--shadow);
-      transform: translateY(-2px);
-      border-color: var(--brown-300);
-    }
-
-    .exp-logo {
-      width: 52px;
-      height: 52px;
-      border-radius: 12px;
-      object-fit: contain;
-      background: var(--bg-tag);
-      padding: 6px;
-      flex-shrink: 0;
-    }
-
-    .exp-info {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .exp-title {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 0.15rem;
-    }
-
-    .exp-org {
-      font-size: 0.88rem;
-      color: var(--accent);
-      font-weight: 500;
-    }
-
-    .exp-period {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-top: 0.2rem;
-    }
-
-    /* News */
+    /* News Section */
     .news-list {
       list-style: none;
     }
@@ -422,13 +323,13 @@ layout: null
     /* Publication Card */
     .pub-card {
       display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 1.5rem;
-      padding: 1.5rem;
+      grid-template-columns: 360px 1fr;
+      gap: 1.8rem;
+      padding: 1.8rem;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 16px;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.5rem;
       transition: all 0.3s ease;
       align-items: stretch;
     }
@@ -489,7 +390,7 @@ layout: null
       background: var(--bg-tag);
       padding: 0.25rem 0.7rem;
       border-radius: 100px;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.7rem;
       width: fit-content;
       letter-spacing: 0.03em;
     }
@@ -501,10 +402,10 @@ layout: null
     }
 
     .pub-title {
-      font-size: 1.05rem;
+      font-size: 1.15rem;
       font-weight: 600;
       color: var(--text-primary);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.5rem;
       line-height: 1.4;
     }
 
@@ -519,9 +420,9 @@ layout: null
     }
 
     .pub-authors {
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       color: var(--text-muted);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.5rem;
       line-height: 1.6;
     }
 
@@ -541,9 +442,9 @@ layout: null
     }
 
     .pub-desc {
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       color: var(--text-secondary);
-      margin-bottom: 0.8rem;
+      margin-bottom: 1rem;
       line-height: 1.6;
       display: -webkit-box;
       -webkit-line-clamp: 3;
@@ -562,8 +463,8 @@ layout: null
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;
-      padding: 0.3rem 0.7rem;
-      font-size: 0.78rem;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.8rem;
       font-weight: 500;
       color: var(--text-secondary);
       background: var(--bg-tag);
@@ -583,9 +484,27 @@ layout: null
 
     /* Footer */
     footer {
-      padding: 2rem 0;
-      text-align: center;
+      margin-top: 3rem;
+      padding: 2.5rem 0;
       border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .footer-icons {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-icons a {
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      transition: color 0.2s;
+    }
+
+    .footer-icons a:hover {
+      color: var(--accent);
     }
 
     .footer-text {
@@ -598,36 +517,29 @@ layout: null
       text-decoration: none;
     }
 
-    /* ── Responsive ── */
-    @media (max-width: 900px) {
-      .page-container {
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-grid {
         grid-template-columns: 1fr;
-        gap: 0;
-        padding-top: 4.5rem;
-      }
-
-      .profile {
-        position: relative;
-        top: auto;
         text-align: center;
-        padding: 2rem 0 1rem;
-        border-bottom: 1px solid var(--border);
-        margin-bottom: 1rem;
+        gap: 2rem;
       }
 
-      .profile-photo {
-        margin-left: auto;
-        margin-right: auto;
-        display: block;
+      .portrait-wrapper {
+        display: flex;
+        justify-content: center;
+      }
+
+      .portrait-wrapper img {
         width: 180px;
         height: 180px;
       }
 
-      .social-icons {
-        justify-content: center;
+      .hero-info h1 {
+        font-size: 2rem;
       }
 
-      .interest-tags {
+      .social-links {
         justify-content: center;
       }
 
@@ -640,20 +552,19 @@ layout: null
         aspect-ratio: 16/9;
         min-height: auto;
       }
+
+      .nav-links {
+        gap: 1rem;
+      }
+
+      .container {
+        padding: 0 1.2rem;
+      }
     }
 
     @media (max-width: 480px) {
       .nav-links {
         display: none;
-      }
-
-      .page-container {
-        padding-left: 1.2rem;
-        padding-right: 1.2rem;
-      }
-
-      .profile-name {
-        font-size: 1.6rem;
       }
     }
 
@@ -678,8 +589,6 @@ layout: null
     <div class="nav-inner">
       <a href="#" class="nav-name">{{ site.name }}</a>
       <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#experience">Experience</a></li>
         <li><a href="#news">News</a></li>
         <li><a href="#publications">Publications</a></li>
         <li><a href="cv/Hyunsoo_Cha_s_Resume__CV_.pdf" target="_blank">CV</a></li>
@@ -687,146 +596,133 @@ layout: null
     </div>
   </nav>
 
-  <!-- Page Layout -->
-  <div class="page-container">
-
-    <!-- ── Left Sidebar ── -->
-    <aside class="profile">
-      <img class="profile-photo" src="{{ '/images/portrait_2022.jpg' | relative_url }}" alt="{{ site.name }}" />
-      <h1 class="profile-name">{{ site.name }}</h1>
-      <div class="profile-role">{{ site.position }}</div>
-      <div class="profile-org">Seoul National University</div>
-      <a class="profile-email" href="mailto:{{ site.email }}">
-        <i class="fas fa-envelope"></i> {{ site.email }}
-      </a>
-
-      <div class="social-icons">
-        <a class="social-icon" href="cv/Hyunsoo_Cha_s_Resume__CV_.pdf" target="_blank" title="CV">
-          <i class="fas fa-file"></i>
-        </a>
-        <a class="social-icon" href="https://scholar.google.com/citations?user={{ site.google_scholar }}" title="Google Scholar">
-          <i class="ai ai-google-scholar"></i>
-        </a>
-        <a class="social-icon" href="https://github.com/{{ site.github_username }}" title="GitHub">
-          <i class="fab fa-github"></i>
-        </a>
-        <a class="social-icon" href="https://x.com/{{ site.x_username }}" title="X / Twitter">
-          <i class="fab fa-twitter"></i>
-        </a>
-        <a class="social-icon" href="https://linkedin.com/in/{{ site.linkedin_username }}" title="LinkedIn">
-          <i class="fab fa-linkedin"></i>
-        </a>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="portrait-wrapper">
+          <img src="{{ '/images/portrait_2022.jpg' | relative_url }}" alt="{{ site.name }}" />
+        </div>
+        <div class="hero-info">
+          <h1>{{ site.name }}</h1>
+          <div class="position">{{ site.position }} @ Seoul National University</div>
+          <div class="bio">
+            {{ site.description | markdownify | remove: '<p>' | remove: '</p>' }}
+          </div>
+          <div class="social-links">
+            <a class="social-link" href="cv/Hyunsoo_Cha_s_Resume__CV_.pdf" target="_blank">
+              <i class="fas fa-file"></i> CV
+            </a>
+            <a class="social-link" href="https://scholar.google.com/citations?user={{ site.google_scholar }}">
+              <i class="ai ai-google-scholar"></i> Scholar
+            </a>
+            <a class="social-link" href="https://github.com/{{ site.github_username }}">
+              <i class="fab fa-github"></i> GitHub
+            </a>
+            <a class="social-link" href="https://x.com/{{ site.x_username }}">
+              <i class="fab fa-twitter"></i> X
+            </a>
+            <a class="social-link" href="https://linkedin.com/in/{{ site.linkedin_username }}">
+              <i class="fab fa-linkedin"></i> LinkedIn
+            </a>
+          </div>
+        </div>
       </div>
+    </div>
+  </section>
 
-      <div class="sidebar-section-title">Research Interests</div>
-      <div class="interest-tags">
-        <span class="interest-tag">Generative Models</span>
-        <span class="interest-tag">Interactive Avatars</span>
-        <span class="interest-tag">Appearance Editing</span>
+  <div class="container"><hr class="divider"></div>
+
+  <!-- News -->
+  <section class="section" id="news">
+    <div class="container">
+      <div class="section-header">
+        <h2>News</h2>
       </div>
-    </aside>
-
-    <!-- ── Right Content ── -->
-    <div class="content">
-
-      <!-- About -->
-      <section class="section" id="about">
-        <div class="section-header"><h2>About</h2></div>
-        <div class="about-text fade-in">
-          {{ site.description | markdownify | remove: '<p>' | remove: '</p>' }}
-        </div>
-      </section>
-
-      <!-- Experience -->
-      <section class="section" id="experience">
-        <div class="section-header"><h2>Experience</h2></div>
-
-        <div class="exp-card fade-in">
-          <img class="exp-logo" src="{{ '/images/nvidia_logo.png' | relative_url }}" alt="NVIDIA" />
-          <div class="exp-info">
-            <div class="exp-title">Research Scientist Intern</div>
-            <div class="exp-org">NVIDIA</div>
-            <div class="exp-period">2025</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- News -->
-      <section class="section" id="news">
-        <div class="section-header"><h2>News</h2></div>
-        <ul class="news-list" id="news-list">
-          {% for news in site.data.news %}
-          <li class="fade-in">
-            <span class="news-date">{{ news.date }}</span>
-            <span>{{ news.description | markdownify | remove: '<p>' | remove: '</p>' }}</span>
-          </li>
-          {% endfor %}
-        </ul>
-        <button class="news-toggle" id="news-toggle" style="display:none;" onclick="toggleNews()">Show more</button>
-      </section>
-
-      <!-- Publications -->
-      <section class="section" id="publications">
-        <div class="section-header"><h2>Publications</h2></div>
-
-        {% for publication in site.data.publications %}
-        <div class="pub-card fade-in">
-          <div class="pub-image {% unless publication.image_mouseover contains "mp4" %}pub-image--no-video{% endunless %}">
-            {% if publication.image_mouseover contains "mp4" %}
-            <video preload="auto" playsinline loop muted>
-              <source src="./images/{{ publication.image_mouseover }}" type="video/mp4">
-            </video>
-            {% endif %}
-            <img alt="{{ publication.title }}" src="./images/{{ publication.image }}" />
-          </div>
-          <div class="pub-content">
-            <span class="pub-venue">
-              {{ publication.venue }}
-              {% for award in publication.awards %}
-                <span class="award">{{ award }}</span>
-              {% endfor %}
-            </span>
-            <h3 class="pub-title">
-              <a href="{{ publication.project_page }}">{{ publication.title }}</a>
-            </h3>
-            <div class="pub-authors">
-              {% for author_id in publication.authors %}
-                {% assign author = site.data.authors[author_id] %}
-                {% if author.is_me %}
-                  <span class="me">{{ author.first_name }} {{ author.middle_name }} {{ author.last_name }}</span>{% if forloop.last == false %}, {% endif %}
-                {% else %}
-                  <a href="{{ author.website }}">{{ author.first_name }} {{ author.middle_name }} {{ author.last_name }}</a>{% if forloop.last == false %}, {% endif %}
-                {% endif %}
-              {% endfor %}
-            </div>
-            <p class="pub-desc">{{ publication.description }}</p>
-            <div class="pub-links">
-              <a class="pub-link" href="{{ publication.project_page }}">
-                <i class="fas fa-globe-asia"></i> Project
-              </a>
-              <a class="pub-link" href="https://arxiv.org/pdf/{{ publication.arxiv }}.pdf">
-                <i class="fas fa-file-pdf"></i> PDF
-              </a>
-              <a class="pub-link" href="https://arxiv.org/abs/{{ publication.arxiv }}">
-                <i class="ai ai-arxiv"></i> arXiv
-              </a>
-              {% if publication.github %}
-              <a class="pub-link" href="https://github.com/{{ publication.github }}">
-                <i class="fab fa-github"></i> Code
-              </a>
-              {% endif %}
-            </div>
-          </div>
-        </div>
+      <ul class="news-list" id="news-list">
+        {% for news in site.data.news %}
+        <li class="fade-in">
+          <span class="news-date">{{ news.date }}</span>
+          <span>{{ news.description | markdownify | remove: '<p>' | remove: '</p>' }}</span>
+        </li>
         {% endfor %}
-      </section>
+      </ul>
+      <button class="news-toggle" id="news-toggle" style="display:none;" onclick="toggleNews()">Show more</button>
+    </div>
+  </section>
 
-    </div><!-- .content -->
-  </div><!-- .page-container -->
+  <div class="container"><hr class="divider"></div>
+
+  <!-- Publications -->
+  <section class="section" id="publications">
+    <div class="container">
+      <div class="section-header">
+        <h2>Publications</h2>
+      </div>
+
+      {% for publication in site.data.publications %}
+      <div class="pub-card fade-in">
+        <div class="pub-image {% unless publication.image_mouseover contains "mp4" %}pub-image--no-video{% endunless %}">
+          {% if publication.image_mouseover contains "mp4" %}
+          <video preload="auto" playsinline loop muted>
+            <source src="./images/{{ publication.image_mouseover }}" type="video/mp4">
+          </video>
+          {% endif %}
+          <img alt="{{ publication.title }}" src="./images/{{ publication.image }}" />
+        </div>
+        <div class="pub-content">
+          <span class="pub-venue">
+            {{ publication.venue }}
+            {% for award in publication.awards %}
+              <span class="award">{{ award }}</span>
+            {% endfor %}
+          </span>
+          <h3 class="pub-title">
+            <a href="{{ publication.project_page }}">{{ publication.title }}</a>
+          </h3>
+          <div class="pub-authors">
+            {% for author_id in publication.authors %}
+              {% assign author = site.data.authors[author_id] %}
+              {% if author.is_me %}
+                <span class="me">{{ author.first_name }} {{ author.middle_name }} {{ author.last_name }}</span>{% if forloop.last == false %}, {% endif %}
+              {% else %}
+                <a href="{{ author.website }}">{{ author.first_name }} {{ author.middle_name }} {{ author.last_name }}</a>{% if forloop.last == false %}, {% endif %}
+              {% endif %}
+            {% endfor %}
+          </div>
+          <p class="pub-desc">{{ publication.description }}</p>
+          <div class="pub-links">
+            <a class="pub-link" href="{{ publication.project_page }}">
+              <i class="fas fa-globe-asia"></i> Project
+            </a>
+            <a class="pub-link" href="https://arxiv.org/pdf/{{ publication.arxiv }}.pdf">
+              <i class="fas fa-file-pdf"></i> PDF
+            </a>
+            <a class="pub-link" href="https://arxiv.org/abs/{{ publication.arxiv }}">
+              <i class="ai ai-arxiv"></i> arXiv
+            </a>
+            {% if publication.github %}
+            <a class="pub-link" href="https://github.com/{{ publication.github }}">
+              <i class="fab fa-github"></i> Code
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
 
   <!-- Footer -->
   <footer>
-    <div class="footer-text">&copy; {{ 'now' | date: '%Y' }} {{ site.name }}</div>
+    <div class="container">
+      <div class="footer-icons">
+        <a href="mailto:{{ site.email }}"><i class="fas fa-envelope"></i></a>
+        <a href="https://github.com/{{ site.github_username }}"><i class="fab fa-github"></i></a>
+        <a href="https://scholar.google.com/citations?user={{ site.google_scholar }}"><i class="ai ai-google-scholar"></i></a>
+      </div>
+      <p class="footer-text">&copy; {{ 'now' | date: '%Y' }} {{ site.name }}</p>
+    </div>
   </footer>
 
   <script>
@@ -844,22 +740,8 @@ layout: null
         }
       });
     }, { threshold: 0.1 });
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-    // Active nav link highlighting
-    const sections = document.querySelectorAll('.section[id]');
-    const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(sec => {
-        if (window.scrollY >= sec.offsetTop - 120) {
-          current = sec.getAttribute('id');
-        }
-      });
-      navAnchors.forEach(a => {
-        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-      });
-    });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
     // News: show only first 5
     (function() {
