@@ -439,6 +439,16 @@ layout: null
       border-color: var(--brown-300);
     }
 
+    .pub-card.highlight {
+      border-left: 3px solid var(--accent);
+      background: linear-gradient(135deg, #fffaf4 0%, var(--bg-card) 100%);
+    }
+
+    .pub-card.highlight:hover {
+      border-color: var(--brown-300);
+      border-left-color: var(--accent-hover);
+    }
+
     .pub-image {
       position: relative;
       border-radius: 0;
@@ -679,8 +689,8 @@ layout: null
       <a href="#" class="nav-name">{{ site.name }}</a>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
-        <li><a href="#experience">Experience</a></li>
         <li><a href="#news">News</a></li>
+        <li><a href="#experience">Experience</a></li>
         <li><a href="#publications">Publications</a></li>
         <li><a href="cv/Hyunsoo_Cha_s_Resume__CV_.pdf" target="_blank">CV</a></li>
       </ul>
@@ -737,20 +747,6 @@ layout: null
         </div>
       </section>
 
-      <!-- Experience -->
-      <section class="section" id="experience">
-        <div class="section-header"><h2>Experience</h2></div>
-
-        <div class="exp-card fade-in">
-          <img class="exp-logo" src="{{ '/images/nvidia_logo.png' | relative_url }}" alt="NVIDIA" />
-          <div class="exp-info">
-            <div class="exp-title">Research Scientist Intern</div>
-            <div class="exp-org">NVIDIA</div>
-            <div class="exp-period">2025</div>
-          </div>
-        </div>
-      </section>
-
       <!-- News -->
       <section class="section" id="news">
         <div class="section-header"><h2>News</h2></div>
@@ -765,12 +761,26 @@ layout: null
         <button class="news-toggle" id="news-toggle" style="display:none;" onclick="toggleNews()">Show more</button>
       </section>
 
+      <!-- Experience -->
+      <section class="section" id="experience">
+        <div class="section-header"><h2>Experience</h2></div>
+
+        <div class="exp-card fade-in">
+          <img class="exp-logo" src="{{ '/images/nvidia-logo-vert.png' | relative_url }}" alt="NVIDIA" />
+          <div class="exp-info">
+            <div class="exp-title">Research Scientist Intern (Upcoming)</div>
+            <div class="exp-org">NVIDIA &middot; Santa Clara, CA, USA</div>
+            <div class="exp-period">Jun 2026 &ndash;</div>
+          </div>
+        </div>
+      </section>
+
       <!-- Publications -->
       <section class="section" id="publications">
         <div class="section-header"><h2>Publications</h2></div>
 
         {% for publication in site.data.publications %}
-        <div class="pub-card fade-in">
+        <div class="pub-card fade-in{% if publication.highlight %} highlight{% endif %}">
           <div class="pub-image {% unless publication.image_mouseover contains "mp4" %}pub-image--no-video{% endunless %}">
             {% if publication.image_mouseover contains "mp4" %}
             <video preload="auto" playsinline loop muted>
