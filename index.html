@@ -822,18 +822,20 @@ layout: null
   <!-- Navigation -->
   <nav id="navbar">
     <div class="nav-inner">
-      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
-        <i class="fas fa-sun icon-sun"></i>
-        <i class="fas fa-moon icon-moon"></i>
-      </button>
       <a href="#" class="nav-name">{{ site.name }}</a>
-      <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#news">News</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#publications">Publications</a></li>
-        <li><a href="cv/Hyunsoo_Cha_s_Resume__CV_.pdf" target="_blank">CV</a></li>
-      </ul>
+      <div style="display:flex;align-items:center;gap:1.5rem;">
+        <ul class="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#news">News</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#publications">Publications</a></li>
+          <li><a href="cv/Hyunsoo_Cha_s_Resume__CV_.pdf" target="_blank">CV</a></li>
+        </ul>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+          <i class="fas fa-sun icon-sun"></i>
+          <i class="fas fa-moon icon-moon"></i>
+        </button>
+      </div>
     </div>
   </nav>
 
