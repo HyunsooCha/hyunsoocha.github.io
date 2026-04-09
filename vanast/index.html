@@ -457,7 +457,37 @@
       }
 
       .bibtex-card {
+        position: relative;
         padding: 24px;
+      }
+
+      .bibtex-copy {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px;
+        font-family: 'Inter', sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text-secondary);
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 8px;
+        cursor: pointer;
+        backdrop-filter: blur(10px);
+        transition: all 0.2s ease;
+      }
+      .bibtex-copy:hover {
+        border-color: var(--glass-border-hover);
+        color: var(--accent-brown);
+        transform: translateY(-1px);
+      }
+      .bibtex-copy.copied {
+        color: var(--accent-brown);
+        border-color: var(--accent-brown);
       }
 
       .bibtex-card pre {
@@ -558,10 +588,47 @@
         --glow-warm: 0 0 40px rgba(196, 154, 108, 0.08);
       }
 
+      [data-theme="dark"] .nav {
+        background: rgba(21, 18, 16, 0.85);
+      }
+
       [data-theme="dark"] .bg-grid {
         background-image:
           linear-gradient(rgba(196, 154, 108, 0.03) 1px, transparent 1px),
           linear-gradient(90deg, rgba(196, 154, 108, 0.03) 1px, transparent 1px);
+      }
+
+      [data-theme="dark"] .bg-glow-1 {
+        background: radial-gradient(circle, rgba(196, 154, 108, 0.04) 0%, transparent 70%);
+      }
+      [data-theme="dark"] .bg-glow-2 {
+        background: radial-gradient(circle, rgba(196, 154, 108, 0.03) 0%, transparent 70%);
+      }
+
+      [data-theme="dark"] .hero-title-sub {
+        background: linear-gradient(135deg, #e8e0d8 0%, #c4b8a8 50%, #c49a6c 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+
+      [data-theme="dark"] .venue-badge {
+        background: linear-gradient(135deg, rgba(196, 154, 108, 0.15), rgba(196, 154, 108, 0.1));
+        border-color: rgba(196, 154, 108, 0.25);
+      }
+
+      [data-theme="dark"] .nav-links a:hover {
+        background: rgba(196, 154, 108, 0.1);
+      }
+      [data-theme="dark"] .nav-links a.active {
+        background: rgba(196, 154, 108, 0.12);
+      }
+
+      [data-theme="dark"] .btn-primary {
+        box-shadow: 0 4px 20px rgba(196, 154, 108, 0.2);
+      }
+      [data-theme="dark"] .btn-outline {
+        background: var(--glass-bg);
+        border-color: var(--glass-border);
       }
 
       [data-theme="dark"] img { filter: none; }
@@ -882,7 +949,10 @@
           <div class="section-label">Citation</div>
           <h2 class="section-title" style="margin-bottom: 20px;">BibTeX</h2>
           <div class="glass-card bibtex-card">
-            <pre><code>@inproceedings{cha2026vanast,
+            <button class="bibtex-copy" id="bibtex-copy" onclick="copyBibtex()">
+              <i class="fas fa-copy"></i> Copy
+            </button>
+            <pre><code id="bibtex-text">@inproceedings{cha2026vanast,
   title={Vanast: Virtual Try-On with Human Image Animation via Synthetic Triplet Supervision},
   author={Cha, Hyunsoo and Woo, Wonjung and Kim, Byungjun and Joo, Hanbyul},
   booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
@@ -914,6 +984,20 @@
     <script src="static/js/bulma-slider.min.js"></script>
     <script src="static/js/index.js"></script>
     <script>
+      // Copy BibTeX
+      function copyBibtex() {
+        var text = document.getElementById('bibtex-text').textContent;
+        navigator.clipboard.writeText(text).then(function() {
+          var btn = document.getElementById('bibtex-copy');
+          btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+          btn.classList.add('copied');
+          setTimeout(function() {
+            btn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+            btn.classList.remove('copied');
+          }, 2000);
+        });
+      }
+
       // Dark mode toggle
       (function() {
         var toggle = document.getElementById('theme-toggle');
