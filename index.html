@@ -967,7 +967,7 @@ layout: null
         <div class="section-header"><h2>Publications</h2></div>
 
         {% for publication in site.data.publications %}
-        <div class="pub-card fade-in{% if publication.highlight %} highlight{% endif %}" data-tags="{{ publication.tags | join: '|' }}">
+        <div class="pub-card fade-in{% if publication.featured %} highlight{% endif %}" data-tags="{{ publication.tags | join: '|' }}">
           <div class="pub-image {% unless publication.image_mouseover contains "mp4" %}pub-image--no-video{% endunless %}">
             {% if publication.image_mouseover contains "mp4" %}
             <video preload="auto" playsinline loop muted>

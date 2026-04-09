@@ -2,6 +2,7 @@
   title: "Vanast: Virtual Try-On with Human Image Animation via Synthetic Triplet Supervision"
   venue: CVPR, 2026
   highlight: true
+  featured: true
   description: "Given a human image and one or more garment images, our method generates virtual try-on with human image animation conditioned on a pose video while preserving identity."
   project_page: https://hyunsoocha.github.io/vanast
   github: snuvclab/vanast
@@ -21,6 +22,7 @@
 - id: durian
   title: "Durian: Dual Reference Image-Guided Portrait Animation with Attribute Transfer"
   venue: ICLR, 2026
+  featured: true
   description: "Given a portrait and one or more reference images specifying target attributes, Durian generates a portrait animation with attribute transfer in a single-stage pipeline."
   project_page: https://hyunsoocha.github.io/durian
   github: snuvclab/durian
@@ -40,6 +42,7 @@
 - id: perse
   title: "PERSE: Personalized 3D Generative Avatars from A Single Portrait"
   venue: CVPR, 2025
+  featured: true
   description: "A method for building an animatable personalized generative avatar from a reference portrait."
   project_page: https://hyunsoocha.github.io/perse
   github: snuvclab/perse
