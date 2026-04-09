@@ -23,6 +23,14 @@
     <link rel="stylesheet" href="static/css/bulma-carousel.min.css" />
     <link rel="stylesheet" href="static/css/bulma-slider.min.css" />
 
+    <script>
+      (function() {
+        var t = localStorage.getItem('theme');
+        if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
+
     <style>
       /* ===== CSS Reset & Base ===== */
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -529,6 +537,67 @@
         .section { padding: 40px 0; }
       }
 
+      /* ===== Dark Mode ===== */
+      [data-theme="dark"] {
+        --bg-100: #151210;
+        --bg-200: #1e1a16;
+        --bg-300: #2a2520;
+        --bg-400: #3a332a;
+        --bg-500: #4a4238;
+        --bg-600: #5a5148;
+        --bg-700: #7a7068;
+        --accent-brown: #c49a6c;
+        --accent-warm: #d4a870;
+        --accent-deep: #a07848;
+        --glass-bg: rgba(30, 26, 22, 0.65);
+        --glass-border: rgba(196, 154, 108, 0.15);
+        --glass-border-hover: rgba(196, 154, 108, 0.3);
+        --text-primary: #e8e0d8;
+        --text-secondary: #c4b8a8;
+        --text-muted: #8a7e6e;
+        --glow-warm: 0 0 40px rgba(196, 154, 108, 0.08);
+      }
+
+      [data-theme="dark"] .bg-grid {
+        background-image:
+          linear-gradient(rgba(196, 154, 108, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(196, 154, 108, 0.03) 1px, transparent 1px);
+      }
+
+      [data-theme="dark"] img { filter: none; }
+      [data-theme="dark"] video { filter: none; }
+
+      /* Theme Toggle */
+      .theme-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        border: 1px solid var(--glass-border);
+        background: var(--glass-bg);
+        color: var(--text-secondary);
+        cursor: pointer;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+        padding: 0;
+        backdrop-filter: blur(10px);
+      }
+      .theme-toggle:hover {
+        border-color: var(--glass-border-hover);
+        color: var(--accent-brown);
+        transform: translateY(-1px);
+      }
+      .theme-toggle .icon-sun,
+      .theme-toggle .icon-moon { display: none; }
+      [data-theme="light"] .theme-toggle .icon-moon { display: inline; }
+      [data-theme="dark"] .theme-toggle .icon-sun { display: inline; }
+
+      html, body, .nav, .glass-card, .btn, .theme-toggle {
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+      }
+
       /* ===== Scroll bar ===== */
       ::-webkit-scrollbar { width: 8px; }
       ::-webkit-scrollbar-track { background: var(--bg-100); }
@@ -550,12 +619,18 @@
           <a href="https://hyunsoocha.github.io/" class="nav-home">
             <i class="fas fa-home"></i>
           </a>
-          <ul class="nav-links">
-            <li><a href="https://hyunsoocha.github.io/vanast" class="active">Vanast</a></li>
-            <li><a href="https://hyunsoocha.github.io/durian">Durian</a></li>
-            <li><a href="https://hyunsoocha.github.io/perse">PERSE</a></li>
-            <li><a href="https://hyunsoocha.github.io/pegasus/">PEGASUS</a></li>
-          </ul>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <ul class="nav-links">
+              <li><a href="https://hyunsoocha.github.io/vanast" class="active">Vanast</a></li>
+              <li><a href="https://hyunsoocha.github.io/durian">Durian</a></li>
+              <li><a href="https://hyunsoocha.github.io/perse">PERSE</a></li>
+              <li><a href="https://hyunsoocha.github.io/pegasus/">PEGASUS</a></li>
+            </ul>
+            <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+              <i class="fas fa-sun icon-sun"></i>
+              <i class="fas fa-moon icon-moon"></i>
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -839,6 +914,23 @@
     <script src="static/js/bulma-slider.min.js"></script>
     <script src="static/js/index.js"></script>
     <script>
+      // Dark mode toggle
+      (function() {
+        var toggle = document.getElementById('theme-toggle');
+        var html = document.documentElement;
+        function setTheme(t) { html.setAttribute('data-theme', t); localStorage.setItem('theme', t); }
+        var saved = localStorage.getItem('theme');
+        if (saved) setTheme(saved);
+        else if (window.matchMedia('(prefers-color-scheme: dark)').matches) setTheme('dark');
+        else setTheme('light');
+        toggle.addEventListener('click', function() {
+          setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+        });
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+          if (!localStorage.getItem('theme')) setTheme(e.matches ? 'dark' : 'light');
+        });
+      })();
+
       // Intersection Observer for fade-in animations
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
