@@ -545,6 +545,33 @@ layout: null
       margin-left: 0.5em;
     }
 
+    .pub-badge {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.2rem 0.55rem;
+      border-radius: 100px;
+      margin-left: 0.4em;
+      letter-spacing: 0.03em;
+      vertical-align: middle;
+    }
+
+    .pub-badge.badge-highlight {
+      color: #fff;
+      background: #c0392b;
+    }
+
+    .pub-badge.badge-oral {
+      color: #fff;
+      background: #2980b9;
+    }
+
+    .pub-badge.badge-spotlight {
+      color: #fff;
+      background: #8e44ad;
+    }
+
     .pub-title {
       font-size: 1.05rem;
       font-weight: 600;
@@ -955,6 +982,9 @@ layout: null
               {% for award in publication.awards %}
                 <span class="award">{{ award }}</span>
               {% endfor %}
+              {% if publication.highlight %}<span class="pub-badge badge-highlight">Highlight</span>{% endif %}
+              {% if publication.oral %}<span class="pub-badge badge-oral">Oral</span>{% endif %}
+              {% if publication.spotlight %}<span class="pub-badge badge-spotlight">Spotlight</span>{% endif %}
             </span>
             <h3 class="pub-title">
               <a href="{{ publication.project_page }}">{{ publication.title }}</a>
