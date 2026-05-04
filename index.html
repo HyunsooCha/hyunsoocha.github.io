@@ -380,6 +380,17 @@ layout: null
       font-weight: 500;
     }
 
+    .exp-org a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .exp-org a:hover {
+      border-bottom-color: var(--accent);
+    }
+
     .exp-desc {
       font-size: 0.84rem;
       color: var(--text-muted);
@@ -956,7 +967,13 @@ layout: null
           <img class="exp-logo" src="{{ '/images/' | append: exp.logo | relative_url }}" alt="{{ exp.organization }}" />
           <div class="exp-info">
             <div class="exp-title">{{ exp.title }}</div>
-            <div class="exp-org">{{ exp.organization }}</div>
+            <div class="exp-org">
+              {% if exp.url %}
+                <a href="{{ exp.url }}" target="_blank" rel="noopener">{{ exp.organization }}</a>
+              {% else %}
+                {{ exp.organization }}
+              {% endif %}
+            </div>
             <div class="exp-period">{{ exp.location }} &middot; {{ exp.period }}</div>
             {% if exp.description %}
             <div class="exp-desc">{{ exp.description }}</div>
