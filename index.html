@@ -317,6 +317,10 @@ layout: null
       line-height: 1.85;
     }
 
+    .about-text p + p {
+      margin-top: 0.9rem;
+    }
+
     .about-text a {
       color: var(--accent);
       text-decoration: none;
@@ -925,7 +929,7 @@ layout: null
       <section class="section" id="about">
         <div class="section-header"><h2>About</h2></div>
         <div class="about-text fade-in">
-          {{ site.description | markdownify | remove: '<p>' | remove: '</p>' }}
+          {{ site.description | markdownify }}
         </div>
       </section>
 

@@ -23,7 +23,10 @@ name: Hyunsoo Cha
 position: PhD Student
 email: 243stephen@snu.ac.kr
 description: >-
-  I am Hyunsoo Cha, a PhD student at [Seoul National University](https://en.snu.ac.kr/index.html), advised by Prof. [Hanbyul Joo](https://jhugestar.github.io/). I will be joining [NVIDIA](https://www.nvidia.com/) as a Research Scientist Intern starting June 2026. My research goal is to develop generative models that can understand and represent people in virtual worlds.
+  I am Hyunsoo Cha, a PhD student at [Seoul National University](https://en.snu.ac.kr/index.html), advised by Prof. [Hanbyul Joo](https://jhugestar.github.io/). I will be joining [NVIDIA AMRI](https://research.nvidia.com/labs/amri/) as a Research Scientist Intern starting July 2026.
+
+
+  My long-term research goal is to build virtual worlds in which humans and intelligent agents seamlessly interact, with agents that perceive, represent, and meaningfully assist people in their everyday lives. Toward this vision, I develop generative models that capture the richness of human appearance, motion, and behavior, serving as a foundation for embodied agents that can truly understand and collaborate with people.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 x_username: hyunssu_cha
