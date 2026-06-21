@@ -627,6 +627,14 @@ layout: null
       text-decoration: underline;
     }
 
+    .pub-authors .pub-equal-contrib {
+      display: block;
+      font-size: 0.78rem;
+      font-style: italic;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
+
     .pub-desc {
       font-size: 0.85rem;
       color: var(--text-secondary);
@@ -1013,12 +1021,16 @@ layout: null
             <div class="pub-authors">
               {% for author_id in publication.authors %}
                 {% assign author = site.data.authors[author_id] %}
+                {% if publication.equal_contrib contains author_id %}{% assign star = "*" %}{% else %}{% assign star = "" %}{% endif %}
                 {% if author.is_me %}
-                  <span class="me">{{ author.first_name }} {{ author.middle_name }} {{ author.last_name }}</span>{% if forloop.last == false %}, {% endif %}
+                  <span class="me">{{ author.first_name }} {{ author.middle_name }} {{ author.last_name }}{{ star }}</span>{% if forloop.last == false %}, {% endif %}
+                {% elsif author.website %}
+                  <a href="{{ author.website }}">{{ author.first_name }} {{ author.middle_name }} {{ author.last_name }}{{ star }}</a>{% if forloop.last == false %}, {% endif %}
                 {% else %}
-                  <a href="{{ author.website }}">{{ author.first_name }} {{ author.middle_name }} {{ author.last_name }}</a>{% if forloop.last == false %}, {% endif %}
+                  <span>{{ author.first_name }} {{ author.middle_name }} {{ author.last_name }}{{ star }}</span>{% if forloop.last == false %}, {% endif %}
                 {% endif %}
               {% endfor %}
+              {% if publication.equal_contrib %}<span class="pub-equal-contrib">* Equal contribution</span>{% endif %}
             </div>
             <p class="pub-desc">{{ publication.description }}</p>
             {% if publication.tags %}
