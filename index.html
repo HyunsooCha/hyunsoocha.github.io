@@ -499,6 +499,45 @@ layout: null
       animation: pub-flash 3s ease-out;
     }
 
+    /* Selected vs. all publications toggle */
+    .pub-extra { display: none; }
+    #publications.show-all .pub-extra { display: grid; }
+
+    .pub-toggle-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 0.6rem;
+    }
+
+    .pub-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1.15rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .pub-toggle:hover {
+      color: var(--accent);
+      border-color: var(--brown-300);
+    }
+
+    .pub-toggle i {
+      font-size: 0.72rem;
+      transition: transform 0.2s ease;
+    }
+
+    .pub-toggle[aria-expanded="true"] i {
+      transform: rotate(180deg);
+    }
+
     .pub-image {
       position: relative;
       border-radius: 0;
@@ -996,7 +1035,7 @@ layout: null
         <div class="section-header"><h2>Publications</h2></div>
 
         {% for publication in site.data.publications %}
-        <div class="pub-card fade-in{% if publication.featured %} highlight{% endif %}" data-tags="{{ publication.tags | join: '|' }}">
+        <div class="pub-card fade-in{% if publication.featured %} highlight{% endif %}{% unless publication.selected %} pub-extra{% endunless %}" data-tags="{{ publication.tags | join: '|' }}">
           <div class="pub-image {% unless publication.image_mouseover contains "mp4" %}pub-image--no-video{% endunless %}">
             {% if publication.image_mouseover contains "mp4" %}
             <video preload="auto" playsinline loop muted>
@@ -1060,6 +1099,17 @@ layout: null
           </div>
         </div>
         {% endfor %}
+
+        {% assign extra_count = 0 %}
+        {% for p in site.data.publications %}{% unless p.selected %}{% assign extra_count = extra_count | plus: 1 %}{% endunless %}{% endfor %}
+        {% if extra_count > 0 %}
+        <div class="pub-toggle-wrap">
+          <button type="button" class="pub-toggle" aria-expanded="false" onclick="togglePublications(this)">
+            <span class="pub-toggle-label">Show all publications</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+        </div>
+        {% endif %}
       </section>
 
     </div><!-- .content -->
@@ -1125,6 +1175,23 @@ layout: null
       btn.textContent = isExpanded ? 'Show more' : 'Show less';
     }
 
+    // Toggle between selected and all publications
+    function togglePublications(btn) {
+      const section = document.getElementById('publications');
+      const expanded = section.classList.toggle('show-all');
+      btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      btn.querySelector('.pub-toggle-label').textContent =
+        expanded ? 'Show selected only' : 'Show all publications';
+      if (expanded) {
+        // These cards were display:none, so the fade-in observer never fired
+        section.querySelectorAll('.pub-extra.fade-in:not(.visible)')
+          .forEach(el => el.classList.add('visible'));
+      }
+      if (!expanded) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
     // Interest tag click → scroll through matching publications sequentially
     const tagClickState = {};
     document.querySelectorAll('.interest-tag[data-tag]').forEach(tag => {
@@ -1138,6 +1205,14 @@ layout: null
         tagClickState[target] = idx + 1;
 
         const match = matches[idx];
+        // Reveal hidden (non-selected) cards so the match is visible
+        if (match.classList.contains('pub-extra')) {
+          const section = document.getElementById('publications');
+          if (!section.classList.contains('show-all')) {
+            const btn = section.querySelector('.pub-toggle');
+            if (btn) togglePublications(btn);
+          }
+        }
         match.scrollIntoView({ behavior: 'smooth', block: 'center' });
         match.classList.remove('pub-card--flash');
         void match.offsetWidth;

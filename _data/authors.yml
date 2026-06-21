@@ -1,7 +1,6 @@
 hyunsoo:
   first_name: Hyunsoo
   last_name: Cha
-  # middle_name:
   website: https://hyunsoocha.github.io
   is_me: true
 hanbyul:
@@ -21,7 +20,8 @@ sangwon:
   last_name: Baik
   website: https://tlb-miss.github.io/
 sungjoo:
-  first_name: Sungjoo
+  first_name: June
+  middle_name: Sungjoo
   last_name: Kim
   website: https://junesjukim.github.io/
 hyeonwoo:
