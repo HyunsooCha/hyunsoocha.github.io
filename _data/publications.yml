@@ -3,7 +3,7 @@
   venue: arXiv, 2026
   featured: false
   selected: false
-  description: "A compositional 3D reconstruction pipeline that puts physics in the loop of shape and layout estimation, using a physics engine as a diagnostic tool to produce a stable, simulation-ready scene from a single image."
+  description: "A compositional 3D reconstruction pipeline that puts physics in the loop of shape and layout estimation, producing a stable, simulation-ready scene from a single image."
   project_page: https://snuvclab.github.io/SimuScene/
   github: snuvclab/SimuScene
   arxiv: 2606.03994
@@ -91,6 +91,7 @@
 - id: pegasus
   title: "PEGASUS: Personalized Generative 3D Avatars with Composable Attributes"
   venue: CVPR, 2024
+  selected: true
   description: "A method for constructing a personalized generative 3D face avatar from monocular videos."
   project_page: https://hyunsoocha.github.io/pegasus
   github: snuvclab/pegasus
