@@ -1,3 +1,23 @@
+- id: rofacto
+  title: "Robot-Factored World Models via Robot Rendering"
+  venue: arXiv, 2026
+  featured: false
+  selected: false
+  description: "Factors action realization and robot appearance out of the world model by rendering actions as visible robot geometry, yielding a shared visual interface that transfers across viewpoints and unseen robot embodiments."
+  project_page: https://bjkim95.github.io/rofacto/
+  github: bjkim95/rofacto
+  arxiv: 2607.22535
+  image: rofacto.jpeg
+  image_mouseover: rofacto.mp4
+  authors:
+    - byungjun
+    - taeksoo
+    - hyunsoo
+    - hanbyul
+  tags:
+    - World Models
+    - Robotic Manipulation
+
 - id: simuscene
   title: "SimuScene: Simulation-Ready Compositional 3D Scene Reconstruction from a Single Image"
   venue: arXiv, 2026
