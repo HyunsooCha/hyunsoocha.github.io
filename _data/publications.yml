@@ -1,6 +1,6 @@
 - id: rofacto
   title: "Robot-Factored World Models via Robot Rendering"
-  venue: arXiv, 2026
+  venue: CoRL, 2026
   featured: false
   selected: false
   description: "Factors action realization and robot appearance out of the world model by rendering actions as visible robot geometry, yielding a shared visual interface that transfers across viewpoints and unseen robot embodiments."
