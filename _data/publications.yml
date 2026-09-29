@@ -20,7 +20,7 @@
 
 - id: simuscene
   title: "SimuScene: Simulation-Ready Compositional 3D Scene Reconstruction from a Single Image"
-  venue: arXiv, 2026
+  venue: NeurIPS, 2026
   featured: false
   selected: false
   description: "A compositional 3D reconstruction pipeline that puts physics in the loop of shape and layout estimation, producing a stable, simulation-ready scene from a single image."
