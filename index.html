@@ -1027,14 +1027,14 @@ layout: null
       </section>
 
       <!-- Publications -->
-      <section class="section" id="publications">
+      <section class="section show-all" id="publications">
         {% assign extra_count = 0 %}
         {% for p in site.data.publications %}{% unless p.selected %}{% assign extra_count = extra_count | plus: 1 %}{% endunless %}{% endfor %}
         <div class="section-header">
           <h2>Publications</h2>
           {% if extra_count > 0 %}
-          <button type="button" class="pub-toggle" aria-expanded="false" onclick="togglePublications(this)">
-            <span class="pub-toggle-label">Show all</span>
+          <button type="button" class="pub-toggle" aria-expanded="true" onclick="togglePublications(this)">
+            <span class="pub-toggle-label">Show selected</span>
             <i class="fas fa-chevron-down"></i>
           </button>
           {% endif %}
