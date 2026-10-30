@@ -1,9 +1,13 @@
 - title: Research Scientist Intern
-  organization: NVIDIA AMRI
+  organization: NVIDIA AI-Mediated Reality and Interaction Research Group (AMRI)
   url: https://research.nvidia.com/labs/amri/
   location: Santa Clara, CA, USA
   period: Jul 2026 - Mar 2027
   logo: nvidia-logo-vert.png
+  description: |
+    Manager: Shalini De Mello<br>
+    Mentors: Seonwook Park, Amrita Mazumdar<br>
+    Collaborators: Rajarshi Roy, Koki Nagano, Christian Jacobsen
 
 - title: Intern
   organization: DRAM Solution Team, Samsung Electronics
