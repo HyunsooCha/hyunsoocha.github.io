@@ -6,7 +6,7 @@
 ## Career updates
 
 The editable CV lives in `~/GitHub/writing/career/cv`.
-Follow the [shared CV and homepage synchronization policy](~/Agents/papers/career.md)
+Follow the [shared CV and homepage synchronization policy](~/Agents/writing/career.md)
 for every CV or homepage career update. It owns the requirements for keeping
 career facts and the downloadable CV synchronized across both repositories.
 
