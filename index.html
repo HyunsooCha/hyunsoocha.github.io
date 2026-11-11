@@ -10,13 +10,16 @@ layout: null
   <title>{{ site.name }}</title>
   <link rel="icon" type="image/svg+xml" href="images/hs_logo.svg">
 
-  <!-- Theme: open in the system theme; the toggle overrides it until reload -->
+  <!-- Theme: apply before paint to avoid flash -->
   <script>
-    document.documentElement.setAttribute('data-theme',
-      window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    (function() {
+      var t = localStorage.getItem('theme');
+      if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
   </script>
 
-  {% if site.google_analytics %}
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -24,59 +27,41 @@ layout: null
     gtag('js', new Date());
     gtag('config', '{{ site.google_analytics }}');
   </script>
-  {% endif %}
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="{{ '/css/fontawesome.all.min.css' | relative_url }}" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" rel="stylesheet">
+  <script defer src="{{ '/js/fontawesome.all.min.js' | relative_url }}"></script>
 
   <style>
-    {% include embedded-fonts.css %}
-
-    /* Warm paper ramp: near-white brown (light) and near-black brown (dark) */
     :root {
-      color-scheme: light;
-      --bg: #f8f5f0;
-      --surface: #fdfbf8;
-      --raised: #f0ebe3;
-      --text: #1e1913;
-      --text-2: #5b5247;
-      --text-3: #756c60;
-      --accent: #8a5524;
-      --line: rgba(30, 25, 19, 0.08);
-      --line-strong: rgba(30, 25, 19, 0.16);
-      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-      --shadow-float: 0 8px 24px rgba(0, 0, 0, 0.06);
-      --ease: cubic-bezier(0.22, 1, 0.36, 1);
-      --nav-h: 60px;
-    }
+      --brown-50: #fdf8f1;
+      --brown-100: #f0ebe3;
+      --brown-200: #e4ddd2;
+      --brown-300: #d2c9bc;
+      --brown-400: #c49a6c;
+      --brown-500: #a67c52;
+      --brown-600: #8b6340;
+      --brown-700: #6f4e32;
+      --brown-800: #5a3e28;
+      --brown-900: #3d2b1a;
+      --brown-950: #2a1c10;
 
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme]) {
-        color-scheme: dark;
-        --bg: #14110d;
-        --surface: #1b1814;
-        --raised: #25211b;
-        --text: #eee7dc;
-        --text-2: #aaa194;
-        --text-3: #8c8477;
-        --accent: #d4a36c;
-        --line: rgba(238, 231, 220, 0.08);
-        --line-strong: rgba(238, 231, 220, 0.16);
-        --shadow-sm: 0 0 0 transparent;
-        --shadow-float: 0 0 0 transparent;
-      }
-    }
-
-    :root[data-theme="dark"] {
-      color-scheme: dark;
-      --bg: #14110d;
-      --surface: #1b1814;
-      --raised: #25211b;
-      --text: #eee7dc;
-      --text-2: #aaa194;
-      --text-3: #8c8477;
-      --accent: #d4a36c;
-      --line: rgba(238, 231, 220, 0.08);
-      --line-strong: rgba(238, 231, 220, 0.16);
-      --shadow-sm: 0 0 0 transparent;
-      --shadow-float: 0 0 0 transparent;
+      --text-primary: #1e1913;
+      --text-secondary: #5b5247;
+      --text-muted: #756c60;
+      --bg-primary: #f8f5f0;
+      --bg-card: #fdfbf8;
+      --bg-tag: #f0ebe3;
+      --accent: #a67c52;
+      --accent-hover: #8b6340;
+      --border: #e4ddd2;
+      --shadow: rgba(30, 25, 19, 0.08);
     }
 
     * {
@@ -85,308 +70,236 @@ layout: null
       box-sizing: border-box;
     }
 
+    html, body, nav, .pub-card, .exp-card, .social-icon, .interest-tag,
+    .pub-link, .news-toggle, .theme-toggle {
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+
     html {
       scroll-behavior: smooth;
-      scroll-padding-top: calc(var(--nav-h) + 24px);
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 15px;
-      line-height: 24px;
-      background-color: var(--bg);
-      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
       -webkit-font-smoothing: antialiased;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button {
-      font: inherit;
-      color: inherit;
-    }
-
-    :focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-      border-radius: 4px;
-    }
-
-    .icon {
-      width: 18px;
-      height: 18px;
-      flex-shrink: 0;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 1.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    /* Shared control: icon buttons, toggles and paper links */
-    .control {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      height: 32px;
-      padding: 0 12px;
-      font-size: 13px;
-      font-weight: 500;
-      line-height: 16px;
-      color: var(--text-2);
-      background: var(--surface);
-      border: 1px solid var(--line-strong);
-      border-radius: 8px;
-      cursor: pointer;
-      transition: color 150ms var(--ease), background-color 150ms var(--ease),
-        border-color 150ms var(--ease), transform 120ms var(--ease);
-    }
-
-    .control:hover {
-      color: var(--text);
-      background: var(--raised);
-    }
-
-    .control:active {
-      transform: scale(0.97);
-    }
-
-    .control--icon {
-      width: 36px;
-      height: 36px;
-      padding: 0;
-    }
-
-    /* Prose links */
-    .prose a,
-    .news-text a {
-      color: var(--accent);
-      text-decoration: underline;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 3px;
-      text-decoration-color: transparent;
-      transition: text-decoration-color 150ms var(--ease);
-    }
-
-    .prose a:hover,
-    .news-text a:hover {
-      text-decoration-color: currentColor;
-    }
-
-    /* Navigation */
+    /* ── Navigation ── */
     nav {
       position: fixed;
       top: 0;
       width: 100%;
-      height: var(--nav-h);
-      background: var(--bg);
-      border-bottom: 1px solid var(--line);
+      background: rgba(248, 245, 240, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       z-index: 100;
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s ease;
+    }
+
+    nav.scrolled {
+      box-shadow: 0 2px 20px var(--shadow);
     }
 
     .nav-inner {
-      position: relative;
       max-width: 1200px;
-      height: 100%;
       margin: 0 auto;
-      padding: 0 32px;
+      padding: 0.8rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 16px;
+      gap: 0.8rem;
     }
 
     .nav-name {
-      font-size: 16px;
-      font-weight: 500;
-      line-height: 16px;
-      color: var(--text);
-    }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 24px;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--text-primary);
+      text-decoration: none;
     }
 
     .nav-links {
       display: flex;
-      gap: 24px;
+      gap: 2rem;
       list-style: none;
     }
 
     .nav-links a {
-      font-size: 14px;
-      line-height: 20px;
-      color: var(--text-2);
-      transition: color 150ms var(--ease);
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+      letter-spacing: 0.01em;
     }
 
     .nav-links a:hover,
     .nav-links a.active {
-      color: var(--text);
+      color: var(--accent);
     }
 
-    .nav-buttons {
-      display: flex;
-      gap: 8px;
-    }
-
-    .nav-menu {
-      display: none;
-    }
-
-    .theme-toggle .icon-sun,
-    [data-theme="dark"] .theme-toggle .icon-moon {
-      display: none;
-    }
-
-    [data-theme="dark"] .theme-toggle .icon-sun {
-      display: block;
-    }
-
-    /* Page layout */
+    /* ── Page Layout ── */
     .page-container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: calc(var(--nav-h) + 48px) 32px 64px;
+      padding: 5.5rem 2rem 2rem;
       display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 64px;
+      grid-template-columns: 300px 1fr;
+      gap: 3.5rem;
       align-items: start;
     }
 
-    @keyframes enter {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-    }
-
-    .profile,
-    .content {
-      animation: enter 400ms var(--ease) both;
-    }
-
-    .content {
-      animation-delay: 60ms;
-    }
-
-    /* Sidebar */
+    /* ── Left Sidebar (sticky) ── */
     .profile {
       position: sticky;
-      top: calc(var(--nav-h) + 48px);
+      top: 5rem;
+      padding: 2rem 0;
     }
 
     .profile-photo {
-      display: block;
-      width: 200px;
-      height: 200px;
+      width: 220px;
+      height: 220px;
       border-radius: 50%;
       object-fit: cover;
-      box-shadow: 0 0 0 1px var(--line);
-      margin-bottom: 24px;
+      border: 4px solid var(--brown-200);
+      box-shadow: 0 8px 30px var(--shadow);
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .profile-photo:hover {
+      transform: scale(1.03);
+      box-shadow: 0 12px 40px rgba(30, 25, 19, 0.15);
     }
 
     .profile-name {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 36px;
-      font-weight: 500;
-      line-height: 40px;
-      color: var(--text);
-      margin-bottom: 8px;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+      line-height: 1.2;
     }
 
     .profile-role {
-      font-size: 15px;
+      font-size: 1rem;
+      color: var(--accent);
       font-weight: 500;
-      line-height: 20px;
-      color: var(--text);
+      margin-bottom: 0.15rem;
     }
 
     .profile-org {
-      font-size: 14px;
-      line-height: 20px;
-      color: var(--text-2);
-      margin-top: 4px;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 1.2rem;
     }
 
+    .profile-email {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 1.2rem;
+      transition: color 0.2s;
+    }
+
+    .profile-email:hover {
+      color: var(--accent);
+    }
+
+    /* Social icons row */
     .social-icons {
       display: flex;
-      gap: 8px;
+      gap: 0.5rem;
       flex-wrap: wrap;
-      margin-top: 20px;
+      margin-bottom: 1.8rem;
     }
 
+    .social-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .social-icon:hover {
+      background: var(--brown-100);
+      border-color: var(--brown-300);
+      color: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+
+    /* Research Interests */
     .sidebar-section-title {
-      font-size: 13px;
-      font-weight: 500;
-      line-height: 16px;
-      color: var(--text-2);
-      margin: 32px 0 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 0.7rem;
     }
 
     .interest-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      font-size: 12px;
-      line-height: 16px;
-      color: var(--text-2);
-      border: 1px solid var(--line-strong);
-      border-radius: 6px;
+      gap: 0.4rem;
     }
 
     .interest-tag {
-      height: 28px;
-      padding: 0 10px;
-      font-size: 13px;
-      background: var(--surface);
-      cursor: pointer;
-      transition: color 150ms var(--ease), background-color 150ms var(--ease),
-        transform 120ms var(--ease);
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background: var(--bg-tag);
+      border: 1px solid var(--border);
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+      transition: all 0.2s ease;
     }
 
     .interest-tag:hover {
-      color: var(--text);
-      background: var(--raised);
+      background: var(--brown-200);
+      border-color: var(--brown-300);
+      color: var(--accent-hover);
     }
 
-    .interest-tag:active {
-      transform: scale(0.97);
-    }
-
-    /* Content */
+    /* ── Right Content ── */
     .content {
+      padding: 2rem 0 4rem;
       min-width: 0;
     }
 
-    .section + .section {
-      margin-top: 64px;
+    .section {
+      margin-bottom: 3rem;
     }
 
     .section-header {
       display: flex;
       align-items: center;
-      gap: 16px;
-      margin-bottom: 24px;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
     }
 
     .section-header h2 {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 28px;
-      font-weight: 500;
-      line-height: 32px;
-      color: var(--text);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text-primary);
       white-space: nowrap;
     }
 
@@ -394,83 +307,58 @@ layout: null
       content: '';
       flex: 1;
       height: 1px;
-      background: var(--line-strong);
+      background: linear-gradient(to right, var(--border), transparent);
     }
 
     /* About */
     .about-text {
-      max-width: 40rem;
-      font-size: 16px;
-      line-height: 28px;
-      color: var(--text);
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.85;
     }
 
     .about-text p + p {
-      margin-top: 16px;
+      margin-top: 0.9rem;
     }
 
-    /* News */
-    .news-list {
-      list-style: none;
-      display: grid;
-      grid-template-columns: max-content 1fr;
-      column-gap: 24px;
-      row-gap: 12px;
+    .about-text a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
     }
 
-    .news-list li {
-      display: contents;
-    }
-
-    .news-list li[hidden] {
-      display: none;
-    }
-
-    .news-date {
-      font-size: 14px;
-      line-height: 24px;
-      color: var(--text-3);
-      font-variant-numeric: tabular-nums;
-      white-space: nowrap;
-    }
-
-    .news-text {
-      color: var(--text-2);
-    }
-
-    .news-text em {
-      font-style: normal;
-      font-weight: 500;
-    }
-
-    .news-toggle {
-      margin-top: 20px;
+    .about-text a:hover {
+      border-bottom-color: var(--accent);
     }
 
     /* Experience */
     .exp-card {
       display: flex;
-      gap: 20px;
-      padding: 20px;
-      background: var(--surface);
-      border: 1px solid var(--line);
+      gap: 1.2rem;
+      padding: 1.2rem 1.4rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
       border-radius: 14px;
-      box-shadow: var(--shadow-sm);
+      margin-bottom: 1rem;
       align-items: center;
+      transition: all 0.3s ease;
     }
 
-    .exp-card + .exp-card {
-      margin-top: 12px;
+    .exp-card:hover {
+      box-shadow: 0 6px 24px var(--shadow);
+      transform: translateY(-2px);
+      border-color: var(--brown-300);
     }
 
     .exp-logo {
-      width: 64px;
-      height: 64px;
-      padding: 8px;
-      border-radius: 8px;
+      width: 72px;
+      height: 72px;
+      border-radius: 14px;
       object-fit: contain;
       background: #ffffff;
-      box-shadow: 0 0 0 1px var(--line);
+      border: 1px solid var(--border);
+      padding: 6px;
       flex-shrink: 0;
     }
 
@@ -480,116 +368,201 @@ layout: null
     }
 
     .exp-title {
-      font-size: 16px;
-      font-weight: 500;
-      line-height: 24px;
-      color: var(--text);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.15rem;
     }
 
     .exp-org {
-      font-size: 14px;
-      line-height: 20px;
-      color: var(--text-2);
+      font-size: 0.88rem;
+      color: var(--accent);
+      font-weight: 500;
     }
 
     .exp-org a {
-      transition: color 150ms var(--ease);
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
     }
 
     .exp-org a:hover {
-      color: var(--accent);
-    }
-
-    .exp-period {
-      font-size: 13px;
-      line-height: 20px;
-      color: var(--text-3);
-      font-variant-numeric: tabular-nums;
-      margin-top: 4px;
+      border-bottom-color: var(--accent);
     }
 
     .exp-desc {
-      font-size: 14px;
-      line-height: 20px;
-      color: var(--text-2);
-      margin-top: 8px;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+      line-height: 1.5;
     }
 
-    /* Publications */
-    .pub-toggle {
-      order: 1;
-      flex-shrink: 0;
+    .exp-period {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
     }
 
-    .pub-toggle .icon {
-      transition: transform 150ms var(--ease);
+    /* News */
+    .news-list {
+      list-style: none;
     }
 
-    .pub-toggle[aria-expanded="true"] .icon {
-      transform: rotate(180deg);
+    .news-list li {
+      padding: 0.6rem 0;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      display: flex;
+      gap: 1rem;
+      align-items: baseline;
     }
 
-    #publications .pub-extra {
-      display: none;
+    .news-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      min-width: 80px;
     }
 
-    #publications.show-all .pub-extra {
-      display: grid;
+    .news-list li a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
     }
 
+    .news-list li a:hover {
+      text-decoration: underline;
+    }
+
+    .news-toggle {
+      display: inline-block;
+      margin-top: 0.8rem;
+      padding: 0.4rem 1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--accent);
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .news-toggle:hover {
+      background: var(--brown-100);
+      border-color: var(--brown-300);
+    }
+
+    /* Publication Card */
     .pub-card {
       display: grid;
       grid-template-columns: 280px 1fr;
-      gap: 24px;
-      padding: 24px;
-      background: var(--surface);
-      border: 1px solid var(--line);
+      gap: 1.5rem;
+      padding: 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
       border-radius: 16px;
-      box-shadow: var(--shadow-sm);
+      margin-bottom: 1.2rem;
+      transition: all 0.3s ease;
+      align-items: stretch;
     }
 
-    .pub-card + .pub-card {
-      margin-top: 16px;
+    .pub-card:hover {
+      box-shadow: 0 8px 30px var(--shadow);
+      transform: translateY(-2px);
+      border-color: var(--brown-300);
     }
 
-    /* Featured papers keep a thin accent edge */
     .pub-card.highlight {
-      box-shadow: inset 2px 0 0 var(--accent), var(--shadow-sm);
+      border-left: 3px solid var(--accent);
+      background: linear-gradient(to right, #faf6f0 0%, #faf6f0 280px, var(--bg-card) 320px);
+    }
+
+    .pub-card.highlight:hover {
+      border-color: var(--brown-300);
+      border-left-color: var(--accent-hover);
     }
 
     @keyframes pub-flash {
-      0%, 50% {
-        border-color: var(--accent);
-        background-color: var(--raised);
-      }
+      0%   { box-shadow: 0 0 0 0 rgba(166, 124, 82, 0); }
+      10%  { box-shadow: 0 0 0 5px rgba(166, 124, 82, 0.6); }
+      30%  { box-shadow: 0 0 24px 5px rgba(166, 124, 82, 0.4); }
+      60%  { box-shadow: 0 0 14px 3px rgba(166, 124, 82, 0.25); }
+      100% { box-shadow: 0 0 0 0 rgba(166, 124, 82, 0); }
     }
 
     .pub-card--flash {
-      animation: pub-flash 1200ms var(--ease);
+      animation: pub-flash 3s ease-out;
+    }
+
+    /* Selected vs. all publications toggle */
+    .pub-extra { display: none; }
+    #publications.show-all .pub-extra { display: grid; }
+
+    .pub-toggle {
+      flex-shrink: 0;
+      order: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.85rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .pub-toggle:hover {
+      color: var(--accent);
+      border-color: var(--brown-300);
+    }
+
+    .pub-toggle i {
+      font-size: 0.72rem;
+      transition: transform 0.2s ease;
+    }
+
+    .pub-toggle[aria-expanded="true"] i {
+      transform: rotate(180deg);
     }
 
     .pub-image {
       position: relative;
-      align-self: center;
-      border-radius: 4px;
+      border-radius: 0;
       overflow: hidden;
+      background: #ffffff;
+      min-height: 0;
     }
 
     .pub-image img {
-      display: block;
       width: 100%;
-      height: auto;
+      height: 100%;
+      object-fit: contain;
+      transition: transform 0.4s ease;
+    }
+
+    .pub-card:hover .pub-image--no-video img {
+      transform: scale(1.05);
     }
 
     .pub-image video {
       position: absolute;
-      inset: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       object-fit: contain;
-      background: #ffffff;
       opacity: 0;
-      transition: opacity 200ms var(--ease);
+      z-index: 2;
+      transition: opacity 0.3s ease;
     }
 
     .pub-image:hover video {
@@ -600,41 +573,67 @@ layout: null
       display: flex;
       flex-direction: column;
       justify-content: center;
-      min-width: 0;
     }
 
     .pub-venue {
-      font-size: 13px;
-      line-height: 20px;
-      color: var(--text-3);
-      font-variant-numeric: tabular-nums;
-      margin-bottom: 8px;
-    }
-
-    .pub-venue .award,
-    .pub-venue .pub-badge {
-      color: var(--accent);
-      font-weight: 500;
-    }
-
-    .pub-venue .award::before,
-    .pub-venue .pub-badge::before {
-      content: '\00b7';
-      margin: 0 8px;
-      color: var(--text-3);
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
       font-weight: 400;
+      color: var(--accent);
+      background: var(--bg-tag);
+      padding: 0.25rem 0.7rem;
+      border-radius: 100px;
+      margin-bottom: 0.6rem;
+      width: fit-content;
+      letter-spacing: 0.03em;
+    }
+
+    .pub-venue .award {
+      color: #c0392b;
+      font-weight: 500;
+      margin-left: 0.5em;
+    }
+
+    .pub-badge {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.2rem 0.55rem;
+      border-radius: 100px;
+      margin-left: 0.4em;
+      letter-spacing: 0.03em;
+      vertical-align: middle;
+    }
+
+    .pub-badge.badge-highlight {
+      color: #fff;
+      background: #c0392b;
+    }
+
+    .pub-badge.badge-oral {
+      color: #fff;
+      background: #2980b9;
+    }
+
+    .pub-badge.badge-spotlight {
+      color: #fff;
+      background: #8e44ad;
     }
 
     .pub-title {
-      font-size: 16px;
-      font-weight: 500;
-      line-height: 24px;
-      color: var(--text);
-      margin-bottom: 8px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.4rem;
+      line-height: 1.4;
     }
 
     .pub-title a {
-      transition: color 150ms var(--ease);
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s;
     }
 
     .pub-title a:hover {
@@ -642,38 +641,40 @@ layout: null
     }
 
     .pub-authors {
-      font-size: 14px;
-      line-height: 22px;
-      color: var(--text-2);
-      margin-bottom: 8px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+      line-height: 1.6;
     }
 
     .pub-authors .me {
-      color: var(--text);
-      font-weight: 500;
+      color: var(--text-primary);
+      font-weight: 600;
     }
 
     .pub-authors a {
-      transition: color 150ms var(--ease);
+      color: var(--text-muted);
+      text-decoration: none;
     }
 
     .pub-authors a:hover {
       color: var(--accent);
+      text-decoration: underline;
     }
 
     .pub-authors .pub-equal-contrib {
       display: block;
-      font-size: 12px;
-      line-height: 16px;
-      color: var(--text-3);
-      margin-top: 4px;
+      font-size: 0.78rem;
+      font-style: italic;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
     }
 
     .pub-desc {
-      font-size: 14px;
-      line-height: 22px;
-      color: var(--text-2);
-      margin-bottom: 12px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.8rem;
+      line-height: 1.6;
       display: -webkit-box;
       -webkit-line-clamp: 3;
       line-clamp: 3;
@@ -683,197 +684,242 @@ layout: null
 
     .pub-tags {
       display: flex;
+      gap: 0.35rem;
       flex-wrap: wrap;
-      gap: 4px;
-      margin-bottom: 16px;
+      margin-bottom: 0.6rem;
     }
 
     .pub-tag {
-      padding: 2px 6px;
-      color: var(--text-3);
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--accent);
+      background: transparent;
+      border: 1px solid var(--brown-200);
+      padding: 0.15rem 0.55rem;
+      border-radius: 100px;
+      letter-spacing: 0.02em;
     }
 
     .pub-links {
       display: flex;
+      gap: 0.5rem;
       flex-wrap: wrap;
-      gap: 8px;
     }
 
     .pub-link {
-      height: 28px;
-      padding: 0 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.3rem 0.7rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background: var(--bg-tag);
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .pub-link:hover {
+      background: var(--brown-200);
+      color: var(--accent-hover);
+    }
+
+    .pub-link i {
+      font-size: 0.85rem;
     }
 
     /* Footer */
     footer {
-      padding: 32px 0;
+      padding: 2rem 0;
       text-align: center;
-      border-top: 1px solid var(--line);
-      font-size: 13px;
-      line-height: 20px;
-      color: var(--text-3);
-      font-variant-numeric: tabular-nums;
+      border-top: 1px solid var(--border);
     }
 
-    /* Responsive */
+    .footer-text {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .footer-text a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ── Responsive ── */
     @media (max-width: 900px) {
       .page-container {
         grid-template-columns: 1fr;
-        gap: 40px;
-        padding-top: calc(var(--nav-h) + 40px);
+        gap: 0;
+        padding-top: 4.5rem;
       }
 
       .profile {
-        position: static;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        position: relative;
+        top: auto;
         text-align: center;
-        padding-bottom: 40px;
-        border-bottom: 1px solid var(--line);
+        padding: 2rem 0 1rem;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 1rem;
       }
 
       .profile-photo {
-        width: 160px;
-        height: 160px;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        width: 180px;
+        height: 180px;
       }
 
-      .social-icons,
-      .interest-tags {
+      .social-icons {
         justify-content: center;
       }
-    }
 
-    @media (max-width: 720px) {
-      .nav-inner {
-        padding: 0 20px;
-      }
-
-      .nav-menu {
-        display: inline-flex;
-      }
-
-      .nav-links {
-        display: none;
-        position: absolute;
-        top: calc(var(--nav-h) - 4px);
-        right: 20px;
-        min-width: 200px;
-        flex-direction: column;
-        gap: 4px;
-        padding: 8px;
-        background: var(--surface);
-        border: 1px solid var(--line-strong);
-        border-radius: 12px;
-        box-shadow: var(--shadow-float);
-      }
-
-      nav.open .nav-links {
-        display: flex;
-        animation: enter 180ms var(--ease);
-      }
-
-      .nav-links a {
-        display: flex;
-        align-items: center;
-        height: 36px;
-        padding: 0 12px;
-        border-radius: 8px;
-      }
-
-      .nav-links a:hover {
-        background: var(--raised);
-      }
-
-      .page-container {
-        padding-left: 20px;
-        padding-right: 20px;
-      }
-
-      .profile-name {
-        font-size: 32px;
-        line-height: 36px;
+      .interest-tags {
+        justify-content: center;
       }
 
       .pub-card {
         grid-template-columns: 1fr;
-        gap: 16px;
-        padding: 20px;
+        padding: 1.2rem;
       }
 
-      .exp-card {
-        align-items: flex-start;
-        gap: 16px;
-        padding: 16px;
-      }
-
-      .exp-logo {
-        width: 56px;
-        height: 56px;
-      }
-
-      .news-list {
-        grid-template-columns: 1fr;
-        row-gap: 0;
-      }
-
-      .news-text {
-        margin-bottom: 12px;
+      .pub-image {
+        aspect-ratio: 16/9;
+        min-height: auto;
       }
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
+    @media (max-width: 480px) {
+      .nav-links {
+        display: none;
       }
 
-      *,
-      *::before,
-      *::after {
-        animation: none !important;
-        transition: none !important;
+      .page-container {
+        padding-left: 1.2rem;
+        padding-right: 1.2rem;
       }
+
+      .profile-name {
+        font-size: 1.6rem;
+      }
+    }
+
+    /* Animate on scroll */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Dark Mode ── */
+    [data-theme="dark"] {
+      --text-primary: #eee7dc;
+      --text-secondary: #aaa194;
+      --text-muted: #8c8477;
+      --bg-primary: #14110d;
+      --bg-card: #1b1814;
+      --bg-tag: #25211b;
+      --accent: #c49a6c;
+      --accent-hover: #d4b896;
+      --border: #302b25;
+      --shadow: rgba(0, 0, 0, 0.3);
+      --brown-100: #25211b;
+      --brown-200: #302b25;
+      --brown-300: #3e382f;
+    }
+
+    [data-theme="dark"] nav {
+      background: rgba(20, 17, 13, 0.85);
+    }
+
+    [data-theme="dark"] .pub-card.highlight {
+      background: linear-gradient(to right, #221d17 0%, #221d17 280px, var(--bg-card) 320px);
+    }
+
+    [data-theme="dark"] .exp-logo {
+      background: #25211b;
+    }
+
+    [data-theme="dark"] .pub-image {
+      background: #25211b;
+    }
+
+    /* Keep images normal — no invert */
+    [data-theme="dark"] img {
+      filter: none;
+    }
+
+    [data-theme="dark"] .profile-photo {
+      border-color: var(--brown-300);
+    }
+
+    /* ── Theme Toggle Button ── */
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+      padding: 0;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .theme-toggle:hover {
+      background: var(--brown-100);
+      border-color: var(--brown-300);
+      color: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+
+    .theme-toggle .icon-sun,
+    .theme-toggle .icon-moon {
+      display: none;
+    }
+
+    [data-theme="light"] .theme-toggle .icon-moon {
+      display: inline;
+    }
+
+    [data-theme="dark"] .theme-toggle .icon-sun {
+      display: inline;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Icons: Lucide v0.469.0, ISC License -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/> <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
-    <symbol id="i-file-text" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/> <path d="M14 2v4a2 2 0 0 0 2 2h4"/> <path d="M10 9H8"/> <path d="M16 13H8"/> <path d="M16 17H8"/></symbol>
-    <symbol id="i-graduation-cap" viewBox="0 0 24 24"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/> <path d="M22 10v6"/> <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></symbol>
-    <symbol id="i-github" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/> <path d="M9 18c-4.51 2-5-2-7-2"/></symbol>
-    <symbol id="i-twitter" viewBox="0 0 24 24"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></symbol>
-    <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/> <rect width="4" height="12" x="2" y="9"/> <circle cx="4" cy="4" r="2"/></symbol>
-    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/> <path d="M12 2v2"/> <path d="M12 20v2"/> <path d="m4.93 4.93 1.41 1.41"/> <path d="m17.66 17.66 1.41 1.41"/> <path d="M2 12h2"/> <path d="M20 12h2"/> <path d="m6.34 17.66-1.41 1.41"/> <path d="m19.07 4.93-1.41 1.41"/></symbol>
-    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
-    <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
-    <symbol id="i-menu" viewBox="0 0 24 24"><line x1="4" x2="20" y1="12" y2="12"/> <line x1="4" x2="20" y1="6" y2="6"/> <line x1="4" x2="20" y1="18" y2="18"/></symbol>
-  </svg>
-
   <!-- Navigation -->
   <nav id="navbar">
     <div class="nav-inner">
       <a href="#" class="nav-name">{{ site.name }}</a>
-      <div class="nav-actions">
-        <ul class="nav-links" id="nav-links">
+      <div style="display:flex;align-items:center;gap:1.5rem;">
+        <ul class="nav-links">
           <li><a href="#about">About</a></li>
           <li><a href="#news">News</a></li>
           <li><a href="#experience">Experience</a></li>
           <li><a href="#publications">Publications</a></li>
           <li><a href="cv/Hyunsoo_Cha_Resume_CV.pdf" target="_blank">CV</a></li>
         </ul>
-        <div class="nav-buttons">
-          <button type="button" class="control control--icon theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
-            <svg class="icon icon-sun" aria-hidden="true"><use href="#i-sun"/></svg>
-            <svg class="icon icon-moon" aria-hidden="true"><use href="#i-moon"/></svg>
-          </button>
-          <button type="button" class="control control--icon nav-menu" id="nav-menu" aria-label="Menu" aria-controls="nav-links" aria-expanded="false">
-            <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg>
-          </button>
-        </div>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+          <i class="fas fa-sun icon-sun"></i>
+          <i class="fas fa-moon icon-moon"></i>
+        </button>
       </div>
     </div>
   </nav>
@@ -881,7 +927,7 @@ layout: null
   <!-- Page Layout -->
   <div class="page-container">
 
-    <!-- Left Sidebar -->
+    <!-- ── Left Sidebar ── -->
     <aside class="profile">
       <img class="profile-photo" src="{{ '/images/portrait_2022.jpg' | relative_url }}" alt="{{ site.name }}" />
       <h1 class="profile-name">{{ site.name }}</h1>
@@ -889,27 +935,27 @@ layout: null
       <div class="profile-org">Seoul National University</div>
 
       <div class="social-icons">
-        <a class="control control--icon" href="mailto:{{ site.email }}" title="Email" aria-label="Email">
-          <svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>
+        <a class="social-icon" href="mailto:{{ site.email }}" title="Email">
+          <i class="fas fa-envelope"></i>
         </a>
-        <a class="control control--icon" href="cv/Hyunsoo_Cha_Resume_CV.pdf" target="_blank" title="CV" aria-label="CV">
-          <svg class="icon" aria-hidden="true"><use href="#i-file-text"/></svg>
+        <a class="social-icon" href="cv/Hyunsoo_Cha_Resume_CV.pdf" target="_blank" title="CV">
+          <i class="fas fa-file"></i>
         </a>
-        <a class="control control--icon" href="https://scholar.google.com/citations?user={{ site.google_scholar }}" title="Google Scholar" aria-label="Google Scholar">
-          <svg class="icon" aria-hidden="true"><use href="#i-graduation-cap"/></svg>
+        <a class="social-icon" href="https://scholar.google.com/citations?user={{ site.google_scholar }}" title="Google Scholar">
+          <i class="ai ai-google-scholar"></i>
         </a>
-        <a class="control control--icon" href="https://github.com/{{ site.github_username }}" title="GitHub" aria-label="GitHub">
-          <svg class="icon" aria-hidden="true"><use href="#i-github"/></svg>
+        <a class="social-icon" href="https://github.com/{{ site.github_username }}" title="GitHub">
+          <i class="fab fa-github"></i>
         </a>
-        <a class="control control--icon" href="https://x.com/{{ site.x_username }}" title="X / Twitter" aria-label="X / Twitter">
-          <svg class="icon" aria-hidden="true"><use href="#i-twitter"/></svg>
+        <a class="social-icon" href="https://x.com/{{ site.x_username }}" title="X / Twitter">
+          <i class="fab fa-twitter"></i>
         </a>
-        <a class="control control--icon" href="https://linkedin.com/in/{{ site.linkedin_username }}" title="LinkedIn" aria-label="LinkedIn">
-          <svg class="icon" aria-hidden="true"><use href="#i-linkedin"/></svg>
+        <a class="social-icon" href="https://linkedin.com/in/{{ site.linkedin_username }}" title="LinkedIn">
+          <i class="fab fa-linkedin"></i>
         </a>
       </div>
 
-      <div class="sidebar-section-title">Research interests</div>
+      <div class="sidebar-section-title">Research Interests</div>
       <div class="interest-tags">
         {% assign all_tags = "" %}
         {% for pub in site.data.publications %}
@@ -925,18 +971,18 @@ layout: null
         {% endfor %}
         {% assign tag_list = all_tags | split: "|" | sort %}
         {% for tag in tag_list %}
-          <button type="button" class="tag interest-tag" data-tag="{{ tag }}">{{ tag }}</button>
+          <span class="interest-tag" data-tag="{{ tag }}" style="cursor:pointer;">{{ tag }}</span>
         {% endfor %}
       </div>
     </aside>
 
-    <!-- Right Content -->
+    <!-- ── Right Content ── -->
     <div class="content">
 
       <!-- About -->
       <section class="section" id="about">
         <div class="section-header"><h2>About</h2></div>
-        <div class="about-text prose">
+        <div class="about-text fade-in">
           {{ site.description | markdownify }}
         </div>
       </section>
@@ -946,13 +992,13 @@ layout: null
         <div class="section-header"><h2>News</h2></div>
         <ul class="news-list" id="news-list">
           {% for news in site.data.news %}
-          <li>
+          <li class="fade-in">
             <span class="news-date">{{ news.date }}</span>
-            <span class="news-text">{{ news.description | markdownify | remove: '<p>' | remove: '</p>' }}</span>
+            <span>{{ news.description | markdownify | remove: '<p>' | remove: '</p>' }}</span>
           </li>
           {% endfor %}
         </ul>
-        <button type="button" class="control news-toggle" id="news-toggle" hidden>Show more</button>
+        <button class="news-toggle" id="news-toggle" style="display:none;" onclick="toggleNews()">Show more</button>
       </section>
 
       <!-- Experience -->
@@ -960,7 +1006,7 @@ layout: null
         <div class="section-header"><h2>Experience</h2></div>
 
         {% for exp in site.data.experience %}
-        <div class="exp-card">
+        <div class="exp-card fade-in">
           <img class="exp-logo" src="{{ '/images/' | append: exp.logo | relative_url }}" alt="{{ exp.organization }}" />
           <div class="exp-info">
             <div class="exp-title">{{ exp.title }}</div>
@@ -987,25 +1033,33 @@ layout: null
         <div class="section-header">
           <h2>Publications</h2>
           {% if extra_count > 0 %}
-          <button type="button" class="control pub-toggle" aria-expanded="true">
+          <button type="button" class="pub-toggle" aria-expanded="true" onclick="togglePublications(this)">
             <span class="pub-toggle-label">Show selected</span>
-            <svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+            <i class="fas fa-chevron-down"></i>
           </button>
           {% endif %}
         </div>
 
         {% for publication in site.data.publications %}
-        <div class="pub-card{% if publication.featured %} highlight{% endif %}{% unless publication.selected %} pub-extra{% endunless %}" data-tags="{{ publication.tags | join: '|' }}">
-          <div class="pub-image">
-            <img alt="{{ publication.title }}" src="./images/{{ publication.image }}" />
+        <div class="pub-card fade-in{% if publication.featured %} highlight{% endif %}{% unless publication.selected %} pub-extra{% endunless %}" data-tags="{{ publication.tags | join: '|' }}">
+          <div class="pub-image {% unless publication.image_mouseover contains "mp4" %}pub-image--no-video{% endunless %}">
             {% if publication.image_mouseover contains "mp4" %}
             <video preload="auto" playsinline loop muted>
               <source src="./images/{{ publication.image_mouseover }}" type="video/mp4">
             </video>
             {% endif %}
+            <img alt="{{ publication.title }}" src="./images/{{ publication.image }}" />
           </div>
           <div class="pub-content">
-            <div class="pub-venue">{{ publication.venue }}{% for award in publication.awards %}<span class="award">{{ award }}</span>{% endfor %}{% if publication.highlight %}<span class="pub-badge">Highlight</span>{% endif %}{% if publication.oral %}<span class="pub-badge">Oral</span>{% endif %}{% if publication.spotlight %}<span class="pub-badge">Spotlight</span>{% endif %}</div>
+            <span class="pub-venue">
+              {{ publication.venue }}
+              {% for award in publication.awards %}
+                <span class="award">{{ award }}</span>
+              {% endfor %}
+              {% if publication.highlight %}<span class="pub-badge badge-highlight">Highlight</span>{% endif %}
+              {% if publication.oral %}<span class="pub-badge badge-oral">Oral</span>{% endif %}
+              {% if publication.spotlight %}<span class="pub-badge badge-spotlight">Spotlight</span>{% endif %}
+            </span>
             <h3 class="pub-title">
               <a href="{% if publication.project_page %}{{ publication.project_page }}{% else %}https://arxiv.org/abs/{{ publication.arxiv }}{% endif %}">{{ publication.title }}</a>
             </h3>
@@ -1030,18 +1084,26 @@ layout: null
             {% assign sorted_tags = publication.tags | sort %}
             <div class="pub-tags">
               {% for tag in sorted_tags %}
-                <span class="tag pub-tag">{{ tag }}</span>
+                <span class="pub-tag">{{ tag }}</span>
               {% endfor %}
             </div>
             {% endif %}
             <div class="pub-links">
               {% if publication.project_page %}
-              <a class="control pub-link" href="{{ publication.project_page }}">Project</a>
+              <a class="pub-link" href="{{ publication.project_page }}">
+                <i class="fas fa-globe-asia"></i> Project
+              </a>
               {% endif %}
-              <a class="control pub-link" href="https://arxiv.org/pdf/{{ publication.arxiv }}.pdf">PDF</a>
-              <a class="control pub-link" href="https://arxiv.org/abs/{{ publication.arxiv }}">arXiv</a>
+              <a class="pub-link" href="https://arxiv.org/pdf/{{ publication.arxiv }}.pdf">
+                <i class="fas fa-file-pdf"></i> PDF
+              </a>
+              <a class="pub-link" href="https://arxiv.org/abs/{{ publication.arxiv }}">
+                <i class="ai ai-arxiv"></i> arXiv
+              </a>
               {% if publication.github %}
-              <a class="control pub-link" href="https://github.com/{{ publication.github }}">Code</a>
+              <a class="pub-link" href="https://github.com/{{ publication.github }}">
+                <i class="fab fa-github"></i> Code
+              </a>
               {% endif %}
             </div>
           </div>
@@ -1053,10 +1115,26 @@ layout: null
   </div><!-- .page-container -->
 
   <!-- Footer -->
-  <footer>&copy; {{ 'now' | date: '%Y' }} {{ site.name }}</footer>
+  <footer>
+    <div class="footer-text">&copy; {{ 'now' | date: '%Y' }} {{ site.name }}</div>
+  </footer>
 
   <script>
-    const NEWS_VISIBLE = 5;
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 10);
+    });
+
+    // Fade-in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
     // Active nav link highlighting
     const sections = document.querySelectorAll('.section[id]');
@@ -1064,78 +1142,75 @@ layout: null
     window.addEventListener('scroll', () => {
       let current = '';
       sections.forEach(sec => {
-        if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+        if (window.scrollY >= sec.offsetTop - 120) {
+          current = sec.getAttribute('id');
+        }
       });
       navAnchors.forEach(a => {
         a.classList.toggle('active', a.getAttribute('href') === '#' + current);
       });
-    }, { passive: true });
+    });
 
-    // Small-screen menu
-    (function() {
-      const nav = document.getElementById('navbar');
-      const btn = document.getElementById('nav-menu');
-      function setOpen(open) {
-        nav.classList.toggle('open', open);
-        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      }
-      btn.addEventListener('click', e => {
-        e.stopPropagation();
-        setOpen(!nav.classList.contains('open'));
-      });
-      document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => setOpen(false)));
-      document.addEventListener('click', e => {
-        if (!nav.contains(e.target)) setOpen(false);
-      });
-      document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') setOpen(false);
-      });
-    })();
-
-    // News: show the first five items
+    // News: show only first 5
     (function() {
       const items = document.querySelectorAll('#news-list li');
       const btn = document.getElementById('news-toggle');
-      if (items.length <= NEWS_VISIBLE) return;
-      items.forEach((item, i) => { item.hidden = i >= NEWS_VISIBLE; });
-      btn.hidden = false;
-      btn.addEventListener('click', () => {
-        const expand = btn.textContent === 'Show more';
-        items.forEach((item, i) => { if (i >= NEWS_VISIBLE) item.hidden = !expand; });
-        btn.textContent = expand ? 'Show less' : 'Show more';
-      });
+      if (items.length > 5) {
+        for (let i = 5; i < items.length; i++) {
+          items[i].style.display = 'none';
+        }
+        btn.style.display = 'inline-block';
+      }
     })();
 
-    // Toggle between selected and all publications
-    const pubSection = document.getElementById('publications');
-    const pubToggle = pubSection.querySelector('.pub-toggle');
-    function setPublications(showAll, scroll) {
-      pubSection.classList.toggle('show-all', showAll);
-      pubToggle.setAttribute('aria-expanded', showAll ? 'true' : 'false');
-      pubToggle.querySelector('.pub-toggle-label').textContent = showAll ? 'Show selected' : 'Show all';
-      if (!showAll && scroll) pubSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-    if (pubToggle) {
-      pubToggle.addEventListener('click', () => {
-        setPublications(!pubSection.classList.contains('show-all'), true);
-      });
+    function toggleNews() {
+      const items = document.querySelectorAll('#news-list li');
+      const btn = document.getElementById('news-toggle');
+      const isExpanded = btn.textContent === 'Show less';
+      for (let i = 5; i < items.length; i++) {
+        items[i].style.display = isExpanded ? 'none' : 'flex';
+        if (!isExpanded) items[i].classList.add('visible');
+      }
+      btn.textContent = isExpanded ? 'Show more' : 'Show less';
     }
 
-    // Interest tag click: scroll through matching publications in order
+    // Toggle between selected and all publications
+    function togglePublications(btn) {
+      const section = document.getElementById('publications');
+      const expanded = section.classList.toggle('show-all');
+      btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      btn.querySelector('.pub-toggle-label').textContent =
+        expanded ? 'Show selected' : 'Show all';
+      if (expanded) {
+        // These cards were display:none, so the fade-in observer never fired
+        section.querySelectorAll('.pub-extra.fade-in:not(.visible)')
+          .forEach(el => el.classList.add('visible'));
+      }
+      if (!expanded) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    // Interest tag click → scroll through matching publications sequentially
     const tagClickState = {};
     document.querySelectorAll('.interest-tag[data-tag]').forEach(tag => {
       tag.addEventListener('click', () => {
         const target = tag.getAttribute('data-tag');
-        const matches = Array.from(document.querySelectorAll('.pub-card')).filter(card =>
-          card.getAttribute('data-tags').split('|').includes(target));
+        const matches = Array.from(document.querySelectorAll('.pub-card[data-tags*="' + target + '"]'));
         if (matches.length === 0) return;
 
-        const idx = (tagClickState[target] || 0) % matches.length;
+        if (!(target in tagClickState)) tagClickState[target] = 0;
+        const idx = tagClickState[target] % matches.length;
         tagClickState[target] = idx + 1;
 
         const match = matches[idx];
-        if (match.classList.contains('pub-extra') && !pubSection.classList.contains('show-all')) {
-          setPublications(true, false);
+        // Reveal hidden (non-selected) cards so the match is visible
+        if (match.classList.contains('pub-extra')) {
+          const section = document.getElementById('publications');
+          if (!section.classList.contains('show-all')) {
+            const btn = section.querySelector('.pub-toggle');
+            if (btn) togglePublications(btn);
+          }
         }
         match.scrollIntoView({ behavior: 'smooth', block: 'center' });
         match.classList.remove('pub-card--flash');
@@ -1147,21 +1222,40 @@ layout: null
       });
     });
 
-    // Theme toggle: follows the system theme until the visitor chooses one
+    // Dark mode toggle
     (function() {
+      const toggle = document.getElementById('theme-toggle');
       const html = document.documentElement;
-      const media = window.matchMedia('(prefers-color-scheme: dark)');
-      let chosen = false;
-      document.getElementById('theme-toggle').addEventListener('click', () => {
-        chosen = true;
-        html.setAttribute('data-theme', html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+
+      function setTheme(theme) {
+        html.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+      }
+
+      // Initialize: check localStorage first, then system preference
+      const saved = localStorage.getItem('theme');
+      if (saved) {
+        setTheme(saved);
+      } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        setTheme('dark');
+      } else {
+        setTheme('light');
+      }
+
+      toggle.addEventListener('click', () => {
+        const current = html.getAttribute('data-theme');
+        setTheme(current === 'dark' ? 'light' : 'dark');
       });
-      media.addEventListener('change', e => {
-        if (!chosen) html.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+
+      // Listen for system theme changes (only if user hasn't manually chosen)
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+          setTheme(e.matches ? 'dark' : 'light');
+        }
       });
     })();
 
-    // Play the teaser video on hover
+    // Video hover play
     document.querySelectorAll('.pub-image').forEach(container => {
       const video = container.querySelector('video');
       if (!video) return;
