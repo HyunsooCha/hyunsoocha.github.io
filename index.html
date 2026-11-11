@@ -1061,7 +1061,7 @@ layout: null
               {% if publication.spotlight %}<span class="pub-badge badge-spotlight">Spotlight</span>{% endif %}
             </span>
             <h3 class="pub-title">
-              <a href="{{ publication.project_page }}">{{ publication.title }}</a>
+              <a href="{% if publication.project_page %}{{ publication.project_page }}{% else %}https://arxiv.org/abs/{{ publication.arxiv }}{% endif %}">{{ publication.title }}</a>
             </h3>
             <div class="pub-authors">
               {% for author_id in publication.authors %}
@@ -1087,9 +1087,11 @@ layout: null
             </div>
             {% endif %}
             <div class="pub-links">
+              {% if publication.project_page %}
               <a class="pub-link" href="{{ publication.project_page }}">
                 <i class="fas fa-globe-asia"></i> Project
               </a>
+              {% endif %}
               <a class="pub-link" href="https://arxiv.org/pdf/{{ publication.arxiv }}.pdf">
                 <i class="fas fa-file-pdf"></i> PDF
               </a>

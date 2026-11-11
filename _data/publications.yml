@@ -1,3 +1,24 @@
+- id: fuha
+  title: "Compact Motion Embeddings for Feed-forward Unified Human Animation"
+  venue: arXiv preprint, 2026
+  featured: false
+  selected: false
+  description: "A real-time-capable feed-forward transformer that learns a compact whole-body motion embedding from the driver and uses it to animate a reference image in face, upper-body, and full-body settings, with no external pose estimator at inference."
+  arxiv: 2611.07481
+  image: fuha.jpeg
+  authors:
+    - seonwook
+    - hyunsoo
+    - amrita
+    - shengze
+    - tianye
+    - hanbyul
+    - koki
+    - shalini
+  tags:
+    - Generative Models
+    - Animation
+
 - id: rofacto
   title: "Robot-Factored World Models via Robot Rendering"
   venue: CoRL, 2026
