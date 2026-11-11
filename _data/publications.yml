@@ -15,6 +15,9 @@
     - hanbyul
     - koki
     - shalini
+  footnote_authors:
+    - hyunsoo
+  footnote: "Part of the work was done during an internship at NVIDIA."
   tags:
     - Generative Models
     - Animation

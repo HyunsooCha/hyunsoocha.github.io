@@ -1067,6 +1067,7 @@ layout: null
               {% for author_id in publication.authors %}
                 {% assign author = site.data.authors[author_id] %}
                 {% if publication.equal_contrib contains author_id %}{% assign star = "*" %}{% else %}{% assign star = "" %}{% endif %}
+                {% if publication.footnote_authors contains author_id %}{% assign star = star | append: "†" %}{% endif %}
                 {% if author.is_me %}
                   <span class="me">{{ author.first_name }} {{ author.middle_name }} {{ author.last_name }}{{ star }}</span>{% if forloop.last == false %}, {% endif %}
                 {% elsif author.website %}
@@ -1076,6 +1077,7 @@ layout: null
                 {% endif %}
               {% endfor %}
               {% if publication.equal_contrib %}<span class="pub-equal-contrib">* Equal contribution</span>{% endif %}
+              {% if publication.footnote %}<span class="pub-equal-contrib">† {{ publication.footnote }}</span>{% endif %}
             </div>
             <p class="pub-desc">{{ publication.description }}</p>
             {% if publication.tags %}
